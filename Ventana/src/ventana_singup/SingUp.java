@@ -38,6 +38,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.text.DefaultCaret;
+import ventana_people.People;
 
 /**
  *
@@ -118,8 +119,8 @@ public class SingUp extends javax.swing.JFrame {
         btnEliminarCuenta = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnPeople = new javax.swing.JButton();
+        btnCerrarSession = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -254,15 +255,23 @@ public class SingUp extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton3.setText("Ver amigos");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton5.setText("People");
-
-        jButton2.setBackground(new java.awt.Color(204, 51, 0));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cerrar Session");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPeople.setText("People");
+        btnPeople.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton2MouseReleased(evt);
+                btnPeopleMouseReleased(evt);
+            }
+        });
+
+        btnCerrarSession.setBackground(new java.awt.Color(204, 51, 0));
+        btnCerrarSession.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSession.setText("Cerrar Session");
+        btnCerrarSession.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnCerrarSessionMouseReleased(evt);
             }
         });
 
@@ -274,9 +283,9 @@ public class SingUp extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jButton3)
                 .addGap(266, 266, 266)
-                .addComponent(jButton5)
+                .addComponent(btnPeople)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCerrarSession, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
@@ -285,8 +294,8 @@ public class SingUp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton5)
-                    .addComponent(jButton2))
+                    .addComponent(btnPeople)
+                    .addComponent(btnCerrarSession))
                 .addContainerGap())
         );
 
@@ -375,13 +384,13 @@ public class SingUp extends javax.swing.JFrame {
         this.fncCambiarEstados(false);
     }//GEN-LAST:event_btnActualizarMouseReleased
 
-    private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+    private void btnCerrarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSessionMouseReleased
         // TODO add your handling code here:
         Principal ventana_principal = new Principal();
         ventana_principal.setVisible(true);
         this.session_activa.CerrarSession();
         this.dispose();
-    }//GEN-LAST:event_jButton2MouseReleased
+    }//GEN-LAST:event_btnCerrarSessionMouseReleased
 
     private void opcionesDeCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionesDeCuentaMouseClicked
         // TODO add your handling code here:
@@ -412,6 +421,14 @@ public class SingUp extends javax.swing.JFrame {
         }catch(Exception e){}
 
     }//GEN-LAST:event_btnEliminarCuentaMouseReleased
+
+    private void btnPeopleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPeopleMouseReleased
+        // TODO add your handling code here:
+        People cuentas = new People( new Session( this.session_activa.getStrEmail() ) );
+        cuentas.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnPeopleMouseReleased
     
     private void fncCambiarEstados(boolean opcion){
         this.campo_nombres.setEditable(opcion);
@@ -509,15 +526,15 @@ public class SingUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnCerrarSession;
     private javax.swing.JButton btnEliminarCuenta;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnPeople;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JTextField campo_correo;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
