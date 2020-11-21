@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jpanelimagen.ArrastreListener;
+import jpanelimagen.ImagenFondo;
 
 /**
  *
@@ -27,8 +29,8 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.fncInsertarPicture(this.panel_1_Background, "/img/b2.jpg", false);
         
-        this.panel_2_Background.setSize( this.panel_1_Background.getWidth() , this.panel_1_Background.getHeight());
-        this.fncInsertarPicture(this.panel_2_Background, "/img/b1.jpg", false);
+        panel_singup.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
+        panel_registro.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
     }
     
     private void fncEstablecerItems(){
@@ -74,7 +76,6 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel_2_Background = new javax.swing.JPanel();
         panel_1_Background = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -102,17 +103,6 @@ public class Principal extends javax.swing.JFrame {
         campo_singup_contrasenha = new javax.swing.JPasswordField();
         jLabel10 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout panel_2_BackgroundLayout = new javax.swing.GroupLayout(panel_2_Background);
-        panel_2_Background.setLayout(panel_2_BackgroundLayout);
-        panel_2_BackgroundLayout.setHorizontalGroup(
-            panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 860, Short.MAX_VALUE)
-        );
-        panel_2_BackgroundLayout.setVerticalGroup(
-            panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -133,8 +123,6 @@ public class Principal extends javax.swing.JFrame {
                 jButton2MouseReleased(evt);
             }
         });
-
-        panel_registro.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("/home/max98/NetBeansProjects/netbenas-practica-final/Ventana/src/img/b2.jpg"),1.0f));
 
         campo_nombres.setText("jTextField1");
 
@@ -254,8 +242,6 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(campo_registro_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
-
-        panel_singup.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("/home/max98/NetBeansProjects/netbenas-practica-final/Ventana/src/img/b2.jpg"),1.0f));
 
         jLabel7.setText("Contraseña: ");
 
@@ -445,7 +431,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel panel_1_Background;
-    private javax.swing.JPanel panel_2_Background;
     private jpanelimagen.JPanelImagen panel_registro;
     private jpanelimagen.JPanelImagen panel_singup;
     private javax.swing.JRadioButton sexo_femenino;
