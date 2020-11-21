@@ -3,9 +3,12 @@ package clases;
 // Importar librerias java
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import ventana_pricipal.Principal;
 
 
@@ -28,7 +31,7 @@ public class Session {
             this.strSexo = scanner.next();
             this.strContrasenha = scanner.next();
             this.strEmail = scanner.next();
-            this.strImgPerfil = "user_default.jpg";
+            this.strImgPerfil = scanner.next();
             
             scanner.close();
         } catch (FileNotFoundException ex) {
@@ -45,6 +48,36 @@ public class Session {
         this.strSexo = "";
         this.strContrasenha = "";
         this.strEmail = "";
+    }
+    
+    public void fncActualizarDatos(){
+        
+        try {
+                
+            File myObj = new File(Rutas.db_profile + this.strEmail + ".txt");
+                
+            if (myObj.exists()) {
+                FileWriter myWriter = new FileWriter(Rutas.db_profile + this.strEmail +".txt");
+                   
+                myWriter.write(this.strNombres + "\n");
+                myWriter.write(this.strApellidos + "\n");
+        
+                myWriter.write(this.strNacimiento + "\n");
+                myWriter.write(this.strSexo + "\n");
+                
+                myWriter.write(this.strContrasenha + "\n");
+                myWriter.write(this.strEmail + "\n");
+                myWriter.write(this.strImgPerfil + "\n");
+                
+                myWriter.close();
+            }
+                
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    
+        //System.out.println("Datos Actualizados...");
     }
     
     // Metodos setters y getters
@@ -103,5 +136,5 @@ public class Session {
     public void setStrImgPerfil(String strImgPerfil) {
         this.strImgPerfil = strImgPerfil;
     }
-    
+        
 }

@@ -11,6 +11,7 @@ package clases;
  */
 public class Rutas {
     public static final String db_profile = "database/profile/";
-    public static final String db_img = "database/img/";
+    public static final String db_img = "database/foto_perfil/";
+    public static final String default_img = "user_default.png";
     public static final String db_chat = "database/chat/";
 }

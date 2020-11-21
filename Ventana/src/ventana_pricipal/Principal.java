@@ -397,6 +397,7 @@ public class Principal extends javax.swing.JFrame {
 
                     myWriter.write(String.valueOf(this.campo_singup_contrasenha.getPassword()) + "\n");
                     myWriter.write(this.campo_registro_email.getText() + "\n");
+                    myWriter.write(Rutas.default_img + "\n");
 
                     myWriter.close();
                     JOptionPane.showMessageDialog(null, "Usuario creado exitosamente...");
@@ -446,8 +447,7 @@ public class Principal extends javax.swing.JFrame {
                 }else{
                    // JOptionPane.showMessageDialog(null, "Iniciando session... \n");
                    
-                   SingUp session =  new SingUp();
-                   session.setSession_activa(new Session( this.campo_singup_email.getText() ));
+                   SingUp session = new SingUp( new Session( this.campo_singup_email.getText() ));
                    session.setVisible(true);
                    this.dispose();
                    session.fncMostrarMensajeDeBienvenida();
@@ -455,7 +455,11 @@ public class Principal extends javax.swing.JFrame {
                    ActionListener tarea = new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            session.fncDetectandoMensajes();
+                            try {
+                                session.fncDetectandoMensajes();
+                            } catch (IOException ex) {
+                                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                    };
 

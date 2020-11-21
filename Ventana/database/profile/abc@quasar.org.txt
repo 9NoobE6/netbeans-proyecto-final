@@ -1,6 +1,7 @@
-jTextField1
-jTextField1
+Miguel Angel 
+Francisco Gutierrez
 01/01/2002
-Femenino
+Masculino
 jPasswordField1
 abc@quasar.org
+abc@quasar.org.SVG
