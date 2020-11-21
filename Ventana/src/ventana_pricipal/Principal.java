@@ -6,12 +6,22 @@
 package ventana_pricipal;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jpanelimagen.ArrastreListener;
 import jpanelimagen.ImagenFondo;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -39,11 +49,19 @@ public class Principal extends javax.swing.JFrame {
         this.cmbox_anho.removeAllItems();
         
         for(int item = 1; item <= 32; item++  ){
-            this.cmbox_dia.addItem(""+item);
+            if(item <= 9){
+                this.cmbox_dia.addItem("0"+item);
+            }else{
+                this.cmbox_dia.addItem(""+item);
+            }
         }
         
         for(int item = 1; item <= 12; item++  ){
-            this.cmbox_mes.addItem(""+item);
+            if(item <= 9){
+                this.cmbox_mes.addItem("0"+item);
+            }else{
+                this.cmbox_mes.addItem(""+item);
+            }
         }
         
         for(int item = 1985; item <= 2020; item++  ){
@@ -136,7 +154,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Contraseña:");
 
-        campo_registro_email.setText("jTextField1");
+        campo_registro_email.setText("abc@quasar.org");
 
         jLabel5.setText("Email:");
 
@@ -342,12 +360,49 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Introduzca su(s) nombre(s), por favor...");
         }else if( this.campo_apellidos.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su(s) apellido(s), por favor...");
-        }else if( this.campo_registro_contrasenha.getText().isEmpty() ){
+        }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca una contraseña, por favor...");
         }else if( this.campo_registro_email.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca un correo electronico, por favor...");
+        }else if( !this.campo_registro_email.getText().contains("@quasar.org") || this.campo_registro_email.getText().length() < 14  ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico example@quasar.org, por favor...");
+        }else{
+            
+            try {
+                
+                File myObj = new File("database/" + this.campo_registro_email.getText() +".txt");
+                
+                if (myObj.createNewFile()) {
+                    FileWriter myWriter = new FileWriter("database/" + this.campo_registro_email.getText() +".txt");
+                    
+                    myWriter.write(this.campo_nombres.getText() + "\n");
+                    myWriter.write(this.campo_apellidos.getText() + "\n");
+
+                    String Fnacimiento = (String)this.cmbox_dia.getSelectedItem()+"/" + (String)this.cmbox_mes.getSelectedItem() +"/"+ (String)this.cmbox_anho.getSelectedItem();     
+                    myWriter.write(Fnacimiento + "\n");
+
+                    if( this.sexo_femenino.isSelected() ){
+                        myWriter.write("Femenino" + "\n");
+                    }else{
+                        myWriter.write("Masculino" + "\n");
+                    }
+
+                    myWriter.write(String.valueOf(this.campo_singup_contrasenha.getPassword()) + "\n");
+                    myWriter.write(this.campo_registro_email.getText() + "\n");
+
+                    myWriter.close();
+                    JOptionPane.showMessageDialog(null, "Usuario creado exitosamente...");
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
+                    myObj.delete();
+                }
+                
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
         }
-        
         
     }//GEN-LAST:event_jButton1MouseReleased
 
@@ -369,8 +424,53 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Introduzca su contraseña, por favor...");
         }else if( this.campo_singup_email.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
+        }else{
+            String file = "database/" + this.campo_singup_email.getText() +".txt";
+            
+            File myObj = new File(file);
+            
+            // Verificar si existe el usuario
+            if ( myObj.exists() ) {
+                
+                // Verificar si la contraseña es correcta
+                if( !fncVerificarContrasehna(file) ){
+                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta... \n");
+                }else{
+                   JOptionPane.showMessageDialog(null, "Iniciando session... \n");
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario no existente...\nRegistre un nuevo usuario.");
+            }
+            
         }
     }//GEN-LAST:event_jButton2MouseReleased
+    
+    
+    private boolean fncVerificarContrasehna(String file){
+        Scanner scanner;
+        String tmpcontrasenha = "";
+        try {
+            scanner = new Scanner(new File(file));
+            scanner.useDelimiter("\n");
+                 
+            int item = 0;
+            while(scanner.hasNext()){
+                String next = scanner.next();
+  
+                if( item == 4){
+                    tmpcontrasenha = next;
+                    break;
+                } item++;
+            }
+                    
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        return String.valueOf(this.campo_singup_contrasenha.getPassword()).trim().equals( tmpcontrasenha );
+    }
     
     /**
      * @param args the command line arguments
@@ -436,4 +536,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton sexo_femenino;
     private javax.swing.JRadioButton sexo_masculino;
     // End of variables declaration//GEN-END:variables
+     private static final String regex = "^(.+)@(.+)$";
 }
