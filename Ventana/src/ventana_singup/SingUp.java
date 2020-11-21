@@ -383,16 +383,27 @@ public class SingUp extends javax.swing.JFrame {
 
     private void btnEliminarCuentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCuentaMouseReleased
         // TODO add your handling code here:
-        Principal ventana_principal = new Principal();
-        ventana_principal.setVisible(true);
         
-        new File( Rutas.db_img + this.session_activa.getStrImgPerfil() ).delete(); 
-        new File( Rutas.db_profile + this.session_activa.getStrEmail() + ".txt" ).delete();
-        new File( Rutas.db_chat + this.session_activa.getStrEmail() + ".txt" ).delete();
+        try{
+            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la cuenta?");
+            
+            if( respuesta == 0 ){
+                Principal ventana_principal = new Principal();
+                ventana_principal.setVisible(true);
+
+                if( !this.session_activa.getStrImgPerfil().equals("user_default.png") ){
+                    new File( Rutas.db_img + this.session_activa.getStrImgPerfil() ).delete(); 
+                }
+                
+                new File( Rutas.db_profile + this.session_activa.getStrEmail() + ".txt" ).delete();
+                new File( Rutas.db_chat + this.session_activa.getStrEmail() + ".txt" ).delete();
+
+                this.session_activa.CerrarSession();
+                this.dispose();
+            }
         
-        this.session_activa.CerrarSession();
-        this.dispose();
-        
+        }catch(Exception e){}
+
     }//GEN-LAST:event_btnEliminarCuentaMouseReleased
     
     private void fncCambiarEstados(boolean opcion){
@@ -413,8 +424,8 @@ public class SingUp extends javax.swing.JFrame {
         this.btnActualizar.setEnabled(false);
         this.fncCambiarEstados(false);
         this.campo_correo.setEnabled(false);
-        
-        this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + session_activa.getStrImgPerfil(), false);
+     
+        this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + session_activa.getStrImgPerfil(), false);   
         this.campo_nombres.setText( session_activa.getStrNombres() );
         this.campo_apellidos.setText( session_activa.getStrApellidos());
         this.campo_correo.setText( session_activa.getStrEmail());
