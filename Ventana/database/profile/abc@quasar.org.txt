@@ -1,7 +1,0 @@
-Maria
-La del barrio
-01/01/2002
-Femenino
-jPasswordField1
-abc@quasar.org
-abc@quasar.org.SVG
