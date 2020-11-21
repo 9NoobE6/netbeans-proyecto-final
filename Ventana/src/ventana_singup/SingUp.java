@@ -407,7 +407,7 @@ public class SingUp extends javax.swing.JFrame {
 
     private void opcionesDeCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionesDeCuentaActionPerformed
         // TODO add your handling code here:
-        abc@quasar.org
+        
     }//GEN-LAST:event_opcionesDeCuentaActionPerformed
     
     private void fncCambiarEstados(boolean opcion){

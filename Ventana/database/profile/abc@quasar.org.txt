@@ -1,7 +1,7 @@
-Miguel Angel 
-Francisco Gutierrez
+jTextField1
+jTextField1
 01/01/2002
-Masculino
-jPasswordField1
+Femenino
 abc@quasar.org
-abc@quasar.org.SVG
+abc@quasar.org
+user_default.png
