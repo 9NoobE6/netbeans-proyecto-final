@@ -5,12 +5,19 @@
  */
 package ventana_pricipal;
 
+// Importar mis clases
+import clases.*;
+import ventana_singup.SingUp;
+
+// Importar librerias java
+import javax.swing.Timer;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,10 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jpanelimagen.ArrastreListener;
 import jpanelimagen.ImagenFondo;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -95,8 +99,8 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         panel_1_Background = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnRegistrarme = new javax.swing.JButton();
+        btnIniciarSession = new javax.swing.JButton();
         panel_registro = new jpanelimagen.JPanelImagen();
         campo_nombres = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -124,23 +128,25 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 153));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Registrarme");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnRegistrarme.setBackground(new java.awt.Color(0, 102, 153));
+        btnRegistrarme.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarme.setText("Registrarme");
+        btnRegistrarme.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
+                btnRegistrarmeMouseReleased(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 153, 51));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Iniciar Session");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnIniciarSession.setBackground(new java.awt.Color(0, 153, 51));
+        btnIniciarSession.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciarSession.setText("Iniciar Session");
+        btnIniciarSession.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton2MouseReleased(evt);
+                btnIniciarSessionMouseReleased(evt);
             }
         });
+
+        panel_registro.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
 
         campo_nombres.setText("jTextField1");
 
@@ -261,6 +267,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
+        panel_singup.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
+
         jLabel7.setText("Contraseña: ");
 
         campo_singup_email.setText("jTextField1");
@@ -313,9 +321,9 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(panel_1_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_1_BackgroundLayout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnIniciarSession)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addComponent(btnRegistrarme))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_1_BackgroundLayout.createSequentialGroup()
                         .addComponent(panel_singup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -331,8 +339,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(panel_registro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panel_1_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(btnIniciarSession)
+                    .addComponent(btnRegistrarme))
                 .addGap(31, 31, 31))
         );
 
@@ -350,7 +358,7 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+    private void btnRegistrarmeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarmeMouseReleased
         // TODO add your handling code here:
         int anho = Integer.parseInt( this.cmbox_anho.getItemAt( this.cmbox_anho.getSelectedIndex() ) );
         
@@ -370,10 +378,10 @@ public class Principal extends javax.swing.JFrame {
             
             try {
                 
-                File myObj = new File("database/" + this.campo_registro_email.getText() +".txt");
+                File myObj = new File(Rutas.db_profile + this.campo_registro_email.getText() +".txt");
                 
                 if (myObj.createNewFile()) {
-                    FileWriter myWriter = new FileWriter("database/" + this.campo_registro_email.getText() +".txt");
+                    FileWriter myWriter = new FileWriter(Rutas.db_profile + this.campo_registro_email.getText() +".txt");
                     
                     myWriter.write(this.campo_nombres.getText() + "\n");
                     myWriter.write(this.campo_apellidos.getText() + "\n");
@@ -404,7 +412,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         
-    }//GEN-LAST:event_jButton1MouseReleased
+    }//GEN-LAST:event_btnRegistrarmeMouseReleased
 
     private void sexo_femeninoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_femeninoMouseReleased
         // TODO add your handling code here:
@@ -418,14 +426,14 @@ public class Principal extends javax.swing.JFrame {
         this.sexo_masculino.setSelected(true);
     }//GEN-LAST:event_sexo_masculinoMouseReleased
 
-    private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+    private void btnIniciarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSessionMouseReleased
         // TODO add your handling code here:
         if( this.campo_singup_contrasenha.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su contraseña, por favor...");
         }else if( this.campo_singup_email.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
         }else{
-            String file = "database/" + this.campo_singup_email.getText() +".txt";
+            String file = Rutas.db_profile + this.campo_singup_email.getText() +".txt";
             
             File myObj = new File(file);
             
@@ -436,7 +444,24 @@ public class Principal extends javax.swing.JFrame {
                 if( !fncVerificarContrasehna(file) ){
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta... \n");
                 }else{
-                   JOptionPane.showMessageDialog(null, "Iniciando session... \n");
+                   // JOptionPane.showMessageDialog(null, "Iniciando session... \n");
+                   
+                   SingUp session =  new SingUp();
+                   session.setSession_activa(new Session( this.campo_singup_email.getText() ));
+                   session.setVisible(true);
+                   this.dispose();
+                   session.fncMostrarMensajeDeBienvenida();
+                   
+                   ActionListener tarea = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            session.fncDetectandoMensajes();
+                        }
+                   };
+
+                   tiempo.addActionListener(tarea);
+                   tiempo.start();
+                   
                 }
                 
             } else {
@@ -444,8 +469,7 @@ public class Principal extends javax.swing.JFrame {
             }
             
         }
-    }//GEN-LAST:event_jButton2MouseReleased
-    
+    }//GEN-LAST:event_btnIniciarSessionMouseReleased
     
     private boolean fncVerificarContrasehna(String file){
         Scanner scanner;
@@ -509,6 +533,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIniciarSession;
+    private javax.swing.JButton btnRegistrarme;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JPasswordField campo_registro_contrasenha;
@@ -518,8 +544,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbox_anho;
     private javax.swing.JComboBox<String> cmbox_dia;
     private javax.swing.JComboBox<String> cmbox_mes;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -536,5 +560,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton sexo_femenino;
     private javax.swing.JRadioButton sexo_masculino;
     // End of variables declaration//GEN-END:variables
-     private static final String regex = "^(.+)@(.+)$";
+    private ActionListener escucha;
+    private Timer tiempo = new Timer(1000, escucha);
 }

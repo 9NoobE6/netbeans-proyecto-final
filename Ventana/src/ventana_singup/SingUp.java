@@ -5,6 +5,13 @@
  */
 package ventana_singup;
 
+// Importar mis clases
+import clases.*;
+import jpanelimagen.ImagenFondo;
+
+// Importar librerias java
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author max98
@@ -16,6 +23,24 @@ public class SingUp extends javax.swing.JFrame {
      */
     public SingUp() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 1.0f ));
+    }
+
+    public Session getSession_activa() {
+        return session_activa;
+    }
+
+    public void setSession_activa(Session session_activa) {
+        this.session_activa = session_activa;
+    }
+    
+    public void fncMostrarMensajeDeBienvenida(){
+        JOptionPane.showMessageDialog(null, "Hola, " + session_activa.getStrNombres() + " bienvenido a RS Gobim.");
+    }
+    
+    public void fncDetectandoMensajes(){
+        System.out.println("Hola mundo");
     }
 
     /**
@@ -27,21 +52,53 @@ public class SingUp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panel_2_Background = new jpanelimagen.JPanelImagen();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Check");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton1MouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_2_BackgroundLayout = new javax.swing.GroupLayout(panel_2_Background);
+        panel_2_Background.setLayout(panel_2_BackgroundLayout);
+        panel_2_BackgroundLayout.setHorizontalGroup(
+            panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(731, Short.MAX_VALUE))
+        );
+        panel_2_BackgroundLayout.setVerticalGroup(
+            panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jButton1)
+                .addContainerGap(486, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 809, Short.MAX_VALUE)
+            .addComponent(panel_2_Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 531, Short.MAX_VALUE)
+            .addComponent(panel_2_Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+        // TODO add your handling code here:
+        System.out.println("Session activado para ... " + session_activa.getStrEmail());
+    }//GEN-LAST:event_jButton1MouseReleased
 
     /**
      * @param args the command line arguments
@@ -79,5 +136,9 @@ public class SingUp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private jpanelimagen.JPanelImagen panel_2_Background;
     // End of variables declaration//GEN-END:variables
+    Session session_activa;
+    
 }
