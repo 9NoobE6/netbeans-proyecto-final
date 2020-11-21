@@ -91,28 +91,6 @@ public class SingUp extends javax.swing.JFrame {
         //System.out.println(st); 
         */
         
-        /*
-        // Cambiar foto de perfil
-        JFileChooser elegirArchivo = new JFileChooser();
-        elegirArchivo.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("gif","jpg","jpeg", "png");
-        elegirArchivo.addChoosableFileFilter(filter);
-        int respuesta = elegirArchivo.showOpenDialog(this);
-        
-        if( respuesta == JFileChooser.APPROVE_OPTION ){
-            File archivo = elegirArchivo.getSelectedFile();
-            
-            try {
-                this.fncCopiarImagen(archivo.getAbsolutePath());
-            } catch (IOException ex) {
-                Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            this.session_activa.fncActualizarDatos();
-            this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + this.session_activa.getStrImgPerfil() , true);
-        }
-        */
-        
     }
 
     /**
@@ -134,14 +112,14 @@ public class SingUp extends javax.swing.JFrame {
         campo_correo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         campo_sexo = new javax.swing.JComboBox<>();
+        btnEliminarCuenta = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        opcionesDeCuenta = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -161,7 +139,7 @@ public class SingUp extends javax.swing.JFrame {
         );
         panel_foto_de_perfilLayout.setVerticalGroup(
             panel_foto_de_perfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 144, Short.MAX_VALUE)
         );
 
         panel_portada.setBackground(new java.awt.Color(204, 255, 255));
@@ -187,15 +165,6 @@ public class SingUp extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel4.setText("Correo:");
 
-        jButton2.setBackground(new java.awt.Color(204, 51, 0));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cerrar Session");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton2MouseReleased(evt);
-            }
-        });
-
         btnModificar.setBackground(new java.awt.Color(204, 204, 0));
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
         btnModificar.setText("Modifcar");
@@ -216,6 +185,15 @@ public class SingUp extends javax.swing.JFrame {
 
         campo_sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
 
+        btnEliminarCuenta.setBackground(new java.awt.Color(204, 0, 51));
+        btnEliminarCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarCuenta.setText("Eliminar cuenta");
+        btnEliminarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEliminarCuentaMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_portadaLayout = new javax.swing.GroupLayout(panel_portada);
         panel_portada.setLayout(panel_portadaLayout);
         panel_portadaLayout.setHorizontalGroup(
@@ -234,10 +212,10 @@ public class SingUp extends javax.swing.JFrame {
                     .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(57, 57, 57)
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                    .addComponent(btnEliminarCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(33, 33, 33))
         );
         panel_portadaLayout.setVerticalGroup(
@@ -262,15 +240,15 @@ public class SingUp extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(26, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(panel_portadaLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addComponent(btnActualizar)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminarCuenta)
+                .addGap(19, 19, 19))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -279,23 +257,12 @@ public class SingUp extends javax.swing.JFrame {
 
         jButton5.setText("People");
 
-        opcionesDeCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Opciones", "Cambiar foto de background", "Cambiar foto de perfil", "Eliminar cuenta" }));
-        opcionesDeCuenta.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                opcionesDeCuentaItemStateChanged(evt);
-            }
-        });
-        opcionesDeCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                opcionesDeCuentaMouseClicked(evt);
-            }
+        jButton2.setBackground(new java.awt.Color(204, 51, 0));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Cerrar Session");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                opcionesDeCuentaMouseReleased(evt);
-            }
-        });
-        opcionesDeCuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionesDeCuentaActionPerformed(evt);
+                jButton2MouseReleased(evt);
             }
         });
 
@@ -309,8 +276,8 @@ public class SingUp extends javax.swing.JFrame {
                 .addGap(266, 266, 266)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(opcionesDeCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +286,7 @@ public class SingUp extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton5)
-                    .addComponent(opcionesDeCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -343,8 +310,8 @@ public class SingUp extends javax.swing.JFrame {
             .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(307, Short.MAX_VALUE))
@@ -366,7 +333,25 @@ public class SingUp extends javax.swing.JFrame {
 
     private void panel_foto_de_perfilMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_foto_de_perfilMouseReleased
         // TODO add your handling code here:
-   
+        // Cambiar foto de perfil
+        JFileChooser elegirArchivo = new JFileChooser();
+        elegirArchivo.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("gif","jpg","jpeg", "png");
+        elegirArchivo.addChoosableFileFilter(filter);
+        int respuesta = elegirArchivo.showOpenDialog(this);
+        
+        if( respuesta == JFileChooser.APPROVE_OPTION ){
+            File archivo = elegirArchivo.getSelectedFile();
+            
+            try {
+                this.fncCopiarImagen(archivo.getAbsolutePath());
+            } catch (IOException ex) {
+                Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            this.session_activa.fncActualizarDatos();
+            this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + this.session_activa.getStrImgPerfil() , true);
+        }
     }//GEN-LAST:event_panel_foto_de_perfilMouseReleased
 
     private void btnModificarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseReleased
@@ -391,24 +376,24 @@ public class SingUp extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2MouseReleased
 
-    private void opcionesDeCuentaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_opcionesDeCuentaItemStateChanged
-        // TODO add your handling code here:                
-    }//GEN-LAST:event_opcionesDeCuentaItemStateChanged
-
-    private void opcionesDeCuentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionesDeCuentaMouseReleased
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_opcionesDeCuentaMouseReleased
-
     private void opcionesDeCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionesDeCuentaMouseClicked
         // TODO add your handling code here:
         
     }//GEN-LAST:event_opcionesDeCuentaMouseClicked
 
-    private void opcionesDeCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionesDeCuentaActionPerformed
+    private void btnEliminarCuentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCuentaMouseReleased
         // TODO add your handling code here:
+        Principal ventana_principal = new Principal();
+        ventana_principal.setVisible(true);
         
-    }//GEN-LAST:event_opcionesDeCuentaActionPerformed
+        new File( Rutas.db_img + this.session_activa.getStrImgPerfil() ).delete(); 
+        new File( Rutas.db_profile + this.session_activa.getStrEmail() + ".txt" ).delete();
+        new File( Rutas.db_chat + this.session_activa.getStrEmail() + ".txt" ).delete();
+        
+        this.session_activa.CerrarSession();
+        this.dispose();
+        
+    }//GEN-LAST:event_btnEliminarCuentaMouseReleased
     
     private void fncCambiarEstados(boolean opcion){
         this.campo_nombres.setEditable(opcion);
@@ -506,6 +491,7 @@ public class SingUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminarCuenta;
     private javax.swing.JButton btnModificar;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JTextField campo_correo;
@@ -519,7 +505,6 @@ public class SingUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JComboBox<String> opcionesDeCuenta;
     private jpanelimagen.JPanelImagen panel_2_Background;
     private javax.swing.JPanel panel_foto_de_perfil;
     private jpanelimagen.JPanelImagen panel_portada;
