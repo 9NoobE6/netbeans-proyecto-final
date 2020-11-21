@@ -365,6 +365,13 @@ public class SingUp extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.btnModificar.setEnabled(true);
         this.btnActualizar.setEnabled(false);
+        
+        this.session_activa.setStrNombres( this.campo_nombres.getText() );
+        this.session_activa.setStrApellidos(this.campo_apellidos.getText() );
+        this.session_activa.setStrEmail(this.campo_correo.getText() );
+        this.session_activa.setStrSexo((String) this.campo_sexo.getSelectedItem());
+        this.session_activa.fncActualizarDatos();
+        
         this.fncCambiarEstados(false);
     }//GEN-LAST:event_btnActualizarMouseReleased
 
