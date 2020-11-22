@@ -404,17 +404,22 @@ public class SingUp extends javax.swing.JFrame {
         elegirArchivo.addChoosableFileFilter(filter);
         int respuesta = elegirArchivo.showOpenDialog(this);
         
+        
         if( respuesta == JFileChooser.APPROVE_OPTION ){
             File archivo = elegirArchivo.getSelectedFile();
             
-            try {
-                this.fncCopiarImagen(archivo.getAbsolutePath());
-            } catch (IOException ex) {
-                Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
+            if(archivo.length() > 1000000) {
+                JOptionPane.showMessageDialog(null, "Lo siento, la imagen tiene que ser menor de 1MB.");
+            }else{
+                try {
+                    this.fncCopiarImagen(archivo.getAbsolutePath());
+                } catch (IOException ex) {
+                    Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                this.session_activa.fncActualizarDatos();
+                this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + this.session_activa.getStrImgPerfil() , true);
             }
-            
-            this.session_activa.fncActualizarDatos();
-            this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + this.session_activa.getStrImgPerfil() , true);
         }
     }//GEN-LAST:event_panel_foto_de_perfilMouseReleased
 
@@ -519,27 +524,30 @@ public class SingUp extends javax.swing.JFrame {
         String pathA = Rutas.storage_friendship + this.session_activa.getStrEmail() + Rutas.extesion_storage;
         File amistades = new File(pathA);
         System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
-        if(amistades.exists()){
+        if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
             try {
+                int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
                 
-                String pathB = Rutas.storage_friendship + "tmp." +this.session_activa.getStrEmail() + Rutas.extesion_storage;
-                File tmp_amistades = new File(pathB);
-                if(tmp_amistades.createNewFile()){
-                    FileWriter sobrescribirArchivo = new FileWriter(pathB);
-                    BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
-                    String linea;
-                    
-                     while ((linea = leerArchivo.readLine()) != null){
-                        // Sobreescribiendo archivo
-                        if( !this.lista_de_amigos.getSelectedValue().equals(linea) )
-                            sobrescribirArchivo.write( linea + "\n");
+                if( respuesta == 0){
+                    String pathB = Rutas.storage_friendship + "tmp." +this.session_activa.getStrEmail() + Rutas.extesion_storage;
+                    File tmp_amistades = new File(pathB);
+                    if(tmp_amistades.createNewFile()){
+                        FileWriter sobrescribirArchivo = new FileWriter(pathB);
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
+                        String linea;
+
+                         while ((linea = leerArchivo.readLine()) != null){
+                            // Sobreescribiendo archivo
+                            if( !this.lista_de_amigos.getSelectedValue().equals(linea) )
+                                sobrescribirArchivo.write( linea + "\n");
+                        }
+                        leerArchivo.close();
+                        sobrescribirArchivo.close();
+
+                        // Cambio de storage
+                        amistades.delete();
+                        tmp_amistades.renameTo(new File(pathA));
                     }
-                    leerArchivo.close();
-                    sobrescribirArchivo.close();
-                    
-                    // Cambio de storage
-                    amistades.delete();
-                    tmp_amistades.renameTo(new File(pathA));
                 }
                 
             } catch (IOException e) {}
