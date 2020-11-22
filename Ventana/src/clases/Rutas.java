@@ -13,24 +13,10 @@ import java.nio.file.Paths;
  *
  * @author victo
  */
-public class Rutas {
-    public static long size_friendship;
+public class Rutas {        
+    public static final String path_db_profiles = "database/profile/___profiles.txt";
+    public static final String path_db_profiles_tmp = "database/profile/___00000000.txt";
     
-    public Rutas(){}
-    
-    public Rutas(String correo){
-        this.size_friendship = this.fncObtenerTamahnoStorages( Rutas.storage_friendship +  correo + Rutas.extesion_storage );
-    }
-    
-    public long fncObtenerTamahnoStorages(String file){
-        Path path = Paths.get(file);
-        long bytes =0;
-        try{
-             bytes = Files.size(path.toAbsolutePath());
-        }catch(Exception e){}
-        return bytes;
-    }
-        
     public static final String db_profile = "database/profile/";
     public static final String storage_friendship = "database/friendship/";
     public static final String db_img = "database/foto_perfil/";

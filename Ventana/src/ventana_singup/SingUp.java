@@ -474,6 +474,7 @@ public class SingUp extends javax.swing.JFrame {
                 
                 new File( Rutas.db_profile + this.session_activa.getStrEmail() + ".txt" ).delete();
                 new File( Rutas.db_chat + this.session_activa.getStrEmail() + ".txt" ).delete();
+                Storage.fncStorageEliminarUnaLinea(Rutas.path_db_profiles, Rutas.path_db_profiles_tmp, this.session_activa.getStrEmail());
                 
                 ventana_principal.tiempo.stop();
                 this.session_activa.CerrarSession();
@@ -658,25 +659,6 @@ public class SingUp extends javax.swing.JFrame {
     
     private void fncSincronizandoMensajes(){
         System.out.println("::: Observador SingUp :::");
-        
-        /* // 
-        this.mensajes.removeAllElements();
-        this.llistaMensajes.removeAll();
-        DefaultListModel a = new DefaultListModel();
-        
-        File archivo = new File( Rutas.db_chat + session_activa.getStrEmail() + ".txt" );
-        BufferedReader br = new BufferedReader( new FileReader(archivo) );
-        String st; 
-        
-        while ((st = br.readLine()) != null){
-            mensajes.addElement(st);
-        }
-        
-        this.llistaMensajes.setModel(mensajes);
-        this.llistaMensajes.setAutoscrolls(true);
-        this.llistaMensajes.setSelectedIndex( 1 );
-        //System.out.println(st); 
-        */
     }
     
     private void fncSincronizarAmigos() throws FileNotFoundException, IOException{

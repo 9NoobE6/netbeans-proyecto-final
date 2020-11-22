@@ -1,7 +1,7 @@
-Mario
-Quezadilla
+jTextField1
+jTextField1
 01/01/2002
-Masculino
+Femenino
 jPasswordField1
 abc@quasar.org
-user_default.png
+abc@quasar.org.SVG

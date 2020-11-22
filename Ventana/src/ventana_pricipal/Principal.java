@@ -14,6 +14,7 @@ import javax.swing.Timer;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -383,10 +384,12 @@ public class Principal extends javax.swing.JFrame {
             
             try {
                 
-                File myObj = new File(Rutas.db_profile + this.campo_registro_email.getText() +".txt");
+                String path = Rutas.db_profile + this.campo_registro_email.getText() +".txt";
+                File myObj = new File(path);
                 
                 if (myObj.createNewFile()) {
-                    FileWriter myWriter = new FileWriter(Rutas.db_profile + this.campo_registro_email.getText() +".txt");
+                    FileWriter myWriter = new FileWriter(path);
+                    File storage_cuentas = new File(Rutas.path_db_profiles);
                     
                     myWriter.write(this.campo_nombres.getText() + "\n");
                     myWriter.write(this.campo_apellidos.getText() + "\n");
@@ -405,11 +408,17 @@ public class Principal extends javax.swing.JFrame {
                     myWriter.write(Rutas.default_img + "\n");
 
                     myWriter.close();
+                                        
+                    Storage.fncStorageAcoplarUnaLinea(Rutas.path_db_profiles, this.campo_registro_email.getText());
+                    //Storage.fncStorageEliminarUnaLinea(Rutas.path_db_profiles, Rutas.db_profile + "tmp00000.txt", this.campo_registro_email.getText());
+                    
                     JOptionPane.showMessageDialog(null, "Usuario creado exitosamente...");
                     
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
+                    Storage.fncStorageEliminarUnaLinea(Rutas.path_db_profiles, Rutas.path_db_profiles_tmp, this.campo_registro_email.getText());
                     myObj.delete();
+                    
                 }
                 
             } catch (IOException e) {
