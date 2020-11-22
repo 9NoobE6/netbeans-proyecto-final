@@ -32,7 +32,7 @@ public class Session {
             this.strApellidos = scanner.next();
             this.strNacimiento = scanner.next();
             this.strSexo = scanner.next();
-            scanner.next(); // Omitimos la contraseña
+            this.strContrasenha = scanner.next();
             this.strEmail = scanner.next();
             this.strImgPerfil = scanner.next();
             
@@ -55,11 +55,11 @@ public class Session {
     public void fncActualizarDatos(){
         
         try {
-                
-            File myObj = new File(Rutas.db_profile + this.strEmail + ".txt");
+            String path = Storage.fncStorageObtenerRutaData(this.strEmail);
+            File myObj = new File(path);
                 
             if (myObj.exists()) {
-                FileWriter myWriter = new FileWriter(Rutas.db_profile + this.strEmail +".txt");
+                FileWriter myWriter = new FileWriter(path);
                    
                 myWriter.write(this.strNombres + "\n");
                 myWriter.write(this.strApellidos + "\n");

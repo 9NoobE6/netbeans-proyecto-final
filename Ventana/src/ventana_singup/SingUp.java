@@ -64,7 +64,7 @@ public class SingUp extends javax.swing.JFrame {
         this.session_activa = session_activa;
         this.InicializarVentana();
     }
-
+    
     public Session getSession_activa() {
         return session_activa;
     }
@@ -418,7 +418,8 @@ public class SingUp extends javax.swing.JFrame {
                 }
 
                 this.session_activa.fncActualizarDatos();
-                this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + this.session_activa.getStrImgPerfil() , true);
+                String img_profile = Storage.fncStorageCrearRuta( this.session_activa.getStrEmail() , Rutas.extesion_svg);
+                this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile  , true);
             }
         }
     }//GEN-LAST:event_panel_foto_de_perfilMouseReleased
@@ -441,7 +442,9 @@ public class SingUp extends javax.swing.JFrame {
         this.session_activa.setStrSexo((String) this.campo_sexo.getSelectedItem());
         this.session_activa.fncActualizarDatos();
         
+        
         this.fncCambiarEstados(false);
+        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         JOptionPane.showMessageDialog(null, "Tus datos se han actualizado exitosamente.");
         
     }//GEN-LAST:event_btnActualizarMouseReleased
@@ -465,6 +468,7 @@ public class SingUp extends javax.swing.JFrame {
 
     private void btnEliminarCuentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCuentaMouseReleased
         // TODO add your handling code here:
+        String path = "";
         
         try{
             int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la cuenta?");
@@ -472,14 +476,20 @@ public class SingUp extends javax.swing.JFrame {
             if( respuesta == 0 ){
                 Principal ventana_principal = new Principal();
                 ventana_principal.setVisible(true);
-
+                observador.stop();
+                
+                
                 if( !this.session_activa.getStrImgPerfil().equals("user_default.png") ){
-                    new File( Rutas.db_img + this.session_activa.getStrImgPerfil() ).delete(); 
+                    new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_svg) ).delete(); 
                 }
                 
-                new File( Rutas.db_profile + this.session_activa.getStrEmail() + ".txt" ).delete();
-                new File( Rutas.db_chat + this.session_activa.getStrEmail() + ".txt" ).delete();
-                Storage.fncStorageEliminarUnaLinea(Rutas.path_db_profiles, Rutas.path_db_profiles_tmp, this.session_activa.getStrEmail());
+                new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_chats) ).delete();
+                new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_friends) ).delete();
+                new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_data) ).delete();
+                
+                new File( Rutas.storage_profiles + this.session_activa.getStrEmail()  ).delete();
+
+                Storage.fncStorageEliminarUnaLinea(Rutas.path_profiles, Rutas.path_tmp_profiles, this.session_activa.getStrEmail());
                 
                 ventana_principal.tiempo.stop();
                 this.session_activa.CerrarSession();
@@ -521,7 +531,7 @@ public class SingUp extends javax.swing.JFrame {
 
     private void btnEliminarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAmigoMouseReleased
         // TODO add your handling code here:
-        String pathA = Rutas.storage_friendship + this.session_activa.getStrEmail() + Rutas.extesion_storage;
+        String pathA = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_friends);
         File amistades = new File(pathA);
         System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
         if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
@@ -529,7 +539,7 @@ public class SingUp extends javax.swing.JFrame {
                 int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
                 
                 if( respuesta == 0){
-                    String pathB = Rutas.storage_friendship + "tmp." +this.session_activa.getStrEmail() + Rutas.extesion_storage;
+                    String pathB = Storage.fncStorageCrearRutaTemporal(this.session_activa.getStrEmail(), Rutas.extesion_friends);
                     File tmp_amistades = new File(pathB);
                     if(tmp_amistades.createNewFile()){
                         FileWriter sobrescribirArchivo = new FileWriter(pathB);
@@ -632,10 +642,10 @@ public class SingUp extends javax.swing.JFrame {
              
             ActionListener tarea = (ActionEvent e) -> {
                 try {
-                    // Observadores o Watchers
-                    
+                    // Observadores o Watchers (Depende de Session)
                     this.fncSincronizandoMensajes();
                     this.fncSincronizarAmigos();
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -646,18 +656,30 @@ public class SingUp extends javax.swing.JFrame {
            
         }catch(Exception a){}
         
+        // Este es para JFrame SingUp (No depende de Session)
         this.setLocationRelativeTo(null);
         this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
         this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
         this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         this.panel_mis_amigos.setVisible(this.ver_amigos);
         
+        // Este es para JFrame SingUp (No depende de Session)
         this.btnModificar.setEnabled(true);
         this.btnActualizar.setEnabled(false);
         this.fncCambiarEstados(false);
         this.campo_correo.setEnabled(false);
-     
-        this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + session_activa.getStrImgPerfil(), false);   
+        
+        // Este es para JFrame SingUp (Si depende de Session)
+        
+        String img_profile = "";
+        if( this.session_activa.getStrImgPerfil().equals("user_default.png") ){
+            img_profile = Rutas.path_user_default;
+            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
+        }else{
+            img_profile = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_svg);
+            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
+        }
+        
         this.campo_nombres.setText( session_activa.getStrNombres() );
         this.campo_apellidos.setText( session_activa.getStrApellidos());
         this.campo_correo.setText( session_activa.getStrEmail());
@@ -670,12 +692,14 @@ public class SingUp extends javax.swing.JFrame {
     }
     
     private void fncSincronizarAmigos() throws FileNotFoundException, IOException{
-        long _size_ = this.fncObtenerTamahnoStorages( Rutas.storage_friendship + this.session_activa.getStrEmail() + Rutas.extesion_storage );
+        String path = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+        long _size_ = this.fncObtenerTamahnoStorages(path);
+        
         if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
             this.amigos.removeAllElements();
             this.lista_de_amigos.removeAll();
 
-            File archivo = new File( Rutas.storage_friendship + session_activa.getStrEmail() + Rutas.extesion_storage );
+            File archivo = new File( path );
             BufferedReader br = new BufferedReader( new FileReader(archivo) );
             String st; 
 
@@ -689,12 +713,18 @@ public class SingUp extends javax.swing.JFrame {
     }
     
     private void fncCopiarImagen(String img) throws FileNotFoundException, IOException{
-        String short_name = session_activa.getStrEmail() + ".SVG";
+        
+        // Crear la nueva ruta del foto de perfil (Email + .svg)
+        String path = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_svg);
+        
         FileInputStream in = new FileInputStream(img);
-        FileOutputStream ou = new FileOutputStream( Rutas.db_img + short_name);
+        FileOutputStream ou = new FileOutputStream( path );
         BufferedInputStream bin = new BufferedInputStream(in);
         BufferedOutputStream bou = new BufferedOutputStream(ou);
-        session_activa.setStrImgPerfil(short_name);
+        
+        // Establecer el nuevo nombre del foto de perfil (Email + .svg)
+        // como ... example@quasar.org.svg 
+        session_activa.setStrImgPerfil(session_activa.getStrEmail() + Rutas.extesion_svg);
         
         int b=0;
         while(b!=-1){

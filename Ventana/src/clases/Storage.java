@@ -60,4 +60,12 @@ public class Storage {
         return  Rutas.storage_profiles +  "/" + email + "/profile/" + email + Rutas.extesion_data;
     }
     
+    public static String fncStorageCrearRuta(String email, String extension){
+        return  Rutas.storage_profiles +  "/" + email + "/profile/" + email + extension;
+    }
+    
+    public static String fncStorageCrearRutaTemporal(String email, String extension){
+        return  Rutas.storage_profiles +  "/" + email + "/profile/.tmp." + email + extension;
+    }
+    
 }
