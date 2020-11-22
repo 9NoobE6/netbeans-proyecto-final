@@ -409,7 +409,7 @@ public class SingUp extends javax.swing.JFrame {
                 }
 
                 this.session_activa.fncActualizarDatos();
-                String img_profile = Storage.fncStorageCrearRuta( this.session_activa.getStrEmail() , Rutas.extesion_svg);
+                String img_profile = Storage.fncStorageCrearRutaProfile( this.session_activa.getStrEmail() , Rutas.extesion_svg);
                 this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile  , true);
                 JOptionPane.showMessageDialog(null, "Foto de perfil actualizado exitosamente.");
             }
@@ -472,12 +472,12 @@ public class SingUp extends javax.swing.JFrame {
                 
                 
                 if( !this.session_activa.getStrImgPerfil().equals("user_default.png") ){
-                    new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_svg) ).delete(); 
+                    new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_svg) ).delete(); 
                 }
                 
-                new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_chats) ).delete();
-                new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_friends) ).delete();
-                new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_data) ).delete();
+                new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_chats) ).delete();
+                new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends) ).delete();
+                new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_data) ).delete();
                 
                 Storage.fncStorageEliminarDirectorio( new File(Rutas.storage_profiles + this.session_activa.getStrEmail()) );
                
@@ -519,7 +519,7 @@ public class SingUp extends javax.swing.JFrame {
 
     private void btnEliminarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAmigoMouseReleased
          // TODO add your handling code here:
-        String pathA = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+        String pathA = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
         File amistades = new File(pathA);
         System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
         if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
@@ -664,7 +664,7 @@ public class SingUp extends javax.swing.JFrame {
             img_profile = Rutas.path_user_default;
             this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
         }else{
-            img_profile = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_svg);
+            img_profile = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_svg);
             this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
         }
         
@@ -680,7 +680,7 @@ public class SingUp extends javax.swing.JFrame {
     }
     
     private void fncSincronizarAmigos() throws FileNotFoundException, IOException{
-        String path = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
         long _size_ = this.fncObtenerTamahnoStorages(path);
         
         if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
@@ -703,7 +703,7 @@ public class SingUp extends javax.swing.JFrame {
     private void fncCopiarImagen(String img) throws FileNotFoundException, IOException{
         
         // Crear la nueva ruta del foto de perfil (Email + .svg)
-        String path = Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_svg);
+        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_svg);
         
         FileInputStream in = new FileInputStream(img);
         FileOutputStream ou = new FileOutputStream( path );

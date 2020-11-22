@@ -9,10 +9,12 @@ import clases.Rutas;
 import clases.Session;
 import clases.Storage;
 import java.awt.Image;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -30,7 +32,7 @@ public class PanelCuenta extends javax.swing.JPanel {
     
     public PanelCuenta(Session session) {
         initComponents();
-        this.session = session;
+        this.perfil = session;
         
         this.campo_nombres.setText( session.getStrNombres() + " " + session.getStrApellidos() );
         this.campo_nombres.setEnabled(false);
@@ -51,28 +53,18 @@ public class PanelCuenta extends javax.swing.JPanel {
             img_profile = Rutas.path_user_default;
             this.fncInsertarPicture(this.panel_foto, img_profile , false); 
         }else{
-            img_profile = Storage.fncStorageCrearRuta(session.getStrEmail(), Rutas.extesion_svg);
+            img_profile = Storage.fncStorageCrearRutaProfile(session.getStrEmail(), Rutas.extesion_svg);
             this.fncInsertarPicture(this.panel_foto, img_profile , false);
         }
-        
-        
-        //this.fncInsertarPicture(this.panel_foto, path , false);
-        
+       
     }
-    
-    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
-        
-        if(vaciar) contenedor.removeAll();
-        
-        System.out.println(url);
-        ImageIcon icono = new ImageIcon( url );
-        JLabel etiquetaImagen = new JLabel();
-        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
-        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
-        contenedor.add(etiquetaImagen);
-        
-        if(vaciar) contenedor.validate();
-        if(vaciar) contenedor.repaint();
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
     
     
@@ -103,6 +95,11 @@ public class PanelCuenta extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Enviar mensaje");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton1MouseReleased(evt);
+            }
+        });
 
         panel_foto.setPreferredSize(new java.awt.Dimension(165, 135));
 
@@ -165,6 +162,31 @@ public class PanelCuenta extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+        // TODO add your handling code here:
+        
+        try{
+            String mensaje = JOptionPane.showInputDialog(null, "Saluda a "+ this.perfil.getStrNombres() + " " + this.perfil.getStrApellidos());
+            if( mensaje.isEmpty() ){
+                JOptionPane.showMessageDialog(null, "El mensaje no fue enviado");
+            }else{
+                
+                String path_chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail() , Rutas.extesion_chats);
+                String path_friends = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_friends);
+                
+                File myChat = new File(path_chat);
+                if ( !myChat.exists()  ){
+                    myChat.createNewFile();
+                }
+                
+                Storage.fncStorageAcoplarUnaLinea(path_chat , mensaje);
+                Storage.fncStorageAcoplarUnaLinea(path_friends , People.session_activa.getStrEmail() + "*" );
+                System.out.println("Mensaje enviado...");
+            }
+        }catch(Exception e){}
+        
+    }//GEN-LAST:event_jButton1MouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAmigo;
@@ -175,5 +197,21 @@ public class PanelCuenta extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel panel_foto;
     // End of variables declaration//GEN-END:variables
+    private Session perfil;
     private Session session;
+    
+    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
+        
+        if(vaciar) contenedor.removeAll();
+        
+        System.out.println(url);
+        ImageIcon icono = new ImageIcon( url );
+        JLabel etiquetaImagen = new JLabel();
+        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
+        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
+        contenedor.add(etiquetaImagen);
+        
+        if(vaciar) contenedor.validate();
+        if(vaciar) contenedor.repaint();
+    }
 }

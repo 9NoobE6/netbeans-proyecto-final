@@ -258,7 +258,7 @@ public class People extends javax.swing.JFrame {
     private jpanelimagen.JPanelImagen panel_3_Background;
     private jpanelimagen.JPanelImagen panel_contenedor_perfiles;
     // End of variables declaration//GEN-END:variables
-    Session session_activa;
+    public static Session session_activa;
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
     JPanelImagen panel_perfiles;

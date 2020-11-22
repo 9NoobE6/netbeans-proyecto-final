@@ -85,6 +85,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Enviar mensaje"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseReleased"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="panel_foto">
       <Properties>
