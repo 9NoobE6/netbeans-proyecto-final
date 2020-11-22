@@ -515,6 +515,34 @@ public class SingUp extends javax.swing.JFrame {
 
     private void btnEliminarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAmigoMouseReleased
         // TODO add your handling code here:
+        String pathA = Rutas.storage_friendship + this.session_activa.getStrEmail() + Rutas.extesion_storage;
+        File amistades = new File(pathA);
+        System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
+        if(amistades.exists()){
+            try {
+                
+                String pathB = Rutas.storage_friendship + "tmp." +this.session_activa.getStrEmail() + Rutas.extesion_storage;
+                File tmp_amistades = new File(pathB);
+                if(tmp_amistades.createNewFile()){
+                    FileWriter sobrescribirArchivo = new FileWriter(pathB);
+                    BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
+                    String linea;
+                    
+                     while ((linea = leerArchivo.readLine()) != null){
+                        // Sobreescribiendo archivo
+                        if( !this.lista_de_amigos.getSelectedValue().equals(linea) )
+                            sobrescribirArchivo.write( linea + "\n");
+                    }
+                    leerArchivo.close();
+                    sobrescribirArchivo.close();
+                    
+                    // Cambio de storage
+                    amistades.delete();
+                    tmp_amistades.renameTo(new File(pathA));
+                }
+                
+            } catch (IOException e) {}
+        }
         
     }//GEN-LAST:event_btnEliminarAmigoMouseReleased
     
@@ -653,8 +681,7 @@ public class SingUp extends javax.swing.JFrame {
     
     private void fncSincronizarAmigos() throws FileNotFoundException, IOException{
         long _size_ = this.fncObtenerTamahnoStorages( Rutas.storage_friendship + this.session_activa.getStrEmail() + Rutas.extesion_storage );
-        
-        if( _size_ > this.size_friendship  ){
+        if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
             this.amigos.removeAllElements();
             this.lista_de_amigos.removeAll();
 
@@ -668,9 +695,7 @@ public class SingUp extends javax.swing.JFrame {
 
             this.lista_de_amigos.setModel(this.amigos);
             this.size_friendship = _size_;
-        }
-        
-        //System.out.println("Sin cambios al friendship.txt"); 
+        } 
     }
     
     private void fncCopiarImagen(String img) throws FileNotFoundException, IOException{
