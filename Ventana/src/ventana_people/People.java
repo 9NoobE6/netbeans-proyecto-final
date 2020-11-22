@@ -5,14 +5,32 @@
  */
 package ventana_people;
 
+import clases.Rutas;
 import clases.Session;
+import clases.Storage;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import jpanelimagen.ImagenFondo;
+import jpanelimagen.JPanelImagen;
 import ventana_pricipal.Principal;
 import ventana_singup.SingUp;
 
@@ -21,40 +39,24 @@ import ventana_singup.SingUp;
  * @author max98
  */
 public class People extends javax.swing.JFrame {
-
+    JScrollPane scrollBar;
     /**
      * Creates new form Registro
      */
     public People() {
+
         initComponents();
         this.setLocationRelativeTo(null);
+        this.fncInicializarVentana();
+
     }
     
     public People(Session session_activa) {
+        
         this.session_activa = session_activa;
         initComponents();
+        this.fncInicializarVentana();
         
-        this.setLocationRelativeTo(null);
-        this.panel_3_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
-        this.campo_email.setText( this.session_activa.getStrEmail() );
-        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
-        
-        // *** Testing ... sin funcionar
-        JScrollPane scrollBar=new JScrollPane(this.panel_cuentas,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
-        scrollBar.setVisible(true);
-        scrollBar.setEnabled(true);
-        this.add( scrollBar );
-        
-        try{
-             
-            ActionListener tarea = (ActionEvent e) -> {
-               this.fncSincronizandoMensajes();
-            };
-
-           observador.addActionListener(tarea);
-           observador.start();
-           
-        }catch(Exception a){}
     }
 
     public Session getSession_activa() {
@@ -64,17 +66,20 @@ public class People extends javax.swing.JFrame {
     public void setSession_activa(Session session_activa) {
         this.session_activa = session_activa;
     }
+   
     
     public void fncAgregarCuentas(){
+        /*
         int t=0;
         for(int item=0; item < 20; item++){
-            Cuenta a = new Cuenta();
+            PanelCuenta a = new PanelCuenta();
             a.setBounds(item, t , 600, 200);
             this.panel_cuentas.add(a);
             this.panel_cuentas.validate();
             this.panel_cuentas.repaint();
             t += 200 + 20;
         }
+        */
     }
     
     @SuppressWarnings("unchecked")
@@ -85,7 +90,9 @@ public class People extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         campo_email = new javax.swing.JTextField();
         bntVolver = new javax.swing.JButton();
-        panel_cuentas = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        panel_contenedor_perfiles = new jpanelimagen.JPanelImagen();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -125,15 +132,35 @@ public class People extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout panel_cuentasLayout = new javax.swing.GroupLayout(panel_cuentas);
-        panel_cuentas.setLayout(panel_cuentasLayout);
-        panel_cuentasLayout.setHorizontalGroup(
-            panel_cuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 740, Short.MAX_VALUE)
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton1.setText("1");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        panel_cuentasLayout.setVerticalGroup(
-            panel_cuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButton1)
+        );
+
+        panel_contenedor_perfiles.setBackground(new java.awt.Color(204, 255, 255));
+        panel_contenedor_perfiles.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
+
+        javax.swing.GroupLayout panel_contenedor_perfilesLayout = new javax.swing.GroupLayout(panel_contenedor_perfiles);
+        panel_contenedor_perfiles.setLayout(panel_contenedor_perfilesLayout);
+        panel_contenedor_perfilesLayout.setHorizontalGroup(
+            panel_contenedor_perfilesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panel_contenedor_perfilesLayout.setVerticalGroup(
+            panel_contenedor_perfilesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 384, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panel_3_BackgroundLayout = new javax.swing.GroupLayout(panel_3_Background);
@@ -142,9 +169,10 @@ public class People extends javax.swing.JFrame {
             panel_3_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_3_BackgroundLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
-                .addGroup(panel_3_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_cuentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panel_3_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_contenedor_perfiles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         panel_3_BackgroundLayout.setVerticalGroup(
@@ -152,8 +180,10 @@ public class People extends javax.swing.JFrame {
             .addGroup(panel_3_BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_cuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(panel_contenedor_perfiles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -222,36 +252,95 @@ public class People extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntVolver;
     private javax.swing.JTextField campo_email;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private jpanelimagen.JPanelImagen panel_3_Background;
-    private javax.swing.JPanel panel_cuentas;
+    private jpanelimagen.JPanelImagen panel_contenedor_perfiles;
     // End of variables declaration//GEN-END:variables
     Session session_activa;
-    JScrollPane myJScrollPane;
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
- 
-    private void fncSincronizandoMensajes() {
+    JPanelImagen panel_perfiles;
+    
+    private void fncInicializarVentana(){
+        this.setLocationRelativeTo(null);
+        this.panel_3_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
+        this.panel_contenedor_perfiles.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.0f ));
+        this.campo_email.setText( this.session_activa.getStrEmail() );
+        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
+        
+        panel_perfiles = new JPanelImagen();
+        panel_perfiles.setPreferredSize(new Dimension(0, 0));
+        panel_perfiles.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
+        panel_perfiles.setLayout(null);
+        
+        // ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
+        JScrollPane jsp = new JScrollPane(panel_perfiles, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED );
+        jsp.setBounds(0, 0, this.panel_contenedor_perfiles.getWidth(), this.panel_contenedor_perfiles.getHeight());
+        jsp.setAutoscrolls(true);
+        this.panel_contenedor_perfiles.add(jsp);
+        
+        try{
+             
+            ActionListener tarea = (ActionEvent e) -> {
+                try {
+                    this.fncSincronizandoPerfiles();
+                } catch (IOException ex) {
+                    Logger.getLogger(People.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            };
+
+           observador.addActionListener(tarea);
+           observador.start();
+           
+        }catch(Exception a){}
+    }
+    
+    private long size_friendship;
+    private int coordenadaY=20;
+    
+    private void fncSincronizandoPerfiles() throws FileNotFoundException, IOException {
         System.out.println("::: Observador People :::");
+        String path = Rutas.path_profiles;
+        long _size_ = this.fncObtenerTamahnoStorages(path);
         
-        /* // 
-        this.mensajes.removeAllElements();
-        this.llistaMensajes.removeAll();
-        DefaultListModel a = new DefaultListModel();
-        
-        File archivo = new File( Rutas.db_chat + session_activa.getStrEmail() + ".txt" );
-        BufferedReader br = new BufferedReader( new FileReader(archivo) );
-        String st; 
-        
-        while ((st = br.readLine()) != null){
-            mensajes.addElement(st);
+        if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
+            
+            panel_perfiles.removeAll();
+            File archivo = new File( path );
+            BufferedReader br = new BufferedReader( new FileReader(archivo) );
+            String linea; 
+
+            while ((linea = br.readLine()) != null){
+                
+                if( linea.equals(this.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains("@quasar.org") ){
+                    PanelCuenta a = new PanelCuenta(new Session(linea));
+                    a.setBounds(60, coordenadaY, 600, 135);
+                    panel_perfiles.add(a);
+                    panel_perfiles.validate();
+                    panel_perfiles.repaint();
+                    coordenadaY += 20 + a.getHeight();
+                }
+            }
+
+            this.size_friendship = _size_;
+            panel_perfiles.setPreferredSize(new Dimension(0, this.coordenadaY ));
+            panel_perfiles.validate();
+            panel_perfiles.revalidate();
+            panel_perfiles.repaint();
+            this.coordenadaY = 20;
+            
         }
         
-        this.llistaMensajes.setModel(mensajes);
-        this.llistaMensajes.setAutoscrolls(true);
-        this.llistaMensajes.setSelectedIndex( 1 );
-        //System.out.println(st); 
-        */
-        
+    }
+    
+    public long fncObtenerTamahnoStorages(String file){
+        Path path = Paths.get(file);
+        long bytes =0;
+        try{
+             bytes = Files.size(path.toAbsolutePath());
+        }catch(Exception e){}
+        return bytes;
     }
 }
