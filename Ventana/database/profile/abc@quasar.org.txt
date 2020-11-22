@@ -1,7 +1,7 @@
-jTextField1
-jTextField1
+Mario
+Quezadilla
 01/01/2002
-Femenino
+Masculino
 jPasswordField1
 abc@quasar.org
 user_default.png

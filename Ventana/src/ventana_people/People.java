@@ -6,7 +6,12 @@
 package ventana_people;
 
 import clases.Session;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 import jpanelimagen.ImagenFondo;
 import ventana_pricipal.Principal;
 import ventana_singup.SingUp;
@@ -32,14 +37,24 @@ public class People extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.panel_3_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
         this.campo_email.setText( this.session_activa.getStrEmail() );
+        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         
+        // *** Testing ... sin funcionar
         JScrollPane scrollBar=new JScrollPane(this.panel_cuentas,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
         scrollBar.setVisible(true);
         scrollBar.setEnabled(true);
         this.add( scrollBar );
         
-        
-        this.fncAgregarCuentas();
+        try{
+             
+            ActionListener tarea = (ActionEvent e) -> {
+               this.fncSincronizandoMensajes();
+            };
+
+           observador.addActionListener(tarea);
+           observador.start();
+           
+        }catch(Exception a){}
     }
 
     public Session getSession_activa() {
@@ -69,7 +84,7 @@ public class People extends javax.swing.JFrame {
         panel_3_Background = new jpanelimagen.JPanelImagen();
         jPanel1 = new javax.swing.JPanel();
         campo_email = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        bntVolver = new javax.swing.JButton();
         btnCerrarSession = new javax.swing.JButton();
         panel_cuentas = new javax.swing.JPanel();
 
@@ -81,12 +96,12 @@ public class People extends javax.swing.JFrame {
         campo_email.setEditable(false);
         campo_email.setText("jTextField1");
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 153));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Volver");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bntVolver.setBackground(new java.awt.Color(0, 102, 153));
+        bntVolver.setForeground(new java.awt.Color(255, 255, 255));
+        bntVolver.setText("Volver");
+        bntVolver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
+                bntVolverMouseReleased(evt);
             }
         });
 
@@ -107,7 +122,7 @@ public class People extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(bntVolver)
                 .addGap(18, 18, 18)
                 .addComponent(btnCerrarSession)
                 .addContainerGap())
@@ -118,7 +133,7 @@ public class People extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(bntVolver)
                     .addComponent(btnCerrarSession))
                 .addContainerGap())
         );
@@ -169,21 +184,28 @@ public class People extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+    private void bntVolverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntVolverMouseReleased
         // TODO add your handling code here:
         SingUp ventana_singup = new SingUp( new Session( this.session_activa.getStrEmail() ));
         ventana_singup.setVisible(true);
+        
+        this.observador.stop();
         ventana_singup.setSession_activa(this.session_activa);
         this.dispose();
+        System.out.println("*** People:::De vuelto a ventana SingUp");
 
-    }//GEN-LAST:event_jButton1MouseReleased
+    }//GEN-LAST:event_bntVolverMouseReleased
 
     private void btnCerrarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSessionMouseReleased
         // TODO add your handling code here:
         Principal ventana_principal = new Principal();
+        ventana_principal.tiempo.stop();
         ventana_principal.setVisible(true);
+        
+        this.observador.stop();
         this.session_activa.CerrarSession();
         this.dispose();
+        System.out.println("*** People:::Session cerrado");
     }//GEN-LAST:event_btnCerrarSessionMouseReleased
 
     /**
@@ -223,13 +245,39 @@ public class People extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntVolver;
     private javax.swing.JButton btnCerrarSession;
     private javax.swing.JTextField campo_email;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private jpanelimagen.JPanelImagen panel_3_Background;
     private javax.swing.JPanel panel_cuentas;
     // End of variables declaration//GEN-END:variables
     Session session_activa;
     JScrollPane myJScrollPane;
+    private ActionListener oyente;
+    private Timer observador = new Timer(1000, oyente);
+ 
+    private void fncSincronizandoMensajes() {
+        System.out.println("::: Observador People :::");
+        
+        /* // 
+        this.mensajes.removeAllElements();
+        this.llistaMensajes.removeAll();
+        DefaultListModel a = new DefaultListModel();
+        
+        File archivo = new File( Rutas.db_chat + session_activa.getStrEmail() + ".txt" );
+        BufferedReader br = new BufferedReader( new FileReader(archivo) );
+        String st; 
+        
+        while ((st = br.readLine()) != null){
+            mensajes.addElement(st);
+        }
+        
+        this.llistaMensajes.setModel(mensajes);
+        this.llistaMensajes.setAutoscrolls(true);
+        this.llistaMensajes.setSelectedIndex( 1 );
+        //System.out.println(st); 
+        */
+        
+    }
 }

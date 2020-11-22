@@ -457,20 +457,6 @@ public class Principal extends javax.swing.JFrame {
                    this.dispose();
                    session.fncMostrarMensajeDeBienvenida();
                    
-                   ActionListener tarea = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            try {
-                                session.fncDetectandoMensajes();
-                            } catch (IOException ex) {
-                                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                   };
-
-                   tiempo.addActionListener(tarea);
-                   tiempo.start();
-                   
                 }
                 
             } else {
@@ -570,5 +556,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton sexo_masculino;
     // End of variables declaration//GEN-END:variables
     private ActionListener escucha;
-    private Timer tiempo = new Timer(1000, escucha);
+    public Timer tiempo = new Timer(1000, escucha);
 }

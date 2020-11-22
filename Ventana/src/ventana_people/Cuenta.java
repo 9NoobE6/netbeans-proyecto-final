@@ -5,6 +5,9 @@
  */
 package ventana_people;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  *
  * @author victo
@@ -17,7 +20,9 @@ public class Cuenta extends javax.swing.JPanel {
     public Cuenta() {
         initComponents();
     }
-
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -37,6 +39,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 import javax.swing.text.DefaultCaret;
 import ventana_people.People;
 
@@ -69,29 +72,7 @@ public class SingUp extends javax.swing.JFrame {
     }
     
     public void fncMostrarMensajeDeBienvenida(){
-        JOptionPane.showMessageDialog(null, "Hola, " + session_activa.getStrNombres() + " bienvenido a RS Gobim.");
-    }
-    
-    public void fncDetectandoMensajes() throws FileNotFoundException, IOException{
-        /*
-        this.mensajes.removeAllElements();
-        this.llistaMensajes.removeAll();
-        DefaultListModel a = new DefaultListModel();
-        
-        File archivo = new File( Rutas.db_chat + session_activa.getStrEmail() + ".txt" );
-        BufferedReader br = new BufferedReader( new FileReader(archivo) );
-        String st; 
-        
-        while ((st = br.readLine()) != null){
-            mensajes.addElement(st);
-        }
-        
-        this.llistaMensajes.setModel(mensajes);
-        this.llistaMensajes.setAutoscrolls(true);
-        this.llistaMensajes.setSelectedIndex( 1 );
-        //System.out.println(st); 
-        */
-        
+        JOptionPane.showMessageDialog(null, "Hola, " + session_activa.getStrNombres() + "\n" + "Bienvenido a RS Gobim.");
     }
 
     /**
@@ -382,14 +363,20 @@ public class SingUp extends javax.swing.JFrame {
         this.session_activa.fncActualizarDatos();
         
         this.fncCambiarEstados(false);
+        JOptionPane.showMessageDialog(null, "Tus datos se han actualizado exitosamente.");
+        
     }//GEN-LAST:event_btnActualizarMouseReleased
 
     private void btnCerrarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSessionMouseReleased
         // TODO add your handling code here:
         Principal ventana_principal = new Principal();
         ventana_principal.setVisible(true);
+        
+        this.observador.stop();
         this.session_activa.CerrarSession();
         this.dispose();
+        System.out.println("*** SingUp:::Session cerrado");
+        
     }//GEN-LAST:event_btnCerrarSessionMouseReleased
 
     private void opcionesDeCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionesDeCuentaMouseClicked
@@ -413,9 +400,11 @@ public class SingUp extends javax.swing.JFrame {
                 
                 new File( Rutas.db_profile + this.session_activa.getStrEmail() + ".txt" ).delete();
                 new File( Rutas.db_chat + this.session_activa.getStrEmail() + ".txt" ).delete();
-
+                
+                ventana_principal.tiempo.stop();
                 this.session_activa.CerrarSession();
                 this.dispose();
+                System.out.println("*** SingUp:::Cuenta eliminada");
             }
         
         }catch(Exception e){}
@@ -426,68 +415,11 @@ public class SingUp extends javax.swing.JFrame {
         // TODO add your handling code here:
         People cuentas = new People( new Session( this.session_activa.getStrEmail() ) );
         cuentas.setVisible(true);
+        
+        this.observador.stop();
         this.dispose();
         
     }//GEN-LAST:event_btnPeopleMouseReleased
-    
-    private void fncCambiarEstados(boolean opcion){
-        this.campo_nombres.setEditable(opcion);
-        this.campo_apellidos.setEditable(opcion);
-        this.campo_correo.setEditable(opcion);
-        this.campo_sexo.setEnabled(opcion);
- 
-    }
-    
-    private void InicializarVentana(){
-        this.setLocationRelativeTo(null);
-        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
-        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
-        
-        
-        this.btnModificar.setEnabled(true);
-        this.btnActualizar.setEnabled(false);
-        this.fncCambiarEstados(false);
-        this.campo_correo.setEnabled(false);
-     
-        this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + session_activa.getStrImgPerfil(), false);   
-        this.campo_nombres.setText( session_activa.getStrNombres() );
-        this.campo_apellidos.setText( session_activa.getStrApellidos());
-        this.campo_correo.setText( session_activa.getStrEmail());
-        this.campo_sexo.setSelectedItem(session_activa.getStrSexo());
-    }
-    
-    
-    private void fncCopiarImagen(String img) throws FileNotFoundException, IOException{
-        String short_name = session_activa.getStrEmail() + ".SVG";
-        FileInputStream in = new FileInputStream(img);
-        FileOutputStream ou = new FileOutputStream( Rutas.db_img + short_name);
-        BufferedInputStream bin = new BufferedInputStream(in);
-        BufferedOutputStream bou = new BufferedOutputStream(ou);
-        session_activa.setStrImgPerfil(short_name);
-        
-        int b=0;
-        while(b!=-1){
-         b=bin.read();
-         bou.write(b);
-        }
-        
-        bin.close();
-        bou.close();
-    }
-    
-    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
-        
-        if(vaciar) contenedor.removeAll();
-        
-        ImageIcon icono = new ImageIcon( url );
-        JLabel etiquetaImagen = new JLabel();
-        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
-        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
-        contenedor.add(etiquetaImagen);
-        
-        if(vaciar) contenedor.validate();
-        if(vaciar) contenedor.repaint();
-    }
     
     /**
      * @param args the command line arguments
@@ -546,4 +478,101 @@ public class SingUp extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     Session session_activa;
     DefaultListModel mensajes = new DefaultListModel();
+    private ActionListener oyente;
+    private Timer observador = new Timer(1000, oyente);
+    
+    private void fncCambiarEstados(boolean opcion){
+        this.campo_nombres.setEditable(opcion);
+        this.campo_apellidos.setEditable(opcion);
+        this.campo_correo.setEditable(opcion);
+        this.campo_sexo.setEnabled(opcion);
+ 
+    }
+    
+    private void InicializarVentana(){
+        this.setLocationRelativeTo(null);
+        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
+        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
+        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
+        
+        this.btnModificar.setEnabled(true);
+        this.btnActualizar.setEnabled(false);
+        this.fncCambiarEstados(false);
+        this.campo_correo.setEnabled(false);
+     
+        this.fncInsertarPicture(this.panel_foto_de_perfil, Rutas.db_img + session_activa.getStrImgPerfil(), false);   
+        this.campo_nombres.setText( session_activa.getStrNombres() );
+        this.campo_apellidos.setText( session_activa.getStrApellidos());
+        this.campo_correo.setText( session_activa.getStrEmail());
+        this.campo_sexo.setSelectedItem(session_activa.getStrSexo());
+        
+        
+        try{
+             
+            ActionListener tarea = (ActionEvent e) -> {
+               this.fncSincronizandoMensajes();
+            };
+
+           observador.addActionListener(tarea);
+           observador.start();
+           
+        }catch(Exception a){}
+        
+    }
+    
+    private void fncSincronizandoMensajes(){
+        System.out.println("::: Observador SingUp :::");
+        
+        /* // 
+        this.mensajes.removeAllElements();
+        this.llistaMensajes.removeAll();
+        DefaultListModel a = new DefaultListModel();
+        
+        File archivo = new File( Rutas.db_chat + session_activa.getStrEmail() + ".txt" );
+        BufferedReader br = new BufferedReader( new FileReader(archivo) );
+        String st; 
+        
+        while ((st = br.readLine()) != null){
+            mensajes.addElement(st);
+        }
+        
+        this.llistaMensajes.setModel(mensajes);
+        this.llistaMensajes.setAutoscrolls(true);
+        this.llistaMensajes.setSelectedIndex( 1 );
+        //System.out.println(st); 
+        */
+    }
+    
+    private void fncCopiarImagen(String img) throws FileNotFoundException, IOException{
+        String short_name = session_activa.getStrEmail() + ".SVG";
+        FileInputStream in = new FileInputStream(img);
+        FileOutputStream ou = new FileOutputStream( Rutas.db_img + short_name);
+        BufferedInputStream bin = new BufferedInputStream(in);
+        BufferedOutputStream bou = new BufferedOutputStream(ou);
+        session_activa.setStrImgPerfil(short_name);
+        
+        int b=0;
+        while(b!=-1){
+         b=bin.read();
+         bou.write(b);
+        }
+        
+        bin.close();
+        bou.close();
+    }
+    
+    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
+        
+        if(vaciar) contenedor.removeAll();
+        
+        ImageIcon icono = new ImageIcon( url );
+        JLabel etiquetaImagen = new JLabel();
+        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
+        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
+        contenedor.add(etiquetaImagen);
+        
+        if(vaciar) contenedor.validate();
+        if(vaciar) contenedor.repaint();
+    }
+    
 }
