@@ -23,4 +23,14 @@ public class Rutas {
     public static final String default_img = "user_default.png";
     public static final String db_chat = "database/chat/";
     public static final String extesion_storage = ".txt";
+    
+    
+    public static final String path_profiles = "storage_profiles/___profiles.txt";
+    public static final String path_tmp_profiles = "storage_profiles/___0000000000.txt";
+    public static final String storage_profiles = "storage_profiles/";
+    public static final String extesion_friends = ".friends";
+    public static final String extesion_chats = ".chats";
+    public static final String extesion_svg = ".svg";
+    public static final String extesion_data = ".data";
+    
 }
