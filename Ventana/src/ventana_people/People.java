@@ -85,7 +85,6 @@ public class People extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         campo_email = new javax.swing.JTextField();
         bntVolver = new javax.swing.JButton();
-        btnCerrarSession = new javax.swing.JButton();
         panel_cuentas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,15 +104,6 @@ public class People extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSession.setBackground(new java.awt.Color(204, 0, 0));
-        btnCerrarSession.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarSession.setText("Cerrar session");
-        btnCerrarSession.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnCerrarSessionMouseReleased(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -121,10 +111,8 @@ public class People extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 391, Short.MAX_VALUE)
                 .addComponent(bntVolver)
-                .addGap(18, 18, 18)
-                .addComponent(btnCerrarSession)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,8 +121,7 @@ public class People extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntVolver)
-                    .addComponent(btnCerrarSession))
+                    .addComponent(bntVolver))
                 .addContainerGap())
         );
 
@@ -196,18 +183,6 @@ public class People extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bntVolverMouseReleased
 
-    private void btnCerrarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSessionMouseReleased
-        // TODO add your handling code here:
-        Principal ventana_principal = new Principal();
-        ventana_principal.tiempo.stop();
-        ventana_principal.setVisible(true);
-        
-        this.observador.stop();
-        this.session_activa.CerrarSession();
-        this.dispose();
-        System.out.println("*** People:::Session cerrado");
-    }//GEN-LAST:event_btnCerrarSessionMouseReleased
-
     /**
      * @param args the command line arguments
      */
@@ -246,7 +221,6 @@ public class People extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntVolver;
-    private javax.swing.JButton btnCerrarSession;
     private javax.swing.JTextField campo_email;
     private javax.swing.JPanel jPanel1;
     private jpanelimagen.JPanelImagen panel_3_Background;

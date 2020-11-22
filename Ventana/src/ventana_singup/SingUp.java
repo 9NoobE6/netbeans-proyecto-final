@@ -244,6 +244,8 @@ public class SingUp extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        bntAmigos.setBackground(new java.awt.Color(0, 153, 153));
+        bntAmigos.setForeground(new java.awt.Color(255, 255, 255));
         bntAmigos.setText("Ver amigos");
         bntAmigos.setFocusable(false);
         bntAmigos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -254,6 +256,8 @@ public class SingUp extends javax.swing.JFrame {
             }
         });
 
+        btnPeople.setBackground(new java.awt.Color(0, 51, 153));
+        btnPeople.setForeground(new java.awt.Color(255, 255, 255));
         btnPeople.setText("People");
         btnPeople.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -294,7 +298,7 @@ public class SingUp extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panel_mis_amigos.setBackground(new java.awt.Color(255, 255, 255));
+        panel_mis_amigos.setBackground(new java.awt.Color(0, 153, 153));
 
         jScrollPane1.setViewportView(lista_de_amigos);
 
@@ -374,11 +378,11 @@ public class SingUp extends javax.swing.JFrame {
                 .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_mis_amigos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
