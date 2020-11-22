@@ -17,11 +17,15 @@ public class Session {
     
     // Metodo constructor
     public Session(String correo){
+       this.fncObtenerDatosDeSession(correo);
+    }
+    
+    private void fncObtenerDatosDeSession(String email){
         Scanner scanner;
         String tmpcontrasenha = "";
         
         try {
-            scanner = new Scanner(new File( Rutas.db_profile + correo + ".txt"));
+            scanner = new Scanner(new File( Rutas.db_profile + email + ".txt"));
             scanner.useDelimiter("\n");
                  
             // System.out.println("Activando session...");
@@ -37,7 +41,6 @@ public class Session {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     // Metodo para cerrar session
