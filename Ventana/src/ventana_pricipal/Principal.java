@@ -384,12 +384,12 @@ public class Principal extends javax.swing.JFrame {
             
             try {
                 
-                String path = Rutas.db_profile + this.campo_registro_email.getText() +".txt";
+                String path = Storage.fncStorageObtenerRutaData(this.campo_registro_email.getText());
                 File myObj = new File(path);
                 
+                // Registrar datos de usuario (.data)
                 if (myObj.createNewFile()) {
                     FileWriter myWriter = new FileWriter(path);
-                    File storage_cuentas = new File(Rutas.path_db_profiles);
                     
                     myWriter.write(this.campo_nombres.getText() + "\n");
                     myWriter.write(this.campo_apellidos.getText() + "\n");
@@ -406,17 +406,15 @@ public class Principal extends javax.swing.JFrame {
                     myWriter.write(String.valueOf(this.campo_singup_contrasenha.getPassword()) + "\n");
                     myWriter.write(this.campo_registro_email.getText() + "\n");
                     myWriter.write(Rutas.default_img + "\n");
-
+                    
                     myWriter.close();
                                         
-                    Storage.fncStorageAcoplarUnaLinea(Rutas.path_db_profiles, this.campo_registro_email.getText());
-                    //Storage.fncStorageEliminarUnaLinea(Rutas.path_db_profiles, Rutas.db_profile + "tmp00000.txt", this.campo_registro_email.getText());
-                    
+                    Storage.fncStorageAcoplarUnaLinea(Rutas.path_profiles, this.campo_registro_email.getText());
                     JOptionPane.showMessageDialog(null, "Usuario creado exitosamente...");
                     
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
-                    Storage.fncStorageEliminarUnaLinea(Rutas.path_db_profiles, Rutas.path_db_profiles_tmp, this.campo_registro_email.getText());
+                    Storage.fncStorageEliminarUnaLinea(Rutas.path_profiles, Rutas.path_db_profiles_tmp, this.campo_registro_email.getText());
                     myObj.delete();
                     
                 }
@@ -448,15 +446,17 @@ public class Principal extends javax.swing.JFrame {
         }else if( this.campo_singup_email.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
         }else{
-            String file = Rutas.db_profile + this.campo_singup_email.getText() +".txt";
+            String _contenedor = Rutas.storage_profiles + this.campo_singup_email.getText();
+            String _data = Storage.fncStorageObtenerRutaData(this.campo_singup_email.getText());
             
-            File myObj = new File(file);
+            File contenedor = new File(_contenedor);
+            File file_data = new File(_data);
             
             // Verificar si existe el usuario
-            if ( myObj.exists() ) {
+            if ( contenedor.isDirectory() && contenedor.exists() && file_data.exists() ) {
                 
                 // Verificar si la contraseña es correcta
-                if( !fncVerificarContrasehna(file) ){
+                if( !fncVerificarContrasehna(_data) ){
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta... \n");
                 }else{
                    // JOptionPane.showMessageDialog(null, "Iniciando session... \n");

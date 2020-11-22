@@ -56,4 +56,8 @@ public class Storage {
         }
     }
     
+    public static String fncStorageObtenerRutaData(String email){
+        return  Rutas.storage_profiles +  "/" + email + "/profile/" + email + Rutas.extesion_data;
+    }
+    
 }
