@@ -22,10 +22,9 @@ public class Session {
     
     private void fncObtenerDatosDeSession(String email){
         Scanner scanner;
-        String tmpcontrasenha = "";
         
         try {
-            scanner = new Scanner(new File( Rutas.db_profile + email + ".txt"));
+            scanner = new Scanner(new File( Storage.fncStorageObtenerRutaData(email) ));
             scanner.useDelimiter("\n");
                  
             // System.out.println("Activando session...");
@@ -33,7 +32,7 @@ public class Session {
             this.strApellidos = scanner.next();
             this.strNacimiento = scanner.next();
             this.strSexo = scanner.next();
-            this.strContrasenha = scanner.next();
+            scanner.next(); // Omitimos la contraseña
             this.strEmail = scanner.next();
             this.strImgPerfil = scanner.next();
             
