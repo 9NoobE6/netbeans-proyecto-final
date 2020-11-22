@@ -487,10 +487,10 @@ public class SingUp extends javax.swing.JFrame {
                 new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_friends) ).delete();
                 new File( Storage.fncStorageCrearRuta(this.session_activa.getStrEmail(), Rutas.extesion_data) ).delete();
                 
-                new File( Rutas.storage_profiles + this.session_activa.getStrEmail()  ).delete();
-
-                Storage.fncStorageEliminarUnaLinea(Rutas.path_profiles, Rutas.path_tmp_profiles, this.session_activa.getStrEmail());
+                Storage.fncStorageEliminarDirectorio( new File(Rutas.storage_profiles + this.session_activa.getStrEmail()) );
+               
                 
+                Storage.fncStorageEliminarUnaLinea(Rutas.path_profiles, Rutas.path_tmp_profiles, this.session_activa.getStrEmail());
                 ventana_principal.tiempo.stop();
                 this.session_activa.CerrarSession();
                 this.dispose();

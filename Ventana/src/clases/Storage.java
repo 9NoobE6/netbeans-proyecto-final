@@ -57,7 +57,7 @@ public class Storage {
     }
     
     public static String fncStorageObtenerRutaData(String email){
-        return  Rutas.storage_profiles +  "/" + email + "/profile/" + email + Rutas.extesion_data;
+        return Rutas.storage_profiles +  "/" + email + "/profile/" + email + Rutas.extesion_data;
     }
     
     public static String fncStorageCrearRuta(String email, String extension){
@@ -67,5 +67,22 @@ public class Storage {
     public static String fncStorageCrearRutaTemporal(String email, String extension){
         return  Rutas.storage_profiles +  "/" + email + "/profile/.tmp." + email + extension;
     }
+    
+    public static boolean fncStorageEliminarDirectorio(File directory) {
+    if(directory.exists()){
+        File[] files = directory.listFiles();
+        if(null!=files){
+            for(int i=0; i<files.length; i++) {
+                if(files[i].isDirectory()) {
+                    fncStorageEliminarDirectorio(files[i]);
+                }
+                else {
+                    files[i].delete();
+                }
+            }
+        }
+    }
+    return(directory.delete());
+}
     
 }

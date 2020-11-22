@@ -384,7 +384,9 @@ public class Principal extends javax.swing.JFrame {
             
             try {
                 
+                this.fncCrearCuentaNueva();
                 String path = Storage.fncStorageObtenerRutaData(this.campo_registro_email.getText());
+                
                 File myObj = new File(path);
                 
                 // Registrar datos de usuario (.data)
@@ -566,4 +568,16 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private ActionListener escucha;
     public Timer tiempo = new Timer(1000, escucha);
+
+    private void fncCrearCuentaNueva() {
+        new File( Rutas.storage_profiles + this.campo_registro_email.getText() ).mkdir();
+        new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile ).mkdir();
+        new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats).mkdir();
+        try {
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_friends ).createNewFile();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

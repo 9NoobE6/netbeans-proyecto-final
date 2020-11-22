@@ -32,6 +32,8 @@ public class Rutas {
     public static final String extesion_chats = ".chats";
     public static final String extesion_svg = ".svg";
     public static final String extesion_data = ".data";
+    public static final String storage_profile = "/profile/";
+    public static final String storage_chats = "/chats/";
     
     // Este ruta es necesario usarlo con getClass().getResource();
     public static final String path_user_default = "src/img/user_default.png";
