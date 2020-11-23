@@ -368,8 +368,16 @@ public class Chats extends javax.swing.JFrame {
                 int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
                 
                 if( respuesta == 0){
-                    String pathB = Storage.fncStorageCrearRutaTemporal(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+                    
+                    // Crear el path y el archivo temporal para eliminar la cuenta
+                    String pathB = Storage.fncStorageCrearRutaTemporalProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
                     File tmp_amistades = new File(pathB);
+                    
+                    // Crear el path y el archivo para el chat de la cuenta a eliminar
+                    String amigo = this.lista_de_amigos.getSelectedValue();
+                    amigo = amigo.replace("*", "");
+                    File path_chat = new File(Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_chats));
+                    
                     if(tmp_amistades.createNewFile()){
                         FileWriter sobrescribirArchivo = new FileWriter(pathB);
                         BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
@@ -386,6 +394,11 @@ public class Chats extends javax.swing.JFrame {
                         // Cambio de storage
                         amistades.delete();
                         tmp_amistades.renameTo(new File(pathA));
+                                               
+                        // Se elimina el chat con el usuario a eliminar (En caso de que exista)
+                        if(path_chat.exists()){                            
+                            Storage.fncStorageEliminarUnaLinea(path_chat,  this.lista_de_amigos.getSelectedValue());
+                        }
                     }
                 }
                 

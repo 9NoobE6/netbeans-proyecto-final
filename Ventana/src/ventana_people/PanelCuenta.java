@@ -79,7 +79,7 @@ public class PanelCuenta extends javax.swing.JPanel {
     private void initComponents() {
 
         btnAgregarAmigo = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnEnviarMensajeTo = new javax.swing.JButton();
         panel_foto = new javax.swing.JPanel();
         campo_nombres = new javax.swing.JTextField();
         campo_sexo = new javax.swing.JTextField();
@@ -92,12 +92,12 @@ public class PanelCuenta extends javax.swing.JPanel {
         btnAgregarAmigo.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarAmigo.setText("Amigo+");
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Enviar mensaje");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEnviarMensajeTo.setBackground(new java.awt.Color(0, 153, 153));
+        btnEnviarMensajeTo.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviarMensajeTo.setText("Enviar mensaje");
+        btnEnviarMensajeTo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
+                btnEnviarMensajeToMouseReleased(evt);
             }
         });
 
@@ -137,7 +137,7 @@ public class PanelCuenta extends javax.swing.JPanel {
                     .addComponent(campo_email))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEnviarMensajeTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAgregarAmigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
@@ -152,7 +152,7 @@ public class PanelCuenta extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnEnviarMensajeTo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarAmigo)
@@ -162,7 +162,7 @@ public class PanelCuenta extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+    private void btnEnviarMensajeToMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeToMouseReleased
         // TODO add your handling code here:
         
         try{
@@ -173,27 +173,33 @@ public class PanelCuenta extends javax.swing.JPanel {
                 
                 String path_chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail() , Rutas.extesion_chats);
                 String path_friends = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_friends);
+                String storage_chat = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_chats);
                 
                 File myChat = new File(path_chat);
                 if ( !myChat.exists()  ){
                     myChat.createNewFile();
                 }
                 
+                // Agregar un mensaje al chat ... de la cuenta deseado... 
                 Storage.fncStorageAcoplarUnaLinea(path_chat , mensaje);
+                
+                // Registrar como amigo no registrado y chat no registrado ... en mi cuenta principal...
                 Storage.fncStorageAcoplarUnaLinea(path_friends , People.session_activa.getStrEmail() + "*" );
+                Storage.fncStorageAcoplarUnaLinea(storage_chat , People.session_activa.getStrEmail() + "*" );
+                
                 System.out.println("Mensaje enviado...");
             }
         }catch(Exception e){}
         
-    }//GEN-LAST:event_jButton1MouseReleased
+    }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAmigo;
+    private javax.swing.JButton btnEnviarMensajeTo;
     private javax.swing.JTextField campo_email;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JTextField campo_sexo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel panel_foto;
     // End of variables declaration//GEN-END:variables

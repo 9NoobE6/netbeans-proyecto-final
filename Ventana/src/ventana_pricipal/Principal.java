@@ -416,7 +416,7 @@ public class Principal extends javax.swing.JFrame {
                     
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
-                    Storage.fncStorageEliminarUnaLinea(Rutas.path_profiles, Rutas.path_tmp_profiles, this.campo_registro_email.getText());
+                    Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), this.campo_registro_email.getText());
                     myObj.delete();
                     
                 }

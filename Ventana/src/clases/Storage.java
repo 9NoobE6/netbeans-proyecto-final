@@ -17,29 +17,29 @@ import java.io.IOException;
  * @author max98
  */
 public class Storage {
-    
-    public static void fncStorageEliminarUnaLinea(String pathA, String pathB, String find_linea){
-        File archivo_original = new File(pathA);
-        if(archivo_original.exists()){
+
+    public static void fncStorageEliminarUnaLinea(File archivo, String find_linea){
+        if(archivo.exists() && find_linea.isEmpty() == false){
             try {
                
-                File archivo_tmp = new File(pathB);
+                File archivo_tmp = new File(archivo.getPath() + "_tmp000.txt");
                 if(archivo_tmp.createNewFile()){
-                    FileWriter sobrescribirArchivo = new FileWriter(pathB);
-                    BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
-                    String linea;
                     
-                     while ((linea = leerArchivo.readLine()) != null){
-                        // Sobreescribiendo archivo
-                        if( !linea.equals(find_linea) )
-                            sobrescribirArchivo.write( linea + "\n");
+                    try (FileWriter sobrescribirArchivo = new FileWriter(archivo.getPath() + "_tmp000.txt")) {
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(archivo.getPath()));
+                        String linea;
+                        
+                        while ((linea = leerArchivo.readLine()) != null){
+                            // Sobreescribiendo archivo
+                            if( !linea.equals(find_linea) )
+                                sobrescribirArchivo.write( linea + "\n");
+                        }
+                        leerArchivo.close();
                     }
-                    leerArchivo.close();
-                    sobrescribirArchivo.close();
                     
                     // Cambio de storage
-                    archivo_original.delete();
-                    archivo_tmp.renameTo(new File(pathA));
+                    archivo.delete();
+                    archivo_tmp.renameTo(new File(archivo.getPath()));
                 }
                 
             } catch (IOException e) {}
@@ -112,7 +112,7 @@ public class Storage {
         return  Rutas.storage_profiles + emailA + "/chats/" + emailB + extension;
     }
     
-    public static String fncStorageCrearRutaTemporal(String email, String extension){
+    public static String fncStorageCrearRutaTemporalProfile(String email, String extension){
         return  Rutas.storage_profiles +  "/" + email + "/profile/.tmp." + email + extension;
     }
     

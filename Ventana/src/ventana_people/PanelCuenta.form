@@ -31,7 +31,7 @@
               </Group>
               <EmptySpace pref="28" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButton1" max="32767" attributes="0"/>
+                  <Component id="btnEnviarMensajeTo" max="32767" attributes="0"/>
                   <Component id="btnAgregarAmigo" max="32767" attributes="0"/>
                   <Component id="jButton3" max="32767" attributes="0"/>
               </Group>
@@ -50,7 +50,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="campo_sexo" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnEnviarMensajeTo" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -75,7 +75,7 @@
         <Property name="text" type="java.lang.String" value="Amigo+"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnEnviarMensajeTo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="99" red="0" type="rgb"/>
@@ -86,7 +86,7 @@
         <Property name="text" type="java.lang.String" value="Enviar mensaje"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseReleased"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEnviarMensajeToMouseReleased"/>
       </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="panel_foto">
