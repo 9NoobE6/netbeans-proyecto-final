@@ -197,24 +197,47 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "El mensaje no fue enviado");
             }else{
                 
-                // Crear path y objeto archivo de mi storage .friends para ver los chats disponibles..
-                String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
                 
-                // Si al perfil seleccionado no son amigos ... 
-                if( Storage.fncStorageBuscarUnaLineaProfile(session_friends, this.perfil.getStrEmail() + "*") ){
+                System.out.println("path = " + this.perfil.stgChats);
+                
+                // Verificar si mi vecino, ha a enviado un mensaje..
+                if(Storage.fncStorageBuscarUnaLinea(this.perfil.stgChats, People.session_activa.getStrEmail() + "*") )
+                {
+                    // * Este se ejecuta cuando
+                    // *
+                    // *
                     
-                    //System.out.println("Tienes una conversacion pendiente ... No son amigos...");
-                    String path_chat = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail(), Rutas.extesion_chats);
-                    Storage.fncStorageAcoplarUnaLinea(path_chat , People.session_activa.getStrEmail() + ": \n" + mensaje + "\n");
-                    JOptionPane.showMessageDialog(null, this.perfil.getStrNombres() + " te ha enviado un mensaje previamente.\nPuedes chatear en tu lista de amigos."  );
+                    // Buscar el buzon .. para saludar..
+                    File buzon = new File(Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail()));
+                    System.out.println("Buzon " + buzon.getAbsolutePath());
                     
-                // Si al perfil seleccionado si son amigos ... 
-                }else if( Storage.fncStorageBuscarUnaLineaProfile(session_friends, this.perfil.getStrEmail()) ){
+                    // Registro mi mensaje en mi buzon
+                    Storage.fncStorageAcoplarUnaLinea(buzon.getAbsolutePath(), People.session_activa.getStrEmail() + ": \n" + mensaje );
                     
-                    System.out.println("Son amigos...");
+                    // Mi buzon se lo paso a perfil destinatario
+                    Storage.fncStorageCopiarArchivo(new File(buzon.getAbsolutePath()), Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail()) );
+                    
+                    //System.out.println("Saludar al vecino");
+                    
+                }else{
+                    
+                    System.out.println("Creando conversacion");
+                    
+                    // Crear algo parecido a un buzon
+                    File buzon_nuevo = new File(Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail()));
+                    
+                    if(buzon_nuevo.createNewFile()){
+                        System.out.println("Buzon, creado...");
+                        //Storage.fncStorageAcoplarUnaLinea( this.perfil.stgChats , People.session_activa.getStrEmail() + "*");
+                        
+                        Storage.fncStorageAcoplarUnaLinea(buzon_nuevo.getAbsolutePath(), People.session_activa.getStrEmail() + ": \n" + mensaje );
+                        Storage.fncStorageAcoplarUnaLinea( this.perfil.stgFriends , People.session_activa.getStrEmail() + "*");
+                       
+                    }else{
+                        Storage.fncStorageAcoplarUnaLinea(buzon_nuevo.getAbsolutePath(), People.session_activa.getStrEmail() + ": \n" + mensaje );
+                    } 
+                    
                 }
-                
-                
             }
         }catch(Exception e){}
         

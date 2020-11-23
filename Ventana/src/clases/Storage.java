@@ -106,7 +106,8 @@ public class Storage {
     }
     
     public static String fncStorageObtenerRutaData(String email){
-        return Rutas.storage_profiles +  "/" + email + "/profile/" + email + Rutas.extesion_data;
+        System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );
+        return Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data;
     }
     
     public static String fncStorageCrearRutaProfile(String email, String extension){
@@ -115,6 +116,10 @@ public class Storage {
     
     public static String fncStorageCrearRutaChats(String emailA, String emailB, String extension){
         return  Rutas.storage_profiles + emailA + "/chats/" + emailB + extension;
+    }
+    
+    public static String fncStorageCrearRutaChats(String emailA, String emailB){
+        return  Rutas.storage_profiles + emailA + "/chats/" + emailB + Rutas.extesion_chats;
     }
     
     public static String fncStorageCrearRutaTemporalProfile(String email, String extension){
@@ -138,9 +143,14 @@ public class Storage {
         return(directory.delete());
     }
     
-    public static void fncStorageMoverArchivo(File archivo, String pathB) throws FileNotFoundException, IOException{
+    public static void fncStorageDezplazarArchivo(File archivo, String pathB) throws FileNotFoundException, IOException{
         
         if(archivo.exists()){
+            System.out.println("******** Moviendo *******");
+            System.out.println("De: " + archivo.getAbsolutePath());
+            System.out.println("To: " + pathB);
+            System.out.println("******** ******** *******");
+            
             FileInputStream in = new FileInputStream( archivo.getAbsolutePath() );
             FileOutputStream ou = new FileOutputStream( pathB );
             BufferedOutputStream bou;
@@ -155,6 +165,61 @@ public class Storage {
             }
             
             bou.close();
+            
+            // Eliminar el archivo original
+            archivo.delete();
+            
+        }
+    }
+    
+    public static void fncStorageCopiarArchivo(File archivoA, String pathB){
+        if(archivoA.exists() && pathB.isEmpty() == false){
+            try {
+               
+                File archivo_tmp = new File(archivoA.getPath() + "_tmp000.txt");
+                if(archivo_tmp.createNewFile()){
+                    
+                    try (FileWriter sobrescribirArchivo = new FileWriter(archivoA.getPath() + "_tmp000.txt")) {
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(archivoA.getPath()));
+                        String linea;
+                        
+                        while ((linea = leerArchivo.readLine()) != null){
+                                sobrescribirArchivo.write( linea + "\n");
+                        }
+                        leerArchivo.close();
+                    }
+                    
+                    // Cambio de storage
+                    archivo_tmp.renameTo(new File(pathB));
+                }
+                
+            } catch (IOException e) {}
+        }
+    }
+    
+    public static void fncStorageMoverArchivo(File archivoA, String pathB){
+        if(archivoA.exists() && pathB.isEmpty() == false){
+            try {
+               
+                File archivo_tmp = new File(archivoA.getPath() + "_tmp000.txt");
+                if(archivo_tmp.createNewFile()){
+                    
+                    try (FileWriter sobrescribirArchivo = new FileWriter(archivoA.getPath() + "_tmp000.txt")) {
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(archivoA.getPath()));
+                        String linea;
+                        
+                        while ((linea = leerArchivo.readLine()) != null){
+                                sobrescribirArchivo.write( linea + "\n");
+                        }
+                        leerArchivo.close();
+                    }
+                    
+                    // Cambio de storage
+                    archivoA.delete();
+                    archivo_tmp.renameTo(new File(pathB));
+                }
+                
+            } catch (IOException e) {}
         }
     }
     

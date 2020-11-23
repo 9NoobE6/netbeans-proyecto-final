@@ -443,7 +443,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnIniciarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSessionMouseReleased
         // TODO add your handling code here:
-        if( this.campo_singup_contrasenha.getText().isEmpty() ){
+        if( String.valueOf(this.campo_singup_contrasenha.getPassword()).isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su contraseña, por favor...");
         }else if( this.campo_singup_email.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
@@ -576,6 +576,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_friends ).createNewFile();
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }

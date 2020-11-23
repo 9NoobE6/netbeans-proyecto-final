@@ -324,8 +324,16 @@ public class Chats extends javax.swing.JFrame {
     private void bntAbrirChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAbrirChatMouseReleased
         // TODO add your handling code here:
         
+        /* String amigo = this.lista_de_amigos.getSelectedValue();
+        
+        if( amigo.contains("*") ){
+            
+        }
+        */
+        
+
         // Crear path y objeto archivo de mi storage .chats para ver los chats que tengo registrados
-        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_chats);
+        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
         File chats = new File(path);
         
         // Si mi archivo de mi storage .chats y el perfil selecciona no es vacio...
@@ -356,6 +364,7 @@ public class Chats extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Lo siento, el chat no existe.");
             }
         }
+        
         
     }//GEN-LAST:event_bntAbrirChatMouseReleased
 
@@ -429,26 +438,24 @@ public class Chats extends javax.swing.JFrame {
 
     private void bntEnviarMensajeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEnviarMensajeMouseReleased
         // TODO add your handling code here:
-        if( this.es_amigo == false ){
-            try {
-                String amigo = this.lista_de_amigos.getSelectedValue();
-                amigo = amigo.replace("*", "");
-                String session_friends = Storage.fncStorageCrearRutaProfile(amigo, Rutas.extesion_friends);
-                Storage.fncStorageAcoplarUnaLinea(session_friends, this.session_activa.getStrEmail() + "*" );
-                
-                 String chat_clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo, Rutas.extesion_friends);
-                 
-                if(new File(this.chat_path_activo).exists()){
-                    new File(this.chat_path_activo).delete();
-                }
-                
-                Storage.fncStorageMoverArchivo(new File(this.chat_path_activo), chat_clone);
-                
-                Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, Chats.session_activa.getStrEmail() + ": " + "\n" + this.txt_mensaje.getText() + "\n");
-                this.txt_mensaje.setText("");
-            } catch (IOException ex) {
-                Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if( this.es_amigo == false && this.txt_mensaje.getText().isEmpty() == false ){
+            String remitente = "";
+            String amigo = this.lista_de_amigos.getSelectedValue();
+            amigo = amigo.replace("*", ""); 
+            
+            // Eniviamos mensajes al bozun,  notificando en .chats y .friends
+            Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgFriends  ), this.session_activa.getStrEmail() + "*");
+            Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgFriends, this.session_activa.getStrEmail() + "*");
+            
+            Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgChats  ), this.session_activa.getStrEmail() + "*");
+            Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgChats, this.session_activa.getStrEmail() + "*");
+            
+            remitente = Chats.session_activa.getStrNombres() +" "+Chats.session_activa.getStrApellidos() + "  (" + Chats.session_activa.getStrEmail() + ")";
+            Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, remitente + ": " + "\n" + this.txt_mensaje.getText() + "\n");          
+            Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo) );
+            
+            this.txt_mensaje.setText("");
+            
         }
         
     }//GEN-LAST:event_bntEnviarMensajeMouseReleased
@@ -641,7 +648,7 @@ public class Chats extends javax.swing.JFrame {
                 if (ultimo_mensaje >= 0) {
                    this.lista_mensajes.ensureIndexIsVisible(ultimo_mensaje);
                 }
-                this.lista_mensajes.setSelectedIndex(ultimo_mensaje);
+                
             }
         }
     }

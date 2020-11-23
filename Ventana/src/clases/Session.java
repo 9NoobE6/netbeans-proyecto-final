@@ -14,6 +14,7 @@ import ventana_pricipal.Principal;
 
 public class Session {
     private String strNombres, strApellidos, strNacimiento, strSexo, strContrasenha, strEmail, strImgPerfil;
+    public String stgChatTmp, stgChats, stgFriends, stgData, stgSvg;
     
     // Metodo constructor
     public Session(String correo){
@@ -40,6 +41,14 @@ public class Session {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // storage_profiles/abcd@quasar.org/profile/example@quasar.org.data
+        this.stgData = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_data;
+        this.stgFriends = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_friends;
+        this.stgChats = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_chats;
+        this.stgChatTmp = Rutas.storage_profiles + this.strEmail + Rutas.storage_chats + this.strEmail + Rutas.extesion_chats;
+        this.stgSvg = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_svg;
+        
     }
     
     // Metodo para cerrar session
