@@ -228,6 +228,11 @@ public class Chats extends javax.swing.JFrame {
         bntEnviarMensaje.setBackground(new java.awt.Color(0, 153, 0));
         bntEnviarMensaje.setForeground(new java.awt.Color(255, 255, 255));
         bntEnviarMensaje.setText("Enviar mensaje");
+        bntEnviarMensaje.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntEnviarMensajeMouseReleased(evt);
+            }
+        });
 
         btnCerrarChat.setBackground(new java.awt.Color(255, 51, 51));
         btnCerrarChat.setForeground(new java.awt.Color(255, 255, 255));
@@ -337,9 +342,11 @@ public class Chats extends javax.swing.JFrame {
                 if(this.lista_de_amigos.getSelectedValue().contains("*")){
                     // Selecciona el chat desde perfil remitente
                     this.chat_path_activo = Storage.fncStorageCrearRutaChats(amigo, this.session_activa.getStrEmail(), Rutas.extesion_chats);
+                    this.es_amigo = false;
                 }else{
                     // Selecciona el chat desde mi cuenta principal
                     this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo, Rutas.extesion_chats);
+                    this.es_amigo = true;
                 }
                 this.chat_activado = true;
                 
@@ -420,6 +427,32 @@ public class Chats extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bntEliminarMouseReleased
 
+    private void bntEnviarMensajeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEnviarMensajeMouseReleased
+        // TODO add your handling code here:
+        if( this.es_amigo == false ){
+            try {
+                String amigo = this.lista_de_amigos.getSelectedValue();
+                amigo = amigo.replace("*", "");
+                String session_friends = Storage.fncStorageCrearRutaProfile(amigo, Rutas.extesion_friends);
+                Storage.fncStorageAcoplarUnaLinea(session_friends, this.session_activa.getStrEmail() + "*" );
+                
+                 String chat_clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo, Rutas.extesion_friends);
+                 
+                if(new File(this.chat_path_activo).exists()){
+                    new File(this.chat_path_activo).delete();
+                }
+                
+                Storage.fncStorageMoverArchivo(new File(this.chat_path_activo), chat_clone);
+                
+                Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, Chats.session_activa.getStrEmail() + ": " + "\n" + this.txt_mensaje.getText() + "\n");
+                this.txt_mensaje.setText("");
+            } catch (IOException ex) {
+                Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }//GEN-LAST:event_bntEnviarMensajeMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -491,6 +524,7 @@ public class Chats extends javax.swing.JFrame {
     DefaultListModel amigos = new DefaultListModel();
     private String chat_path_activo;
     private boolean chat_activado=false;
+    private boolean es_amigo = false;
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);

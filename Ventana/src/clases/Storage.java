@@ -5,9 +5,14 @@
  */
 package clases;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -117,20 +122,40 @@ public class Storage {
     }
     
     public static boolean fncStorageEliminarDirectorio(File directory) {
-    if(directory.exists()){
-        File[] files = directory.listFiles();
-        if(null!=files){
-            for(int i=0; i<files.length; i++) {
-                if(files[i].isDirectory()) {
-                    fncStorageEliminarDirectorio(files[i]);
-                }
-                else {
-                    files[i].delete();
+        if(directory.exists()){
+            File[] files = directory.listFiles();
+            if(null!=files){
+                for(int i=0; i<files.length; i++) {
+                    if(files[i].isDirectory()) {
+                        fncStorageEliminarDirectorio(files[i]);
+                    }
+                    else {
+                        files[i].delete();
+                    }
                 }
             }
         }
+        return(directory.delete());
     }
-    return(directory.delete());
-}
+    
+    public static void fncStorageMoverArchivo(File archivo, String pathB) throws FileNotFoundException, IOException{
+        
+        if(archivo.exists()){
+            FileInputStream in = new FileInputStream( archivo.getAbsolutePath() );
+            FileOutputStream ou = new FileOutputStream( pathB );
+            BufferedOutputStream bou;
+            
+            try (BufferedInputStream bin = new BufferedInputStream(in)) {
+                bou = new BufferedOutputStream(ou);
+                int b=0;
+                while(b!=-1){
+                    b=bin.read();
+                    bou.write(b);
+                }
+            }
+            
+            bou.close();
+        }
+    }
     
 }

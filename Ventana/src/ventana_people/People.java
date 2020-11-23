@@ -315,7 +315,7 @@ public class People extends javax.swing.JFrame {
             while ((linea = br.readLine()) != null){
                 
                 if( linea.equals(this.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains("@quasar.org") ){
-                    PanelCuenta a = new PanelCuenta(new Session(linea));
+                    PanelTarjeta a = new PanelTarjeta(new Session(linea));
                     a.setBounds(60, coordenadaY, 600, 135);
                     panel_perfiles.add(a);
                     panel_perfiles.validate();

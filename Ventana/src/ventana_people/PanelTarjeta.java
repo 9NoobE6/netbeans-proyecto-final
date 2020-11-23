@@ -12,6 +12,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,16 +23,16 @@ import javax.swing.JPanel;
  *
  * @author victo
  */
-public class PanelCuenta extends javax.swing.JPanel {
+public class PanelTarjeta extends javax.swing.JPanel {
 
     /**
      * Creates new form Cuenta
      */
-    public PanelCuenta() {
+    public PanelTarjeta() {
         initComponents();
     }
     
-    public PanelCuenta(Session session) {
+    public PanelTarjeta(Session session) {
         initComponents();
         this.perfil = session;
         
@@ -44,9 +46,11 @@ public class PanelCuenta extends javax.swing.JPanel {
         this.campo_email.setEditable(false);
 
         
+        // Establecer un tamaño al panel para la tarjeta y agregar un imagen de fondo
         this.setSize(600, 135);
         this.fncInsertarPicture(this, getClass().getResource("/img/b2.jpg").getPath(), false);
         
+        // Establecer un tamaño al panel para la foto y agregar el imagen del correspondiente...
         this.panel_foto.setSize(165, 135);
         String img_profile = "";
         if( session.getStrImgPerfil().equals("user_default.png") ){
@@ -55,6 +59,22 @@ public class PanelCuenta extends javax.swing.JPanel {
         }else{
             img_profile = Storage.fncStorageCrearRutaProfile(session.getStrEmail(), Rutas.extesion_svg);
             this.fncInsertarPicture(this.panel_foto, img_profile , false);
+        }
+        
+        /*
+            * Enviado un mensaje, sin ser am
+            ** No he Enviado un mensaje, pero si una solicitud enviada
+            # Somos amigos
+        */
+        
+        // Verificar si, si somos amigos...
+        String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
+        if( Storage.fncStorageBuscarUnaLineaProfile(session_friends, this.perfil.getStrEmail() ) ){
+            this.somos_amigos = true;
+            this.btnAgregarAmigo.setText("Somos amigos");
+        }else        
+        if( Storage.fncStorageBuscarUnaLineaProfile(session_friends, this.perfil.getStrEmail() + "*") ){
+            this.btnAgregarAmigo.setText("Amigo+");
         }
        
     }
@@ -91,6 +111,11 @@ public class PanelCuenta extends javax.swing.JPanel {
         btnAgregarAmigo.setBackground(new java.awt.Color(255, 102, 102));
         btnAgregarAmigo.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarAmigo.setText("Amigo+");
+        btnAgregarAmigo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnAgregarAmigoMouseReleased(evt);
+            }
+        });
 
         btnEnviarMensajeTo.setBackground(new java.awt.Color(0, 153, 153));
         btnEnviarMensajeTo.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,31 +192,68 @@ public class PanelCuenta extends javax.swing.JPanel {
         
         try{
             String mensaje = JOptionPane.showInputDialog(null, "Saluda a "+ this.perfil.getStrNombres() + " " + this.perfil.getStrApellidos());
+            
             if( mensaje.isEmpty() ){
                 JOptionPane.showMessageDialog(null, "El mensaje no fue enviado");
             }else{
                 
-                String path_chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail() , Rutas.extesion_chats);
-                String path_friends = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_friends);
-                String storage_chat = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_chats);
+                // Crear path y objeto archivo de mi storage .friends para ver los chats disponibles..
+                String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
                 
-                File myChat = new File(path_chat);
-                if ( !myChat.exists()  ){
-                    myChat.createNewFile();
+                // Si al perfil seleccionado no son amigos ... 
+                if( Storage.fncStorageBuscarUnaLineaProfile(session_friends, this.perfil.getStrEmail() + "*") ){
+                    
+                    //System.out.println("Tienes una conversacion pendiente ... No son amigos...");
+                    String path_chat = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail(), Rutas.extesion_chats);
+                    Storage.fncStorageAcoplarUnaLinea(path_chat , People.session_activa.getStrEmail() + ": \n" + mensaje + "\n");
+                    JOptionPane.showMessageDialog(null, this.perfil.getStrNombres() + " te ha enviado un mensaje previamente.\nPuedes chatear en tu lista de amigos."  );
+                    
+                // Si al perfil seleccionado si son amigos ... 
+                }else if( Storage.fncStorageBuscarUnaLineaProfile(session_friends, this.perfil.getStrEmail()) ){
+                    
+                    System.out.println("Son amigos...");
                 }
                 
-                // Agregar un mensaje al chat ... de la cuenta deseado... 
-                Storage.fncStorageAcoplarUnaLinea(path_chat , mensaje);
                 
-                // Registrar como amigo no registrado y chat no registrado ... en mi cuenta principal...
-                Storage.fncStorageAcoplarUnaLinea(path_friends , People.session_activa.getStrEmail() + "*" );
-                Storage.fncStorageAcoplarUnaLinea(storage_chat , People.session_activa.getStrEmail() + "*" );
-                
-                System.out.println("Mensaje enviado...");
             }
         }catch(Exception e){}
         
     }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
+
+    private void btnAgregarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAmigoMouseReleased
+        // TODO add your handling code here:
+        /*
+        String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
+        String session_chats = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_chats);
+        
+        if(this.somos_amigos == true){
+            int respuesta = JOptionPane.showConfirmDialog(null, this.perfil.getStrNombres() + " y tú son amigos.\nDeseas eliminar de tu lista de amigos?");
+            
+            if(respuesta == 0){
+                // Eliminar de mi lista de amigos
+                //Storage.fncStorageEliminarUnaLinea(new File(session_friends), this.perfil.getStrEmail() );
+                
+                // Si tenemos una conversacion pendiente, entonces te los paso
+                if( Storage.fncStorageBuscarUnaLinea(session_chats, this.perfil.getStrEmail()) ){
+                    
+                    try {
+                        //Storage.fncStorageAcoplarUnaLinea(session_friends, this.perfil.getStrEmail() + "*" );
+                        String pathA = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail(), Rutas.storage_chats);
+                        String pathB = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail(), Rutas.storage_chats);
+                        Storage.fncStorageMoverArchivo(new File(pathA), pathB );
+                    } catch (IOException ex) {
+                        Logger.getLogger(PanelTarjeta.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+                
+                //this.btnAgregarAmigo.setText("Amigos+");
+            }
+            
+        }
+       */
+        
+    }//GEN-LAST:event_btnAgregarAmigoMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -205,6 +267,9 @@ public class PanelCuenta extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private Session perfil;
     private Session session;
+    private boolean solicitud_enviada = false;
+    private boolean somos_amigos = false;
+    private boolean chat_pendiente = false;
     
     private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
         

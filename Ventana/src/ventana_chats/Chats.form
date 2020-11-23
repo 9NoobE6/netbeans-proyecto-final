@@ -333,6 +333,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Enviar mensaje"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bntEnviarMensajeMouseReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCerrarChat">
               <Properties>
