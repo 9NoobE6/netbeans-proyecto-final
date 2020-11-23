@@ -94,11 +94,17 @@ public class Chats extends javax.swing.JFrame {
         panel_lista_de_amigos = new jpanelimagen.JPanelImagen();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        lista_de_amigos = new javax.swing.JList<>();
+        bntAbrirChat = new javax.swing.JButton();
+        bntEliminar = new javax.swing.JButton();
+        bntVerPerfil = new javax.swing.JButton();
         panel_contenedor_chat = new jpanelimagen.JPanelImagen();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txt_mensaje = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lista_mensajes = new javax.swing.JList<>();
+        bntEnviarMensaje = new javax.swing.JButton();
+        btnCerrarChat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -143,24 +149,24 @@ public class Chats extends javax.swing.JFrame {
 
         jLabel1.setText("Lista de amigos");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        jScrollPane1.setViewportView(lista_de_amigos);
+
+        bntAbrirChat.setBackground(new java.awt.Color(0, 102, 0));
+        bntAbrirChat.setForeground(new java.awt.Color(255, 255, 255));
+        bntAbrirChat.setText("Abrir chat");
+        bntAbrirChat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntAbrirChatMouseReleased(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 0));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Abrir chat");
+        bntEliminar.setBackground(new java.awt.Color(153, 51, 0));
+        bntEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        bntEliminar.setText("Eliminar");
 
-        jButton2.setBackground(new java.awt.Color(153, 51, 0));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Eliminar");
-
-        jButton3.setBackground(new java.awt.Color(0, 0, 102));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Ver perfil");
+        bntVerPerfil.setBackground(new java.awt.Color(0, 0, 102));
+        bntVerPerfil.setForeground(new java.awt.Color(255, 255, 255));
+        bntVerPerfil.setText("Ver perfil");
 
         javax.swing.GroupLayout panel_lista_de_amigosLayout = new javax.swing.GroupLayout(panel_lista_de_amigos);
         panel_lista_de_amigos.setLayout(panel_lista_de_amigosLayout);
@@ -174,11 +180,11 @@ public class Chats extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(panel_lista_de_amigosLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)
+                        .addComponent(bntAbrirChat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(bntEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(bntVerPerfil)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         panel_lista_de_amigosLayout.setVerticalGroup(
@@ -188,26 +194,61 @@ public class Chats extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(panel_lista_de_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(bntAbrirChat)
+                    .addComponent(bntEliminar)
+                    .addComponent(bntVerPerfil))
                 .addContainerGap())
         );
 
         panel_contenedor_chat.setBackground(new java.awt.Color(0, 153, 153));
         panel_contenedor_chat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
+        panel_contenedor_chat.setEnabled(false);
+
+        txt_mensaje.setColumns(20);
+        txt_mensaje.setRows(5);
+        jScrollPane2.setViewportView(txt_mensaje);
+
+        jScrollPane3.setViewportView(lista_mensajes);
+
+        bntEnviarMensaje.setBackground(new java.awt.Color(0, 153, 0));
+        bntEnviarMensaje.setForeground(new java.awt.Color(255, 255, 255));
+        bntEnviarMensaje.setText("Enviar mensaje");
+
+        btnCerrarChat.setBackground(new java.awt.Color(255, 51, 51));
+        btnCerrarChat.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarChat.setText("Cerrar chat");
+        btnCerrarChat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnCerrarChatMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_contenedor_chatLayout = new javax.swing.GroupLayout(panel_contenedor_chat);
         panel_contenedor_chat.setLayout(panel_contenedor_chatLayout);
         panel_contenedor_chatLayout.setHorizontalGroup(
             panel_contenedor_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_contenedor_chatLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCerrarChat)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bntEnviarMensaje)
+                .addContainerGap())
         );
         panel_contenedor_chatLayout.setVerticalGroup(
             panel_contenedor_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_contenedor_chatLayout.createSequentialGroup()
+                .addComponent(jScrollPane3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_contenedor_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bntEnviarMensaje)
+                    .addComponent(btnCerrarChat))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panel_3_BackgroundLayout = new javax.swing.GroupLayout(panel_3_Background);
@@ -262,6 +303,22 @@ public class Chats extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bntVolverMouseReleased
 
+    private void bntAbrirChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAbrirChatMouseReleased
+        // TODO add your handling code here:
+        this.fncCambiarEstadoPanelAmigos(false);
+        this.fncCambiarEstadoPanelChat(true);
+        System.out.println("Iniciando conversacion...");
+        
+    }//GEN-LAST:event_bntAbrirChatMouseReleased
+
+    private void btnCerrarChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarChatMouseReleased
+        // TODO add your handling code here:
+        this.fncCambiarEstadoPanelAmigos(true);
+        this.fncCambiarEstadoPanelChat(false);
+        System.out.println("Finalizó la conversacion...");
+        
+    }//GEN-LAST:event_btnCerrarChatMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -305,23 +362,31 @@ public class Chats extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntAbrirChat;
+    private javax.swing.JButton bntEliminar;
+    private javax.swing.JButton bntEnviarMensaje;
+    private javax.swing.JButton bntVerPerfil;
     private javax.swing.JButton bntVolver;
+    private javax.swing.JButton btnCerrarChat;
     private javax.swing.JTextField campo_email;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> lista_de_amigos;
+    private javax.swing.JList<String> lista_mensajes;
     private jpanelimagen.JPanelImagen panel_3_Background;
     private jpanelimagen.JPanelImagen panel_contenedor_chat;
     private jpanelimagen.JPanelImagen panel_lista_de_amigos;
+    private javax.swing.JTextArea txt_mensaje;
     // End of variables declaration//GEN-END:variables
     public static Session session_activa;
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
-    JPanelImagen panel_perfiles;
+    private long size_friendship;
+    private int coordenadaY=20;
+    private boolean chat_activado=false;
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
@@ -330,6 +395,7 @@ public class Chats extends javax.swing.JFrame {
         this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.1f ));
         this.campo_email.setText( this.session_activa.getStrEmail() );
         this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
+        this.fncCambiarEstadoPanelChat(false);
         
         try{
              
@@ -343,8 +409,35 @@ public class Chats extends javax.swing.JFrame {
         }catch(Exception a){}
     }
     
-    private long size_friendship;
-    private int coordenadaY=20;
+    private void fncCambiarEstadoPanelChat(boolean estado){
+        this.txt_mensaje.setEnabled(estado);
+        this.btnCerrarChat.setEnabled(estado);
+        this.lista_mensajes.setEnabled(estado);
+        this.txt_mensaje.setEnabled(estado);
+        this.bntEnviarMensaje.setEnabled(estado);
+        
+        // [0,153,153]
+        if(estado == false)
+            this.panel_contenedor_chat.setBackground(Color.GRAY);
+        else
+            this.panel_contenedor_chat.setBackground(new Color(0, 153, 153));
+            
+    }
+    
+    private void fncCambiarEstadoPanelAmigos(boolean estado){
+        this.lista_de_amigos.setEnabled(estado);
+        this.bntAbrirChat.setEnabled(estado);
+        this.bntEliminar.setEnabled(estado);
+        this.bntVerPerfil.setEnabled(estado);
+        
+        // [0,153,153]
+        if(estado == false)
+            this.panel_lista_de_amigos.setBackground(Color.GRAY);
+        else
+            this.panel_lista_de_amigos.setBackground(new Color(0, 153, 153));
+            
+    }
+    
     
     public long fncObtenerTamahnoStorages(String file){
         Path path = Paths.get(file);
