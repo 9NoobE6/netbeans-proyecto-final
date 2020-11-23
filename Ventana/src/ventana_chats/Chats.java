@@ -19,13 +19,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -95,9 +98,9 @@ public class Chats extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista_de_amigos = new javax.swing.JList<>();
-        bntAbrirChat = new javax.swing.JButton();
         bntEliminar = new javax.swing.JButton();
         bntVerPerfil = new javax.swing.JButton();
+        bntAbrirChat = new javax.swing.JButton();
         panel_contenedor_chat = new jpanelimagen.JPanelImagen();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_mensaje = new javax.swing.JTextArea();
@@ -151,6 +154,19 @@ public class Chats extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lista_de_amigos);
 
+        bntEliminar.setBackground(new java.awt.Color(153, 51, 0));
+        bntEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        bntEliminar.setText("Eliminar");
+        bntEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntEliminarMouseReleased(evt);
+            }
+        });
+
+        bntVerPerfil.setBackground(new java.awt.Color(0, 0, 102));
+        bntVerPerfil.setForeground(new java.awt.Color(255, 255, 255));
+        bntVerPerfil.setText("Ver perfil");
+
         bntAbrirChat.setBackground(new java.awt.Color(0, 102, 0));
         bntAbrirChat.setForeground(new java.awt.Color(255, 255, 255));
         bntAbrirChat.setText("Abrir chat");
@@ -159,14 +175,6 @@ public class Chats extends javax.swing.JFrame {
                 bntAbrirChatMouseReleased(evt);
             }
         });
-
-        bntEliminar.setBackground(new java.awt.Color(153, 51, 0));
-        bntEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        bntEliminar.setText("Eliminar");
-
-        bntVerPerfil.setBackground(new java.awt.Color(0, 0, 102));
-        bntVerPerfil.setForeground(new java.awt.Color(255, 255, 255));
-        bntVerPerfil.setText("Ver perfil");
 
         javax.swing.GroupLayout panel_lista_de_amigosLayout = new javax.swing.GroupLayout(panel_lista_de_amigos);
         panel_lista_de_amigos.setLayout(panel_lista_de_amigosLayout);
@@ -180,9 +188,9 @@ public class Chats extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(panel_lista_de_amigosLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(bntAbrirChat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bntEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bntAbrirChat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bntVerPerfil)))
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -196,9 +204,9 @@ public class Chats extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(panel_lista_de_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntAbrirChat)
                     .addComponent(bntEliminar)
-                    .addComponent(bntVerPerfil))
+                    .addComponent(bntVerPerfil)
+                    .addComponent(bntAbrirChat))
                 .addContainerGap())
         );
 
@@ -319,6 +327,43 @@ public class Chats extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCerrarChatMouseReleased
 
+    private void bntEliminarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEliminarMouseReleased
+        // TODO add your handling code here:
+        
+        String pathA = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+        File amistades = new File(pathA);
+        System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
+        if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
+            try {
+                int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
+                
+                if( respuesta == 0){
+                    String pathB = Storage.fncStorageCrearRutaTemporal(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+                    File tmp_amistades = new File(pathB);
+                    if(tmp_amistades.createNewFile()){
+                        FileWriter sobrescribirArchivo = new FileWriter(pathB);
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
+                        String linea;
+
+                         while ((linea = leerArchivo.readLine()) != null){
+                            // Sobreescribiendo archivo
+                            if( !this.lista_de_amigos.getSelectedValue().equals(linea) )
+                                sobrescribirArchivo.write( linea + "\n");
+                        }
+                        leerArchivo.close();
+                        sobrescribirArchivo.close();
+
+                        // Cambio de storage
+                        amistades.delete();
+                        tmp_amistades.renameTo(new File(pathA));
+                    }
+                }
+                
+            } catch (IOException e) {}
+        }
+        
+    }//GEN-LAST:event_bntEliminarMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -387,6 +432,8 @@ public class Chats extends javax.swing.JFrame {
     private long size_friendship;
     private int coordenadaY=20;
     private boolean chat_activado=false;
+    DefaultListModel mensajes = new DefaultListModel();
+    DefaultListModel amigos = new DefaultListModel();
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
@@ -400,7 +447,12 @@ public class Chats extends javax.swing.JFrame {
         try{
              
             ActionListener tarea = (ActionEvent e) -> {
-                
+                try {
+                    this.fncSincronizarMensajes();
+                    this.fncSincronizarAmigos();
+                } catch (IOException ex) {
+                    Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
+                }
             };
 
            observador.addActionListener(tarea);
@@ -446,5 +498,30 @@ public class Chats extends javax.swing.JFrame {
              bytes = Files.size(path.toAbsolutePath());
         }catch(Exception e){}
         return bytes;
+    }
+    
+    private void fncSincronizarAmigos() throws FileNotFoundException, IOException{
+        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+        long _size_ = this.fncObtenerTamahnoStorages(path);
+        
+        if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
+            this.amigos.removeAllElements();
+            this.lista_de_amigos.removeAll();
+
+            File archivo = new File( path );
+            BufferedReader br = new BufferedReader( new FileReader(archivo) );
+            String st; 
+
+            while ((st = br.readLine()) != null){
+                this.amigos.addElement(st);
+            }
+
+            this.lista_de_amigos.setModel(this.amigos);
+            this.size_friendship = _size_;
+        } 
+    }
+
+    private void fncSincronizarMensajes() {
+        System.out.println("::: Observador Chats :::");
     }
 }

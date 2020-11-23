@@ -44,14 +44,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="panel_foto_de_perfil" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="panel_portada" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="panel_mis_amigos" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="panel_foto_de_perfil" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="panel_portada" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -69,9 +64,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="panel_mis_amigos" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="321" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -365,84 +358,6 @@
               <Events>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCerrarSessionMouseReleased"/>
               </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="jpanelimagen.JPanelImagen" name="panel_mis_amigos">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-          </Properties>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnEliminarAmigo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnChatearAmigo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnVerPerfilAmigo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="220" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnEliminarAmigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnChatearAmigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnVerPerfilAmigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JList" name="lista_de_amigos">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="0"/>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Component class="javax.swing.JButton" name="btnEliminarAmigo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Eliminar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminarAmigoMouseReleased"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnChatearAmigo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Chatear"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnVerPerfilAmigo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ver perfil"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>

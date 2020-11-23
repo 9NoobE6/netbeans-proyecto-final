@@ -105,12 +105,6 @@ public class SingUp extends javax.swing.JFrame {
         bntAmigos = new javax.swing.JButton();
         btnPeople = new javax.swing.JButton();
         btnCerrarSession = new javax.swing.JButton();
-        panel_mis_amigos = new jpanelimagen.JPanelImagen();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lista_de_amigos = new javax.swing.JList<>();
-        btnEliminarAmigo = new javax.swing.JButton();
-        btnChatearAmigo = new javax.swing.JButton();
-        btnVerPerfilAmigo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -299,48 +293,6 @@ public class SingUp extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panel_mis_amigos.setBackground(new java.awt.Color(255, 255, 255));
-
-        jScrollPane2.setViewportView(lista_de_amigos);
-
-        btnEliminarAmigo.setText("Eliminar");
-        btnEliminarAmigo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEliminarAmigoMouseReleased(evt);
-            }
-        });
-
-        btnChatearAmigo.setText("Chatear");
-
-        btnVerPerfilAmigo.setText("Ver perfil");
-
-        javax.swing.GroupLayout panel_mis_amigosLayout = new javax.swing.GroupLayout(panel_mis_amigos);
-        panel_mis_amigos.setLayout(panel_mis_amigosLayout);
-        panel_mis_amigosLayout.setHorizontalGroup(
-            panel_mis_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-            .addGroup(panel_mis_amigosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnEliminarAmigo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnChatearAmigo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnVerPerfilAmigo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panel_mis_amigosLayout.setVerticalGroup(
-            panel_mis_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_mis_amigosLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_mis_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarAmigo)
-                    .addComponent(btnChatearAmigo)
-                    .addComponent(btnVerPerfilAmigo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout panel_2_BackgroundLayout = new javax.swing.GroupLayout(panel_2_Background);
         panel_2_Background.setLayout(panel_2_BackgroundLayout);
         panel_2_BackgroundLayout.setHorizontalGroup(
@@ -350,12 +302,9 @@ public class SingUp extends javax.swing.JFrame {
                 .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
-                        .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
-                                .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(panel_portada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(panel_mis_amigos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panel_portada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -368,9 +317,7 @@ public class SingUp extends javax.swing.JFrame {
                     .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_mis_amigos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(321, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -523,42 +470,6 @@ public class SingUp extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_bntAmigosMouseReleased
-
-    private void btnEliminarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAmigoMouseReleased
-         // TODO add your handling code here:
-        String pathA = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
-        File amistades = new File(pathA);
-        System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
-        if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
-            try {
-                int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
-                
-                if( respuesta == 0){
-                    String pathB = Storage.fncStorageCrearRutaTemporal(this.session_activa.getStrEmail(), Rutas.extesion_friends);
-                    File tmp_amistades = new File(pathB);
-                    if(tmp_amistades.createNewFile()){
-                        FileWriter sobrescribirArchivo = new FileWriter(pathB);
-                        BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
-                        String linea;
-
-                         while ((linea = leerArchivo.readLine()) != null){
-                            // Sobreescribiendo archivo
-                            if( !this.lista_de_amigos.getSelectedValue().equals(linea) )
-                                sobrescribirArchivo.write( linea + "\n");
-                        }
-                        leerArchivo.close();
-                        sobrescribirArchivo.close();
-
-                        // Cambio de storage
-                        amistades.delete();
-                        tmp_amistades.renameTo(new File(pathA));
-                    }
-                }
-                
-            } catch (IOException e) {}
-        }
-
-    }//GEN-LAST:event_btnEliminarAmigoMouseReleased
     
     /**
      * @param args the command line arguments
@@ -599,12 +510,9 @@ public class SingUp extends javax.swing.JFrame {
     private javax.swing.JButton bntAmigos;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCerrarSession;
-    private javax.swing.JButton btnChatearAmigo;
-    private javax.swing.JButton btnEliminarAmigo;
     private javax.swing.JButton btnEliminarCuenta;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPeople;
-    private javax.swing.JButton btnVerPerfilAmigo;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JTextField campo_correo;
     private javax.swing.JTextField campo_nombres;
@@ -614,11 +522,8 @@ public class SingUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> lista_de_amigos;
     private jpanelimagen.JPanelImagen panel_2_Background;
     private javax.swing.JPanel panel_foto_de_perfil;
-    private jpanelimagen.JPanelImagen panel_mis_amigos;
     private jpanelimagen.JPanelImagen panel_portada;
     // End of variables declaration//GEN-END:variables
     Session session_activa;
@@ -635,14 +540,9 @@ public class SingUp extends javax.swing.JFrame {
         try{
              
             ActionListener tarea = (ActionEvent e) -> {
-                try {
-                    // Observadores o Watchers (Depende de Session)
-                    this.fncSincronizandoMensajes();
-                    this.fncSincronizarAmigos();
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                // Observadores o Watchers (Depende de Session)
+                this.fncSincronizandoMensajes();
+                //this.fncSincronizarAmigos();
             };
 
            observador.addActionListener(tarea);
@@ -654,9 +554,7 @@ public class SingUp extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
         this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
-        this.panel_mis_amigos.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
         this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
-        this.panel_mis_amigos.setVisible(this.ver_amigos);
         
         // Este es para JFrame SingUp (No depende de Session)
         this.btnModificar.setEnabled(true);
@@ -686,26 +584,7 @@ public class SingUp extends javax.swing.JFrame {
         System.out.println("::: Observador SingUp :::");
     }
     
-    private void fncSincronizarAmigos() throws FileNotFoundException, IOException{
-        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
-        long _size_ = this.fncObtenerTamahnoStorages(path);
-        
-        if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
-            this.amigos.removeAllElements();
-            this.lista_de_amigos.removeAll();
-
-            File archivo = new File( path );
-            BufferedReader br = new BufferedReader( new FileReader(archivo) );
-            String st; 
-
-            while ((st = br.readLine()) != null){
-                this.amigos.addElement(st);
-            }
-
-            this.lista_de_amigos.setModel(this.amigos);
-            this.size_friendship = _size_;
-        } 
-    }
+    
     
     private void fncCopiarImagen(String img) throws FileNotFoundException, IOException{
         
