@@ -318,19 +318,32 @@ public class Chats extends javax.swing.JFrame {
 
     private void bntAbrirChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAbrirChatMouseReleased
         // TODO add your handling code here:
+        
+        // Crear path y objeto archivo de mi storage .chats para ver los chats que tengo registrados
         String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_chats);
         File chats = new File(path);
         
+        // Si mi archivo de mi storage .chats y el perfil selecciona no es vacio...
         if(chats.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
             if(Storage.fncStorageBuscarUnaLineaProfile(path, this.lista_de_amigos.getSelectedValue() )){
                 this.fncCambiarEstadoPanelAmigos(false);
                 this.fncCambiarEstadoPanelChat(true);
                 String amigo = this.lista_de_amigos.getSelectedValue();
                 amigo = amigo.replace("*", "");
-                this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo, Rutas.extesion_chats);
+                
+                // Verificar si el perfil seleccionado tiene un (*) eso significa
+                // que el perfil no lo tengo agrego en mi lista de amigos, 
+                // sino que solo recibi un mensaje de él...
+                if(this.lista_de_amigos.getSelectedValue().contains("*")){
+                    // Selecciona el chat desde perfil remitente
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(amigo, this.session_activa.getStrEmail(), Rutas.extesion_chats);
+                }else{
+                    // Selecciona el chat desde mi cuenta principal
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo, Rutas.extesion_chats);
+                }
                 this.chat_activado = true;
                 
-                //System.out.println("Ruta del chat: " + this.chat_path_activo  );
+                System.out.println("Ruta del chat: " + this.chat_path_activo  );
                 //System.out.println("Iniciando conversacion...");
             }else{
                 JOptionPane.showMessageDialog(null, "Lo siento, el chat no existe.");
