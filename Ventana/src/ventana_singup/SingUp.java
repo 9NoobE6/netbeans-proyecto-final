@@ -43,6 +43,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 import javax.swing.text.DefaultCaret;
+import ventana_chats.Chats;
 import ventana_people.People;
 
 /**
@@ -506,6 +507,7 @@ public class SingUp extends javax.swing.JFrame {
     private void bntAmigosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAmigosMouseReleased
         // TODO add your handling code here:
         
+        /*
         if( this.ver_amigos == false ){
             panel_mis_amigos.setVisible(true);
             this.ver_amigos = true;
@@ -513,7 +515,12 @@ public class SingUp extends javax.swing.JFrame {
             panel_mis_amigos.setVisible(false);
             this.ver_amigos = false;
         }
+        */
+        Chats chatear = new Chats( new Session( this.session_activa.getStrEmail() ) );
+        chatear.setVisible(true);
         
+        this.observador.stop();
+        this.dispose();
         
     }//GEN-LAST:event_bntAmigosMouseReleased
 
