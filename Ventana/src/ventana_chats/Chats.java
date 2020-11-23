@@ -152,6 +152,11 @@ public class Chats extends javax.swing.JFrame {
 
         jLabel1.setText("Lista de amigos");
 
+        lista_de_amigos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "cargando..." };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
         jScrollPane1.setViewportView(lista_de_amigos);
 
         bntEliminar.setBackground(new java.awt.Color(153, 51, 0));
@@ -313,18 +318,43 @@ public class Chats extends javax.swing.JFrame {
 
     private void bntAbrirChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAbrirChatMouseReleased
         // TODO add your handling code here:
-        this.fncCambiarEstadoPanelAmigos(false);
-        this.fncCambiarEstadoPanelChat(true);
-        System.out.println("Iniciando conversacion...");
+        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_chats);
+        File chats = new File(path);
+        
+        if(chats.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
+            if(Storage.fncStorageBuscarUnaLineaProfile(path, this.lista_de_amigos.getSelectedValue() )){
+                this.fncCambiarEstadoPanelAmigos(false);
+                this.fncCambiarEstadoPanelChat(true);
+                String amigo = this.lista_de_amigos.getSelectedValue();
+                amigo = amigo.replace("*", "");
+                this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo, Rutas.extesion_chats);
+                this.chat_activado = true;
+                
+                //System.out.println("Ruta del chat: " + this.chat_path_activo  );
+                //System.out.println("Iniciando conversacion...");
+            }else{
+                JOptionPane.showMessageDialog(null, "Lo siento, el chat no existe.");
+            }
+        }
         
     }//GEN-LAST:event_bntAbrirChatMouseReleased
 
     private void btnCerrarChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarChatMouseReleased
         // TODO add your handling code here:
+        
+        // Deshabilitamos todos los componentes de chat
         this.fncCambiarEstadoPanelAmigos(true);
         this.fncCambiarEstadoPanelChat(false);
         System.out.println("Finalizó la conversacion...");
         
+        // Borrar los variables que se nececesitan para otro chat
+        this.lista_mensajes.removeAll();
+        this.mensajes.removeAllElements();
+        this.txt_mensaje.setText("");
+        this.chat_activado = false;
+        this.chat_path_activo = "";
+        this.size_chats = 0;
+       
     }//GEN-LAST:event_btnCerrarChatMouseReleased
 
     private void bntEliminarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEliminarMouseReleased
@@ -430,10 +460,11 @@ public class Chats extends javax.swing.JFrame {
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
     private long size_friendship;
-    private int coordenadaY=20;
-    private boolean chat_activado=false;
+    private long size_chats;
     DefaultListModel mensajes = new DefaultListModel();
     DefaultListModel amigos = new DefaultListModel();
+    private String chat_path_activo;
+    private boolean chat_activado=false;
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
@@ -448,7 +479,12 @@ public class Chats extends javax.swing.JFrame {
              
             ActionListener tarea = (ActionEvent e) -> {
                 try {
-                    this.fncSincronizarMensajes();
+                    System.out.println("::: Observador Chats :::");
+                     
+                    // Sincronizar los mensajes
+                    if( chat_activado == true )
+                        this.fncSincronizarMensajes();
+                    
                     this.fncSincronizarAmigos();
                 } catch (IOException ex) {
                     Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
@@ -521,7 +557,32 @@ public class Chats extends javax.swing.JFrame {
         } 
     }
 
-    private void fncSincronizarMensajes() {
-        System.out.println("::: Observador Chats :::");
+    private void fncSincronizarMensajes() throws FileNotFoundException, IOException {
+        String path = this.chat_path_activo;
+        File chat = new File(path);
+        long _size_ = this.fncObtenerTamahnoStorages(path);
+        
+        if(chat.exists()){
+            if( _size_ > this.size_chats || _size_ < this.size_chats ){
+                this.mensajes.removeAllElements();
+                this.lista_mensajes.removeAll();
+
+                File archivo = new File( path );
+                BufferedReader br = new BufferedReader( new FileReader(archivo) );
+                String st; 
+                while ((st = br.readLine()) != null){
+                    this.mensajes.addElement(st);
+                }
+
+                this.lista_mensajes.setModel(this.mensajes);
+                this.size_chats = _size_;
+                
+                int ultimo_mensaje = this.lista_mensajes.getModel().getSize() - 1;
+                if (ultimo_mensaje >= 0) {
+                   this.lista_mensajes.ensureIndexIsVisible(ultimo_mensaje);
+                }
+                this.lista_mensajes.setSelectedIndex(ultimo_mensaje);
+            }
+        }
     }
 }

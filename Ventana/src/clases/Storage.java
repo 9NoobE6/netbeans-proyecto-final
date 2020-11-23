@@ -56,6 +56,50 @@ public class Storage {
         }
     }
     
+    public static boolean fncStorageBuscarUnaLineaProfile(String pathA, String linea_buscado){
+        boolean respuesta = false;
+        try {
+            File archivo = new File( pathA );
+            BufferedReader br = new BufferedReader( new FileReader(archivo) );
+            String linea; 
+
+            while ((linea = br.readLine()) != null){
+                // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
+                if( linea.equals(linea_buscado) && !linea.isEmpty() && linea.contains("@quasar.org") ){
+                   respuesta = true;
+                   return true;
+                }
+            }
+            
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }finally{
+            return respuesta;
+        }
+    }
+    
+    public static boolean fncStorageBuscarUnaLinea(String pathA, String linea_buscado){
+        boolean respuesta = false;
+        try {
+            File archivo = new File( pathA );
+            BufferedReader br = new BufferedReader( new FileReader(archivo) );
+            String linea; 
+
+            while ((linea = br.readLine()) != null){
+                // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
+                if( linea.equals(linea_buscado) && !linea.isEmpty() ){
+                   respuesta = true;
+                   return true;
+                }
+            }
+            
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }finally{
+            return respuesta;
+        }
+    }
+    
     public static String fncStorageObtenerRutaData(String email){
         return Rutas.storage_profiles +  "/" + email + "/profile/" + email + Rutas.extesion_data;
     }
