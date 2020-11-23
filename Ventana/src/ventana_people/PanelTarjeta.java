@@ -197,52 +197,93 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "El mensaje no fue enviado");
             }else{
                 
+//                System.out.println("*** Perfil seleccionado");
+//                System.out.println(" this.perfil.stgChats = " + this.perfil.stgChats);
+//                System.out.println(" this.perfil.stgFriends = " + this.perfil.stgFriends);
+//                System.out.println("");
+//                
+//                System.out.println("*** Session actual");
+//                System.out.println(" People.session_activa.stgCjhat = " + People.session_activa.stgChats);
+//                System.out.println(" People.session_activa.stgFriends = " + People.session_activa.stgFriends);
+//                System.out.println("");
                 
-                System.out.println("path = " + this.perfil.stgChats);
+                // Generar mensaje...
+                mensaje = People.session_activa.getStrNombres() + 
+                        People.session_activa.getStrApellidos() + 
+                        " ("+ People.session_activa.getStrEmail() + "): \n" +
+                        mensaje;
                 
-                // Verificar si mi vecino, ha a enviado un mensaje..
-                if(Storage.fncStorageBuscarUnaLinea(this.perfil.stgChats, People.session_activa.getStrEmail() + "*") )
-                {
-                    // * Este se ejecuta cuando
-                    // *
-                    // *
+                // Verificar, Si el Perfil Seleccionado ya habia mandado una mensaje...
+                boolean buzon_creado = false;
+                
+                if( Storage.fncStorageBuscarUnaLinea(this.perfil.stgFriends, People.session_activa.getStrEmail() + "*") ){
+                    System.out.println("** Hola " + this.perfil.getStrEmail() + " deseas ser mi amigo de " + People.session_activa.getStrEmail() );
                     
-                    // Buscar el buzon .. para saludar..
-                    File buzon = new File(Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail()));
-                    System.out.println("Buzon " + buzon.getAbsolutePath());
+                    // ****** Utilizar el buzon creado
+                    // Regitrar mensajes como autor de Perfil Seleccionado
                     
-                    // Registro mi mensaje en mi buzon
-                    Storage.fncStorageAcoplarUnaLinea(buzon.getAbsolutePath(), People.session_activa.getStrEmail() + ": \n" + mensaje );
+                    // /home/max98/NetBeansProjects/netbenas-practica-final/Ventana/storage_profiles/abc@quasar.org/chats/abc000@quasar.org.chats
+                    String para_perfil = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail() );
+                    String para_session = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail() );
+                    String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends );
                     
-                    // Mi buzon se lo paso a perfil destinatario
-                    Storage.fncStorageCopiarArchivo(new File(buzon.getAbsolutePath()), Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail()) );
+                    System.out.println("Selecciona el buzon " + para_perfil );
                     
-                    //System.out.println("Saludar al vecino");
+                    Storage.fncStorageAcoplarUnaLinea(para_perfil, mensaje);
+                    Storage.fncStorageCopiarArchivo(new File(para_perfil), para_session);
+                    
+                    // Actulizar mi amigo, evitamos que el perfil o cuenta se duplique...
+                    Storage.fncStorageEliminarUnaLinea(new File(session_friends), this.perfil.getStrEmail() + "*" );
+                    Storage.fncStorageAcoplarUnaLinea(session_friends, this.perfil.getStrEmail() + "*" );
+                    
+                    JOptionPane.showMessageDialog(null, this.perfil.getStrEmail() + " te ha enviado un mensaje previamente.\n" +
+                            "Puedes ver lo en tu lista de amigos y conversar.");
+                    buzon_creado = true;
+                }
+                
+                
+                
+                
+                // Verificar, Si tú Session Activa ya habías un mandado un mensaje al perfil seleccionado...
+                if( Storage.fncStorageBuscarUnaLinea(People.session_activa.stgFriends, this.perfil.getStrEmail() + "*") ){
+                    
+                    // ****** Utilizar el buzon creado
+                    // Regitrar mensajes como autor de Session Activa
+                    
+                    // /home/max98/NetBeansProjects/netbenas-practica-final/Ventana/storage_profiles/abc@quasar.org/chats/abc000@quasar.org.chats
+                    String path = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail()  );
+                    System.out.println("Selecciona el buzon " + path );
+                    
+                    Storage.fncStorageAcoplarUnaLinea(path, mensaje);
                     
                 }else{
                     
-                    System.out.println("Creando conversacion");
-                    
-                    // Crear algo parecido a un buzon
-                    File buzon_nuevo = new File(Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail()));
-                    
-                    if(buzon_nuevo.createNewFile()){
-                        System.out.println("Buzon, creado...");
-                        //Storage.fncStorageAcoplarUnaLinea( this.perfil.stgChats , People.session_activa.getStrEmail() + "*");
+                    // ****** Crear el buzon
+                    // Solo si el buzon, no hacido creado...
+                    if(buzon_creado == false){
+                        System.out.println("***** Crear buzon ");
                         
-                        Storage.fncStorageAcoplarUnaLinea(buzon_nuevo.getAbsolutePath(), People.session_activa.getStrEmail() + ": \n" + mensaje );
-                        Storage.fncStorageAcoplarUnaLinea( this.perfil.stgFriends , People.session_activa.getStrEmail() + "*");
-                       
-                    }else{
-                        Storage.fncStorageAcoplarUnaLinea(buzon_nuevo.getAbsolutePath(), People.session_activa.getStrEmail() + ": \n" + mensaje );
-                    } 
+                        // Regitrar mensajes como autor de Session Activa
+                        String agregar_to_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends  );
+                        String path = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail()  );
+
+                        // Si se crea el buzon ... registramos el mensaje...
+                        if( new File(path).createNewFile() ){                        
+                            // Registrar el perfil seleccionada como interesado en el o ella... 
+                            Storage.fncStorageAcoplarUnaLinea(agregar_to_friends, this.perfil.getStrEmail() + "*");
+
+                            // Registrar el mensaje...
+                            Storage.fncStorageAcoplarUnaLinea(path, mensaje);
+                        }
+                    }
                     
                 }
+                
             }
         }catch(Exception e){}
         
     }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
-
+    
     private void btnAgregarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAmigoMouseReleased
         // TODO add your handling code here:
         /*
