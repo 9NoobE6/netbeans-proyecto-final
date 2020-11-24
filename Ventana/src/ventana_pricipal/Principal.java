@@ -148,25 +148,44 @@ public class Principal extends javax.swing.JFrame {
         });
 
         panel_registro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 51), 2, true));
-        panel_registro.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
 
         campo_nombres.setText("jTextField1");
+        campo_nombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campo_nombresKeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("Nombre (s): ");
 
         jLabel2.setText("Apellidos: ");
 
         campo_apellidos.setText("jTextField1");
+        campo_apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campo_apellidosKeyTyped(evt);
+            }
+        });
 
         jLabel3.setText("Nacimiento (DD/MM/AAAA):");
 
         jLabel4.setText("Contraseña:");
 
         campo_registro_email.setText("abc@quasar.org");
+        campo_registro_email.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campo_registro_emailKeyTyped(evt);
+            }
+        });
 
         jLabel5.setText("Email:");
 
         campo_registro_contrasenha.setText("jPasswordField1");
+        campo_registro_contrasenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campo_registro_contrasenhaKeyTyped(evt);
+            }
+        });
 
         cmbox_dia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
@@ -271,8 +290,6 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        panel_singup.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
-
         jLabel7.setText("Contraseña: ");
 
         campo_singup_email.setText("jTextField1");
@@ -370,16 +387,18 @@ public class Principal extends javax.swing.JFrame {
         
         if( (2020-anho) < 18 ){
             JOptionPane.showMessageDialog(null, "Eres menor de edad!");
-        }else if( this.campo_nombres.getText().isEmpty() ){
+        }else if( this.campo_nombres.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su(s) nombre(s), por favor...");
-        }else if( this.campo_apellidos.getText().isEmpty() ){
+        }else if( this.campo_apellidos.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su(s) apellido(s), por favor...");
-        }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).isEmpty() ){
+        }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca una contraseña, por favor...");
-        }else if( this.campo_registro_email.getText().isEmpty() ){
+        }else if( this.campo_registro_email.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca un correo electronico, por favor...");
-        }else if( !this.campo_registro_email.getText().contains("@quasar.org") || this.campo_registro_email.getText().length() < 14  ){
+        }else if( !this.campo_registro_email.getText().trim().contains("@quasar.org") || this.campo_registro_email.getText().length() < 14  ){
             JOptionPane.showMessageDialog(null, "Introduzca un correo electronico example@quasar.org, por favor...");
+        }else if( this.campo_registro_email.getText().trim().length() > (21 - 2) ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico menor o igual a 20 caracteres, por favor...");
         }else{
             
             try {
@@ -443,9 +462,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnIniciarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSessionMouseReleased
         // TODO add your handling code here:
-        if( String.valueOf(this.campo_singup_contrasenha.getPassword()).isEmpty() ){
+        if( String.valueOf(this.campo_singup_contrasenha.getPassword()).trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su contraseña, por favor...");
-        }else if( this.campo_singup_email.getText().isEmpty() ){
+        }else if( this.campo_singup_email.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
         }else{
             String _contenedor = Rutas.storage_profiles + this.campo_singup_email.getText();
@@ -476,6 +495,61 @@ public class Principal extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnIniciarSessionMouseReleased
+
+    private void campo_nombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_nombresKeyTyped
+
+        // Solo se aceptan caracteres y un espacios        
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || evt.getKeyChar() == ' ' ){
+
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+        
+    }//GEN-LAST:event_campo_nombresKeyTyped
+
+    private void campo_registro_emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_registro_emailKeyTyped
+   
+        // Solo se aceptan caracteres y numeros el . y @
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || evt.getKeyChar() == '@' || evt.getKeyChar() == '.'){
+
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+        
+    }//GEN-LAST:event_campo_registro_emailKeyTyped
+
+    private void campo_registro_contrasenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_registro_contrasenhaKeyTyped
+        // TODO add your handling code here:
+        
+        /*
+        // Solo se aceptan caracteres y un espacios        
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car)){
+
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+        */
+        
+    }//GEN-LAST:event_campo_registro_contrasenhaKeyTyped
+
+    private void campo_apellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_apellidosKeyTyped
+
+        // Solo se aceptan caracteres y un espacios        
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || evt.getKeyChar() == ' ' ){
+
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+        
+    }//GEN-LAST:event_campo_apellidosKeyTyped
     
     private boolean fncVerificarContrasehna(String file){
         Scanner scanner;
@@ -576,7 +650,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_friends ).createNewFile();
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
-            //new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats + Rutas.extesion_chatmp + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
