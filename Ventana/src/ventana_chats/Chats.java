@@ -394,45 +394,34 @@ public class Chats extends javax.swing.JFrame {
         if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false 
           && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
             
-            try {
-                int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
+            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
+            if( respuesta == 0){
                 
-                if( respuesta == 0){
-                    
-                    // Crear el path y el archivo temporal para eliminar la cuenta
-                    String pathB = Storage.fncStorageCrearRutaTemporalProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
-                    File tmp_amistades = new File(pathB);
-                    
-                    // Crear el path y el archivo para el chat de la cuenta a eliminar
-                    String amigo = this.lista_de_amigos.getSelectedValue();
-                    amigo = amigo.replace("*", "");
-                    File path_chat = new File(Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_chats));
-                    
-                    if(tmp_amistades.createNewFile()){
-                        FileWriter sobrescribirArchivo = new FileWriter(pathB);
-                        BufferedReader leerArchivo = new BufferedReader(new FileReader(pathA));
-                        String linea;
-
-                         while ((linea = leerArchivo.readLine()) != null){
-                            // Sobreescribiendo archivo
-                            if( !this.lista_de_amigos.getSelectedValue().equals(linea) )
-                                sobrescribirArchivo.write( linea + "\n");
-                        }
-                        leerArchivo.close();
-                        sobrescribirArchivo.close();
-
-                        // Cambio de storage
-                        amistades.delete();
-                        tmp_amistades.renameTo(new File(pathA));
-                                               
-                        // Se elimina el chat con el usuario a eliminar (En caso de que exista)
-                        if(path_chat.exists()){                            
-                            Storage.fncStorageEliminarUnaLinea(path_chat,  this.lista_de_amigos.getSelectedValue());
-                        }
-                    }
+                // Eliminar una conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
+                // * Eliminar a this.lista_de_amigos.getSelectedValue() en la lista de amigos de this.session_activa
+                // * Eliminar la conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
+                // * Eliminar a this.session_activa en la lista de amigos de  this.lista_de_amigos.getSelectedValue()
+                
+                // ****** TESTING
+                System.out.println("Eliminando a ..." + this.lista_de_amigos.getSelectedValue() );
+                
+                // * Eliminar a this.lista_de_amigos.getSelectedValue() en la lista de amigos de this.session_activa
+                String amigo_eliminar = this.lista_de_amigos.getSelectedValue();
+                if(Storage.fncStorageBuscarUnaLinea(pathA, amigo_eliminar)){
+                    Storage.fncStorageEliminarUnaLinea(new File(pathA), amigo_eliminar);
                 }
                 
-            } catch (IOException e) {}
+                // * Eliminar la conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
+                String conversacion_eliminar = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo_eliminar.replace("*", "") );
+                if(new File(conversacion_eliminar).exists()){
+                    new File(conversacion_eliminar).delete();
+                }
+                
+                // * Eliminar a this.session_activa en la lista de amigos de  this.lista_de_amigos.getSelectedValue()
+                String perfil_friends = new Session(amigo_eliminar.replace("*", "")).stgFriends;
+                Storage.fncStorageEliminarUnaLinea(new File( perfil_friends ), this.session_activa.getStrEmail() + "*");
+                
+            }
         }
         
     }//GEN-LAST:event_bntEliminarMouseReleased
