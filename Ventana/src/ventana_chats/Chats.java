@@ -400,7 +400,6 @@ public class Chats extends javax.swing.JFrame {
                 // Eliminar una conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
                 // * Eliminar a this.lista_de_amigos.getSelectedValue() en la lista de amigos de this.session_activa
                 // * Eliminar la conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
-                // * Eliminar a this.session_activa en la lista de amigos de  this.lista_de_amigos.getSelectedValue()
                 
                 // ****** TESTING
                 System.out.println("Eliminando a ..." + this.lista_de_amigos.getSelectedValue() );
@@ -409,18 +408,19 @@ public class Chats extends javax.swing.JFrame {
                 String amigo_eliminar = this.lista_de_amigos.getSelectedValue();
                 if(Storage.fncStorageBuscarUnaLinea(pathA, amigo_eliminar)){
                     Storage.fncStorageEliminarUnaLinea(new File(pathA), amigo_eliminar);
-                    
+                    System.out.println("elimando de mi .friends a " + amigo_eliminar );
                 }
                 
                 // * Eliminar la conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
-                String conversacion_eliminar = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo_eliminar.replace("*", "") );
-                if(new File(conversacion_eliminar).exists()){
-                    new File(conversacion_eliminar).delete();
-                }
+                //String conversacion_eliminar = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo_eliminar.replace("*", "") );
+                //if(new File(conversacion_eliminar).exists()){
+                //    new File(conversacion_eliminar).delete();
+                //    System.out.println("elimando conversacion de " + conversacion_eliminar );
+                //}
                 
                 // * Eliminar a this.session_activa en la lista de amigos de  this.lista_de_amigos.getSelectedValue()
-                String perfil_friends = new Session(amigo_eliminar.replace("*", "")).stgFriends;
-                Storage.fncStorageEliminarUnaLinea(new File( perfil_friends ), this.session_activa.getStrEmail() + "*");
+                //String perfil_friends = new Session(amigo_eliminar.replace("*", "")).stgFriends;
+                //Storage.fncStorageEliminarUnaLinea(new File( perfil_friends ), this.session_activa.getStrEmail() + "*");
                 
                 // Detecte el error.. tienes que agregar una linea en this.lista_de_amigos.getSelectedValue() .friends
                 // a this.session_activa

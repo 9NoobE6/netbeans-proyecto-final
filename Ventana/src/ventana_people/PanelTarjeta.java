@@ -255,7 +255,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     // * Agregar el nuevo mensaje en People.session_activa.getStrEmail() ,
                     // la conversacion que tengo con this.perfil.getStrEmail()
                     
-                     // ********* TESTING
+                    // ********* TESTING
                     System.out.println("ESTAGE C");
                     // * Agregar el nuevo mensaje en People.session_activa.getStrEmail() con this.perfil.getStrEmail()
                     String buzo_chat =  Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
@@ -266,6 +266,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     if( new File(buzo_chat).exists() ){
                         System.out.println("ESTAGE C >>> mensaje capturado");
                         Storage.fncStorageAcoplarUnaLinea(buzo_chat, mensaje);
+                        JOptionPane.showMessageDialog(null, "Mensaje+");
                     }
                     // ##########  Agregando mensanjes en una conversacion que tengo con this.perfil.getStrEmail()... (FIN)
                     
@@ -350,7 +351,13 @@ public class PanelTarjeta extends javax.swing.JPanel {
                             
                             Storage.fncStorageEliminarUnaLinea(new File(this.perfil.stgFriends), People.session_activa.getStrEmail() + "*");
                             Storage.fncStorageAcoplarUnaLinea(this.perfil.stgFriends, People.session_activa.getStrEmail() + "*");
+                            
+                            //String path_converse = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
+                            //Storage.fncStorageCopiarArchivo(new File(buzo_chat), path_converse);
+                            
                             JOptionPane.showMessageDialog(null, "El mensaje se ha enviado al usuario " +  this.perfil.getStrEmail() +".");
+                            
+                            
 
                             buzon_creado = true;
                         
