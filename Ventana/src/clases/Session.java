@@ -64,14 +64,19 @@ public class Session {
     public void fncActualizarDatos(){
         
         try {
-            String path = Storage.fncStorageObtenerRutaData(this.strEmail);
+            String path = this.stgData;
             File myObj = new File(path);
                 
             if (myObj.exists()) {
                 FileWriter myWriter = new FileWriter(path);
-                   
+                
+                System.out.println(">>>>> NAme " + strNombres);
+                System.out.println(">>>>> FirsrNAme " + strApellidos);
+                
                 myWriter.write(this.strNombres + "\n");
                 myWriter.write(this.strApellidos + "\n");
+                
+                
         
                 myWriter.write(this.strNacimiento + "\n");
                 myWriter.write(this.strSexo + "\n");

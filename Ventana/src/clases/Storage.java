@@ -106,7 +106,7 @@ public class Storage {
     }
     
     public static String fncStorageObtenerRutaData(String email){
-        System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );
+        // System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );
         return Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data;
     }
     

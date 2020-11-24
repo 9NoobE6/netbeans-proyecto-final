@@ -7,6 +7,7 @@ package ventana_singup;
 
 // Importar mis clases
 import clases.*;
+import java.awt.Color;
 import ventana_pricipal.Principal;
 import jpanelimagen.ImagenFondo;
 
@@ -37,11 +38,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultCaret;
 import ventana_chats.Chats;
 import ventana_people.People;
@@ -125,7 +130,7 @@ public class SingUp extends javax.swing.JFrame {
         );
         panel_foto_de_perfilLayout.setVerticalGroup(
             panel_foto_de_perfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
+            .addGap(0, 148, Short.MAX_VALUE)
         );
 
         panel_portada.setBackground(new java.awt.Color(204, 255, 255));
@@ -185,18 +190,28 @@ public class SingUp extends javax.swing.JFrame {
         panel_portadaLayout.setHorizontalGroup(
             panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_portadaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(campo_nombres)
-                    .addComponent(jLabel3)
-                    .addComponent(campo_sexo, 0, 180, Short.MAX_VALUE))
+                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(campo_nombres)
+                            .addComponent(campo_sexo, 0, 180, Short.MAX_VALUE)
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(jLabel3))))
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campo_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel4))
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel2))
+                    .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57)
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
@@ -206,34 +221,34 @@ public class SingUp extends javax.swing.JFrame {
         );
         panel_portadaLayout.setVerticalGroup(
             panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_portadaLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_portadaLayout.createSequentialGroup()
+                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
+                        .addGap(11, 11, 11)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campo_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campo_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
+                        .addContainerGap(24, Short.MAX_VALUE)
+                        .addComponent(btnModificar)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(panel_portadaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnModificar)
-                .addGap(12, 12, 12)
-                .addComponent(btnActualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminarCuenta)
+                        .addComponent(btnEliminarCuenta)))
                 .addGap(19, 19, 19))
         );
 
@@ -317,7 +332,7 @@ public class SingUp extends javax.swing.JFrame {
                     .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(321, Short.MAX_VALUE))
+                .addContainerGap(317, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -372,21 +387,97 @@ public class SingUp extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarMouseReleased
 
     private void btnActualizarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseReleased
-        // TODO add your handling code here:
-        this.btnModificar.setEnabled(true);
-        this.btnActualizar.setEnabled(false);
         
-        this.session_activa.setStrNombres( this.campo_nombres.getText() );
-        this.session_activa.setStrApellidos(this.campo_apellidos.getText() );
-        this.session_activa.setStrEmail(this.campo_correo.getText() );
-        this.session_activa.setStrSexo((String) this.campo_sexo.getSelectedItem());
-        this.session_activa.fncActualizarDatos();
+        // Este es contar los campos modificados
+        int campos_modificados = 0;
+        int campos_vacios = 0;
+ 
+        // Verificar que el campo nombre sea distinto al actual y que no este vacio..
+        if( !this.campo_nombres.getText().equals(this.session_activa.getStrNombres()) ){
+            if( !this.campo_nombres.getText().isEmpty() ){
+                this.session_activa.setStrNombres( this.campo_nombres.getText() );
+                campos_modificados ++;
+            }else {
+                this.campo_nombres.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
+                //this.campo_nombres.setBorder(  BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED,2,true), BorderFactory.createLoweredBevelBorder()) );
+                //this.campo_nombres.setBorder(  BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED,1), new JTextField().getBorder()  ) );
+                
+                campos_vacios++;
+            }
+        }
+        
+        // Verificar que el campo apellidos sea distinto al actual y que no este vacio..
+        if( !this.campo_apellidos.getText().equals(this.session_activa.getStrApellidos()) ){
+            if( !this.campo_apellidos.getText().isEmpty() ){
+                this.session_activa.setStrApellidos(this.campo_apellidos.getText() );
+                campos_modificados ++;
+            }else {
+                this.campo_apellidos.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
+                //this.campo_apellidos.setBorder( BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.RED, Color.RED) );
+                //this.campo_apellidos.setBorder(  BorderFactory.createCompoundBorder( BorderFactory.createLineBorder(Color.RED,2), BorderFactory.createLineBorder(Color.WHITE,3)  ) );
+                campos_vacios++;
+            }
+        }
+        
+        // Verificar que el campo sexo sea distinto al actual y que no este vacio..
+        if( !this.campo_sexo.getSelectedItem().toString().equals(this.session_activa.getStrSexo()) ){
+            if( !this.campo_sexo.getSelectedItem().toString().isEmpty() ){
+                this.session_activa.setStrSexo(this.campo_sexo.getSelectedItem().toString());
+                campos_modificados++;
+            }else campos_vacios++;
+        }
+
+        // Si hay un solo campo modificado.. se actualizan los datos..
+        int respuesta = -1;
+        if(campos_vacios > 0){
+            
+            respuesta = JOptionPane.showConfirmDialog(null, "Tienes campos vacios deseas actualizar de todos modos ? ", null ,JOptionPane.YES_NO_OPTION);
+            
+            if(respuesta == 0){
+                
+                // Quitamos los border rojos de error en caso de existir
+                this.campo_nombres.setBorder( new JTextField().getBorder() );
+                this.campo_apellidos.setBorder( new JTextField().getBorder() );
+
+                // Cambiamos de estados 
+                this.fncCambiarEstados(false);
+                this.btnModificar.setEnabled(true);
+                this.btnActualizar.setEnabled(false);
+                
+                this.session_activa.fncActualizarDatos();
+                this.fncInstertarDatosDeSession();
+                JOptionPane.showMessageDialog(null, "Tus datos se han actualizado exitosamente.");
+                
+            }else JOptionPane.showMessageDialog(null, "Complete los datos solicitados.");
+            
+        // Si hay un solo campo modificado.. se actualizan los datos..
+        }else
+        if(campos_modificados > 0 ){
+            
+            // Quitamos los border rojos de error en caso de existir
+            this.campo_nombres.setBorder( new JTextField().getBorder() );
+            this.campo_apellidos.setBorder( new JTextField().getBorder() );
+                
+            // Cambiamos de estados 
+            this.fncCambiarEstados(false);
+            this.btnModificar.setEnabled(true);
+            this.btnActualizar.setEnabled(false);
+            
+            this.session_activa.fncActualizarDatos();
+            this.fncInstertarDatosDeSession();
+            JOptionPane.showMessageDialog(null, "Tus datos se han actualizado exitosamente.");
+
+        }else{
+            
+            // Cambiamos de estados 
+            this.fncCambiarEstados(false);
+            this.btnModificar.setEnabled(true);
+            this.btnActualizar.setEnabled(false);
+            
+        }
         
         
-        this.fncCambiarEstados(false);
-        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
-        JOptionPane.showMessageDialog(null, "Tus datos se han actualizado exitosamente.");
-        
+
     }//GEN-LAST:event_btnActualizarMouseReleased
 
     private void btnCerrarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSessionMouseReleased
@@ -554,7 +645,6 @@ public class SingUp extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
         this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
-        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         
         // Este es para JFrame SingUp (No depende de Session)
         this.btnModificar.setEnabled(true);
@@ -563,20 +653,7 @@ public class SingUp extends javax.swing.JFrame {
         this.campo_correo.setEnabled(false);
         
         // Este es para JFrame SingUp (Si depende de Session)
-        
-        String img_profile = "";
-        if( this.session_activa.getStrImgPerfil().equals("user_default.png") ){
-            img_profile = Rutas.path_user_default;
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
-        }else{
-            img_profile = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_svg);
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
-        }
-        
-        this.campo_nombres.setText( session_activa.getStrNombres() );
-        this.campo_apellidos.setText( session_activa.getStrApellidos());
-        this.campo_correo.setText( session_activa.getStrEmail());
-        this.campo_sexo.setSelectedItem(session_activa.getStrSexo());
+        this.fncInstertarDatosDeSession();
         
     }
     
@@ -639,6 +716,23 @@ public class SingUp extends javax.swing.JFrame {
         this.campo_correo.setEditable(opcion);
         this.campo_sexo.setEnabled(opcion);
  
+    }
+
+    private void fncInstertarDatosDeSession() {
+        String img_profile = "";
+        if( this.session_activa.getStrImgPerfil().equals("user_default.png") ){
+            img_profile = Rutas.path_user_default;
+            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
+        }else{
+            img_profile = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_svg);
+            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
+        }
+        
+        this.campo_nombres.setText( session_activa.getStrNombres() );
+        this.campo_apellidos.setText( session_activa.getStrApellidos());
+        this.campo_correo.setText( session_activa.getStrEmail());
+        this.campo_sexo.setSelectedItem(session_activa.getStrSexo());
+        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
     }
     
 }
