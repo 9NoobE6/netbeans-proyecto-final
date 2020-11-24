@@ -208,6 +208,9 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 
                 if( Storage.fncStorageBuscarUnaLineaProfile(People.session_activa.stgFriends, this.perfil.getStrEmail()+"*") ){
                     
+                    // ********* TESTING
+                    System.out.println("ESTAGE D ");
+                            
                     String buzo_chat =  Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
                     String perfil_friends = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_friends);
                     
@@ -228,10 +231,43 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 }else
                 if( Storage.fncStorageBuscarUnaLineaProfile(this.perfil.stgFriends, People.session_activa.getStrEmail()+"*") ){
                     
+                    
+                    // ##########  Agregando mensanjes en una conversacion que tengo con this.perfil.getStrEmail() ... (INICIO)
                     // Los mensajes see¡ escriben, cuando el buzon ya existe
                     String buzo_chat =  Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
-                    System.out.println("XXXX " + buzo_chat);
+                    String session_friends =  Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
+                    
+                    // ********* TESTING
+                    System.out.println("ESTAGE C");
+                    System.out.println("XXXX A " + buzo_chat);
+                    
                     Storage.fncStorageAcoplarUnaLinea(buzo_chat, mensaje);
+                    // ##########  Agregando mensanjes en una conversacion que tengo con this.perfil.getStrEmail()... (FIN)
+                    
+                    
+                    // ########## Recuperando la conversacion previa... (INICIO)
+                    String chat_perfil = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
+                    
+                    // ********* TESTING
+                    System.out.println("XXXX B " +  chat_perfil);
+                    
+                    // Verificar si la conversacion que en pefil existe o no ... y si no 
+                    // la conservacion de session_activa se copa a perfil .. eso para tener 
+                    // la misam conversacion.
+                    if( new File(chat_perfil).exists() ){
+                        Storage.fncStorageAcoplarUnaLinea(chat_perfil, mensaje);
+                        JOptionPane.showMessageDialog(null, People.session_activa.getStrEmail() + " tienes una conversación previamente con " + this.perfil.getStrEmail()+" ."
+                        + "\nPuedes abrir la conersacion en la lista de amigos.");
+                    }else{
+                        Storage.fncStorageCopiarArchivo(new File(buzo_chat), chat_perfil);
+                    }
+                    
+                    // Registrar como perfil de interes... a mi lista de amigos...
+                    Storage.fncStorageEliminarUnaLinea(new File(session_friends), this.perfil.getStrEmail() + "*");
+                    Storage.fncStorageAcoplarUnaLinea(session_friends, this.perfil.getStrEmail() + "*");
+                    
+                    // ########## Recuperando la conversacion previa... (FIN)
+                    
                     
                     buzon_creado = true;
                 }
@@ -241,13 +277,38 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 if( Storage.fncStorageBuscarUnaLineaProfile(People.session_activa.stgFriends, this.perfil.getStrEmail()+"*") == false ){
                     
                     if(buzon_creado == false){
+                        
                         // Registrar en la lista de amigos de ... perfil
                         Storage.fncStorageAcoplarUnaLinea(this.perfil.stgFriends, People.session_activa.getStrEmail()+"*");
 
                         // Crear un buzon 
                         String session_friends = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
                         if(new File(session_friends).createNewFile()){
+                            
+                            // ********* TESTING
+                            System.out.println("ESTAGE A ");
+                        
                             Storage.fncStorageAcoplarUnaLinea(session_friends, mensaje);
+                        }else{
+                            
+                            // ********* TESTING
+                            System.out.println("ESTAGE B ");
+                            System.out.println("El buzon .. no lo cree ... ya existe en " +  session_friends);
+                            
+                            // Los mensajes see¡ escriben, cuando el buzon ya existe
+                            String buzo_chat =  Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());                         
+                            
+                            // ********* TESTING
+                            System.out.println("XXXX  buzo_chat " + buzo_chat);
+                            Storage.fncStorageAcoplarUnaLinea(buzo_chat, mensaje);
+                            
+                            
+                            Storage.fncStorageEliminarUnaLinea(new File(this.perfil.stgFriends), People.session_activa.getStrEmail() + "*");
+                            Storage.fncStorageAcoplarUnaLinea(this.perfil.stgFriends, People.session_activa.getStrEmail() + "*");
+                            
+
+                            buzon_creado = true;
+                        
                         }
                     }
                     

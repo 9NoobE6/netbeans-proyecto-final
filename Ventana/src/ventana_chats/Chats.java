@@ -655,7 +655,10 @@ public class Chats extends javax.swing.JFrame {
             
             this.amigos.removeAllElements();
             this.lista_de_amigos.removeAll();
-      
+            
+            this.bntAbrirChat.setEnabled(false);
+            this.bntVerPerfil.setEnabled(false);
+            this.bntEliminar.setEnabled(false);
             this.amigos.addElement("No tienes amigos...");
             
             this.lista_de_amigos.setModel(this.amigos);
