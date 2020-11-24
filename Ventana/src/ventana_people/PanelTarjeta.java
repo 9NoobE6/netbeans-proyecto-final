@@ -232,8 +232,17 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     Storage.fncStorageCopiarArchivo(new File(buzo_chat), buzon_clone);
                     
                     // Mostrar un mensaje de exitos...
-                    JOptionPane.showMessageDialog(null, this.perfil.getStrEmail() +  " te ha enviado un mensaje previamente."
-                    + "\nPuedes abrir la conersacion en la lista de amigos.");
+                    if( 
+                       Storage.fncStorageBuscarUnaLineaProfile(this.perfil.stgFriends, People.session_activa.getStrEmail()+"*") 
+                    && Storage.fncStorageBuscarUnaLineaProfile(People.session_activa.stgFriends, this.perfil.getStrEmail()+"*")
+                    ){
+                        JOptionPane.showMessageDialog(null, "Mensaje enviado." + "\nPuedes abrir la conersacion en la lista de amigos.");
+                    }else{
+                        JOptionPane.showMessageDialog(null, this.perfil.getStrEmail() +  " te ha enviado un mensaje previamente."
+                        + "\nPuedes abrir la conersacion en la lista de amigos.");
+                    }
+                    
+                    
                 
                     buzon_creado = true;
                 }else

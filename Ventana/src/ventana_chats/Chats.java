@@ -409,6 +409,7 @@ public class Chats extends javax.swing.JFrame {
                 String amigo_eliminar = this.lista_de_amigos.getSelectedValue();
                 if(Storage.fncStorageBuscarUnaLinea(pathA, amigo_eliminar)){
                     Storage.fncStorageEliminarUnaLinea(new File(pathA), amigo_eliminar);
+                    
                 }
                 
                 // * Eliminar la conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
@@ -420,6 +421,10 @@ public class Chats extends javax.swing.JFrame {
                 // * Eliminar a this.session_activa en la lista de amigos de  this.lista_de_amigos.getSelectedValue()
                 String perfil_friends = new Session(amigo_eliminar.replace("*", "")).stgFriends;
                 Storage.fncStorageEliminarUnaLinea(new File( perfil_friends ), this.session_activa.getStrEmail() + "*");
+                
+                // Detecte el error.. tienes que agregar una linea en this.lista_de_amigos.getSelectedValue() .friends
+                // a this.session_activa
+                
                 
             }
         }
