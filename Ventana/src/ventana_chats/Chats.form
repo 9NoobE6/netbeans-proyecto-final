@@ -148,11 +148,11 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="bntEliminar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="bntAbrirChat" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="bntVerPerfil" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="bntEliminar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="18" max="32767" attributes="0"/>
@@ -168,9 +168,9 @@
                       <Component id="jScrollPane1" min="-2" pref="346" max="-2" attributes="0"/>
                       <EmptySpace pref="9" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="bntEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bntVerPerfil" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bntAbrirChat" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="bntEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -198,26 +198,15 @@
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lista_de_amigosMouseReleased"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="bntEliminar">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="33" red="99" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Eliminar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bntEliminarMouseReleased"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="bntVerPerfil">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -241,6 +230,20 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bntAbrirChatMouseReleased"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="bntEliminar">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="33" red="99" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Eliminar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bntEliminarMouseReleased"/>
               </Events>
             </Component>
           </SubComponents>
@@ -275,7 +278,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="323" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>

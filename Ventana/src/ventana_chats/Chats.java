@@ -98,9 +98,9 @@ public class Chats extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista_de_amigos = new javax.swing.JList<>();
-        bntEliminar = new javax.swing.JButton();
         bntVerPerfil = new javax.swing.JButton();
         bntAbrirChat = new javax.swing.JButton();
+        bntEliminar = new javax.swing.JButton();
         panel_contenedor_chat = new jpanelimagen.JPanelImagen();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_mensaje = new javax.swing.JTextArea();
@@ -157,16 +157,12 @@ public class Chats extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(lista_de_amigos);
-
-        bntEliminar.setBackground(new java.awt.Color(153, 51, 0));
-        bntEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        bntEliminar.setText("Eliminar");
-        bntEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+        lista_de_amigos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                bntEliminarMouseReleased(evt);
+                lista_de_amigosMouseReleased(evt);
             }
         });
+        jScrollPane1.setViewportView(lista_de_amigos);
 
         bntVerPerfil.setBackground(new java.awt.Color(0, 0, 102));
         bntVerPerfil.setForeground(new java.awt.Color(255, 255, 255));
@@ -178,6 +174,15 @@ public class Chats extends javax.swing.JFrame {
         bntAbrirChat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 bntAbrirChatMouseReleased(evt);
+            }
+        });
+
+        bntEliminar.setBackground(new java.awt.Color(153, 51, 0));
+        bntEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        bntEliminar.setText("Eliminar");
+        bntEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntEliminarMouseReleased(evt);
             }
         });
 
@@ -193,11 +198,11 @@ public class Chats extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(panel_lista_de_amigosLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(bntEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bntAbrirChat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bntVerPerfil)))
+                        .addComponent(bntVerPerfil)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bntEliminar)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         panel_lista_de_amigosLayout.setVerticalGroup(
@@ -209,9 +214,9 @@ public class Chats extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(panel_lista_de_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntEliminar)
                     .addComponent(bntVerPerfil)
-                    .addComponent(bntAbrirChat))
+                    .addComponent(bntAbrirChat)
+                    .addComponent(bntEliminar))
                 .addContainerGap())
         );
 
@@ -259,7 +264,7 @@ public class Chats extends javax.swing.JFrame {
         panel_contenedor_chatLayout.setVerticalGroup(
             panel_contenedor_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_contenedor_chatLayout.createSequentialGroup()
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -322,22 +327,15 @@ public class Chats extends javax.swing.JFrame {
     }//GEN-LAST:event_bntVolverMouseReleased
 
     private void bntAbrirChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAbrirChatMouseReleased
-        // TODO add your handling code here:
-        
-        /* String amigo = this.lista_de_amigos.getSelectedValue();
-        
-        if( amigo.contains("*") ){
-            
-        }
-        */
-        
 
         // Crear path y objeto archivo de mi storage .chats para ver los chats que tengo registrados
-        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
-        File chats = new File(path);
+        String path = this.session_activa.stgFriends;
+        File chats = new File( path );
         
         // Si mi archivo de mi storage .chats y el perfil selecciona no es vacio...
-        if(chats.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
+        if(chats.exists() && this.lista_de_amigos.isSelectionEmpty() == false 
+        && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
+            
             if(Storage.fncStorageBuscarUnaLineaProfile(path, this.lista_de_amigos.getSelectedValue() )){
                 this.fncCambiarEstadoPanelAmigos(false);
                 this.fncCambiarEstadoPanelChat(true);
@@ -389,10 +387,13 @@ public class Chats extends javax.swing.JFrame {
     private void bntEliminarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEliminarMouseReleased
         // TODO add your handling code here:
         
-        String pathA = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+        String pathA = this.session_activa.stgFriends;
         File amistades = new File(pathA);
         System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
-        if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false ){
+        
+        if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false 
+          && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
+            
             try {
                 int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?");
                 
@@ -450,7 +451,7 @@ public class Chats extends javax.swing.JFrame {
             Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgChats  ), this.session_activa.getStrEmail() + "*");
             Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgChats, this.session_activa.getStrEmail() + "*");
             
-            remitente = Chats.session_activa.getStrNombres() +" "+Chats.session_activa.getStrApellidos() + "  (" + Chats.session_activa.getStrEmail() + ")";
+            remitente = this.session_activa.getStrNombres() +" "+this.session_activa.getStrApellidos() + "  (" + this.session_activa.getStrEmail() + ")";
             Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, remitente + ": " + "\n" + this.txt_mensaje.getText() + "\n");          
             Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo) );
             
@@ -459,6 +460,23 @@ public class Chats extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_bntEnviarMensajeMouseReleased
+
+    private void lista_de_amigosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lista_de_amigosMouseReleased
+        // ********* TESTING
+        System.out.println("Quien seleccione ... " + this.lista_de_amigos.getSelectedValue() );
+        String mi_amigo = this.lista_de_amigos.getSelectedValue();
+        
+        if( Storage.fncStorageBuscarUnaLineaProfile(this.session_activa.stgFriends, mi_amigo) ){
+            this.bntAbrirChat.setEnabled(true);
+            this.bntVerPerfil.setEnabled(true);
+            this.bntEliminar.setEnabled(true);
+        }else{
+            this.bntAbrirChat.setEnabled(false);
+            this.bntVerPerfil.setEnabled(false);
+            this.bntEliminar.setEnabled(false);
+        }
+        
+    }//GEN-LAST:event_lista_de_amigosMouseReleased
 
     /**
      * @param args the command line arguments
@@ -522,7 +540,7 @@ public class Chats extends javax.swing.JFrame {
     private jpanelimagen.JPanelImagen panel_lista_de_amigos;
     private javax.swing.JTextArea txt_mensaje;
     // End of variables declaration//GEN-END:variables
-    public static Session session_activa;
+    public Session session_activa;
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
     private long size_friendship;
@@ -541,6 +559,10 @@ public class Chats extends javax.swing.JFrame {
         this.campo_email.setText( this.session_activa.getStrEmail() );
         this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         this.fncCambiarEstadoPanelChat(false);
+        
+        this.bntAbrirChat.setEnabled(false);
+        this.bntEliminar.setEnabled(false);
+        this.bntVerPerfil.setEnabled(false);
         
         try{
              
@@ -604,9 +626,13 @@ public class Chats extends javax.swing.JFrame {
     }
     
     private void fncSincronizarAmigos() throws FileNotFoundException, IOException{
-        String path = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends);
+        String path = this.session_activa.stgFriends;
         long _size_ = this.fncObtenerTamahnoStorages(path);
         
+        // ********* TESTING
+        System.out.print("** Observador -fncSincronizarAmigos- :: " );
+        System.out.println(" Total de amigos = " + this.amigos.getSize() );
+
         if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
             this.amigos.removeAllElements();
             this.lista_de_amigos.removeAll();
@@ -618,10 +644,23 @@ public class Chats extends javax.swing.JFrame {
             while ((st = br.readLine()) != null){
                 this.amigos.addElement(st);
             }
-
+            
             this.lista_de_amigos.setModel(this.amigos);
             this.size_friendship = _size_;
-        } 
+        }
+        
+        
+        // Si no tienes amigos a
+        if( this.amigos.getSize() == 0    ){
+            
+            this.amigos.removeAllElements();
+            this.lista_de_amigos.removeAll();
+      
+            this.amigos.addElement("No tienes amigos...");
+            
+            this.lista_de_amigos.setModel(this.amigos);
+        }
+        
     }
 
     private void fncSincronizarMensajes() throws FileNotFoundException, IOException {
@@ -631,6 +670,7 @@ public class Chats extends javax.swing.JFrame {
         
         if(chat.exists()){
             if( _size_ > this.size_chats || _size_ < this.size_chats ){
+                
                 this.mensajes.removeAllElements();
                 this.lista_mensajes.removeAll();
 
