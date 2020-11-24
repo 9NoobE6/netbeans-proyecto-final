@@ -20,6 +20,7 @@ public class Rutas {
     public static final String storage_profiles = "storage_profiles/";
     public static final String extesion_friends = ".friends";
     public static final String extesion_chats = ".chats";
+    public static final String extesion_chatmp = "tmp_";
     public static final String extesion_svg = ".svg";
     public static final String extesion_data = ".data";
     public static final String storage_profile = "/profile/";
