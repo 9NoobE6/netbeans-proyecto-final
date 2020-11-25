@@ -47,6 +47,10 @@ public class Principal extends javax.swing.JFrame {
         
         panel_singup.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
         panel_registro.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
+        // /img/logo1_3.png, /img/logo2.png
+        panel_logo.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/logo1_1.png").getPath() ), 0.2f ));
+        panel_logo.setToolTipText("RS Gobim");
+
     }
     
     private void fncEstablecerItems(){
@@ -126,6 +130,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         campo_singup_contrasenha = new javax.swing.JPasswordField();
         jLabel10 = new javax.swing.JLabel();
+        panel_logo = new jpanelimagen.JPanelImagen();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -240,8 +245,8 @@ public class Principal extends javax.swing.JFrame {
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel1)
-                                        .addComponent(campo_apellidos)
-                                        .addComponent(campo_nombres, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)))
+                                        .addComponent(campo_nombres, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                                        .addComponent(campo_apellidos)))
                                 .addComponent(campo_registro_contrasenha))
                             .addGroup(panel_registroLayout.createSequentialGroup()
                                 .addGroup(panel_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,31 +322,43 @@ public class Principal extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Inicio de session");
 
+        javax.swing.GroupLayout panel_logoLayout = new javax.swing.GroupLayout(panel_logo);
+        panel_logo.setLayout(panel_logoLayout);
+        panel_logoLayout.setHorizontalGroup(
+            panel_logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 110, Short.MAX_VALUE)
+        );
+        panel_logoLayout.setVerticalGroup(
+            panel_logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 110, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panel_singupLayout = new javax.swing.GroupLayout(panel_singup);
         panel_singup.setLayout(panel_singupLayout);
         panel_singupLayout.setHorizontalGroup(
             panel_singupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_singupLayout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addGap(0, 267, Short.MAX_VALUE))
-            .addGroup(panel_singupLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(30, 30, 30)
                 .addGroup(panel_singupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campo_singup_email)
-                    .addComponent(campo_singup_contrasenha, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                    .addComponent(jLabel10)
+                    .addGroup(panel_singupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(campo_singup_contrasenha)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(campo_singup_email, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_singupLayout.createSequentialGroup()
-                        .addGroup(panel_singupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(89, 89, 89)
+                        .addComponent(panel_logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         panel_singupLayout.setVerticalGroup(
             panel_singupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_singupLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addComponent(jLabel10)
-                .addGap(30, 30, 30)
+                .addGap(66, 66, 66)
+                .addComponent(panel_logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_singup_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -349,7 +366,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_singup_contrasenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(284, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panel_1_BackgroundLayout = new javax.swing.GroupLayout(panel_1_Background);
@@ -540,7 +557,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void campo_singup_emailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_singup_emailKeyReleased
         // TODO add your handling code here:
-        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.fncIniciarSession();
+        }
     }//GEN-LAST:event_campo_singup_emailKeyReleased
 
     private void campo_singup_contrasenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_singup_contrasenhaKeyReleased
@@ -638,6 +657,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel panel_1_Background;
+    private jpanelimagen.JPanelImagen panel_logo;
     private jpanelimagen.JPanelImagen panel_registro;
     private jpanelimagen.JPanelImagen panel_singup;
     private javax.swing.JRadioButton sexo_femenino;
