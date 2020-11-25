@@ -51,6 +51,11 @@ public class Storage {
         }
     }
     
+    public static void fncStorageActualizarUnaLinea(String rutaA, String linea){
+        Storage.fncStorageEliminarUnaLinea(new File(rutaA), linea);
+        Storage.fncStorageAcoplarUnaLinea(rutaA, linea);
+    }
+    
     public static void fncStorageAcoplarUnaLinea(String pathA, String linea){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(pathA, true));

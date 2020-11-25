@@ -440,10 +440,11 @@ public class Chats extends javax.swing.JFrame {
                 String amigo = this.lista_de_amigos.getSelectedValue();
                 amigo = amigo.replace("*", ""); 
 
-                // Eniviamos mensajes al bozun,  notificando en .chats y .friends
+                // Eniviamos una notificacion en .chats
                 Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgFriends  ), this.session_activa.getStrEmail() + "*");
                 Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgFriends, this.session_activa.getStrEmail() + "*");
-
+                
+                // Enviamos una notificación en .friends
                 Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgChats  ), this.session_activa.getStrEmail() + "*");
                 Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgChats, this.session_activa.getStrEmail() + "*");
 
