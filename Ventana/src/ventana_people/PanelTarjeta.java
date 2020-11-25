@@ -68,6 +68,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         }
         
         // Verificar si, si somos amigos...
+        /*
         String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
         if( Storage.fncStorageEncontrarUnaCuenta(session_friends, this.perfil.getStrEmail() ) ){
             this.somos_amigos = true;
@@ -76,6 +77,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         if( Storage.fncStorageEncontrarUnaCuenta(session_friends, this.perfil.getStrEmail() + "*") ){
             this.btnAgregarAmigo.setText("Amigo+");
         }
+        */
         
         // Verificar si tengo conversacion
         if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){

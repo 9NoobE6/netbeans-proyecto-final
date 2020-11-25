@@ -99,17 +99,18 @@ public class SingUp extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         campo_apellidos = new javax.swing.JTextField();
-        campo_correo = new javax.swing.JTextField();
+        campo_email = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        btnModificar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
+        btnModificarCuenta = new javax.swing.JButton();
         campo_sexo = new javax.swing.JComboBox<>();
-        btnEliminarCuenta = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        campo_contrasenha = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         bntAmigos = new javax.swing.JButton();
         btnPeople = new javax.swing.JButton();
         btnCerrarSession = new javax.swing.JButton();
+        btnEliminarCuenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -135,8 +136,8 @@ public class SingUp extends javax.swing.JFrame {
 
         panel_portada.setBackground(new java.awt.Color(204, 255, 255));
 
-        campo_nombres.setEditable(false);
         campo_nombres.setText("jTextField1");
+        campo_nombres.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("Nombre (s):");
@@ -144,46 +145,34 @@ public class SingUp extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel2.setText("Apellido (s):");
 
-        campo_apellidos.setEditable(false);
         campo_apellidos.setText("jTextField1");
+        campo_apellidos.setEnabled(false);
 
-        campo_correo.setEditable(false);
-        campo_correo.setText("jTextField1");
+        campo_email.setText("jTextField1");
+        campo_email.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setText("Sexo:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel4.setText("Correo:");
+        jLabel4.setText("Correo electronico:");
 
-        btnModificar.setBackground(new java.awt.Color(204, 204, 0));
-        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
-        btnModificar.setText("Modifcar");
-        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnModificarCuenta.setBackground(new java.awt.Color(204, 204, 0));
+        btnModificarCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificarCuenta.setText("Modificar");
+        btnModificarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnModificarMouseReleased(evt);
-            }
-        });
-
-        btnActualizar.setBackground(new java.awt.Color(0, 153, 0));
-        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnActualizarMouseReleased(evt);
+                btnModificarCuentaMouseReleased(evt);
             }
         });
 
         campo_sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
+        campo_sexo.setEnabled(false);
 
-        btnEliminarCuenta.setBackground(new java.awt.Color(204, 0, 51));
-        btnEliminarCuenta.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarCuenta.setText("Eliminar cuenta");
-        btnEliminarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEliminarCuentaMouseReleased(evt);
-            }
-        });
+        jLabel5.setText("Contraseña:");
+
+        campo_contrasenha.setText("jPasswordField1");
+        campo_contrasenha.setEnabled(false);
 
         javax.swing.GroupLayout panel_portadaLayout = new javax.swing.GroupLayout(panel_portada);
         panel_portada.setLayout(panel_portadaLayout);
@@ -192,37 +181,60 @@ public class SingUp extends javax.swing.JFrame {
             .addGroup(panel_portadaLayout.createSequentialGroup()
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(campo_nombres)
-                            .addComponent(campo_sexo, 0, 180, Short.MAX_VALUE)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(jLabel3))))
+                                .addContainerGap()
+                                .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel2))
+                            .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel4))
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addGap(105, 105, 105)
+                                .addComponent(jLabel5)
+                                .addGap(70, 70, 70))
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addComponent(campo_contrasenha)))))
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campo_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel4))
-                    .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel2))
-                    .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                    .addComponent(btnEliminarCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(33, 33, 33))
+                        .addGap(57, 57, 57)
+                        .addComponent(btnModificarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_portadaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel3)))
+                        .addGap(44, 44, 44))))
         );
         panel_portadaLayout.setVerticalGroup(
             panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_portadaLayout.createSequentialGroup()
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addContainerGap(24, Short.MAX_VALUE)
+                        .addComponent(btnModificarCuenta)
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_portadaLayout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -232,24 +244,16 @@ public class SingUp extends javax.swing.JFrame {
                         .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campo_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addContainerGap(24, Short.MAX_VALUE)
-                        .addComponent(btnModificar)
-                        .addGap(12, 12, 12)
-                        .addComponent(btnActualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminarCuenta)))
-                .addGap(19, 19, 19))
+                        .addGap(18, 18, 18)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campo_contrasenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(24, 24, 24))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -284,6 +288,15 @@ public class SingUp extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarCuenta.setBackground(new java.awt.Color(204, 0, 51));
+        btnEliminarCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarCuenta.setText("Eliminar cuenta");
+        btnEliminarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEliminarCuentaMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -291,11 +304,13 @@ public class SingUp extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(bntAmigos)
-                .addGap(266, 266, 266)
+                .addGap(155, 155, 155)
                 .addComponent(btnPeople)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(111, 111, 111)
                 .addComponent(btnCerrarSession, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(63, 63, 63)
+                .addComponent(btnEliminarCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +319,8 @@ public class SingUp extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntAmigos)
                     .addComponent(btnPeople)
-                    .addComponent(btnCerrarSession))
+                    .addComponent(btnCerrarSession)
+                    .addComponent(btnEliminarCuenta))
                 .addContainerGap())
         );
 
@@ -379,106 +395,50 @@ public class SingUp extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_panel_foto_de_perfilMouseReleased
 
-    private void btnModificarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseReleased
+    private void btnModificarCuentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarCuentaMouseReleased
         // TODO add your handling code here:
-        this.btnModificar.setEnabled(false);
-        this.btnActualizar.setEnabled(true);
-        this.fncCambiarEstados(true);
-    }//GEN-LAST:event_btnModificarMouseReleased
-
-    private void btnActualizarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseReleased
         
-        // Este es contar los campos modificados
-        int campos_modificados = 0;
-        int campos_vacios = 0;
- 
-        // Verificar que el campo nombre sea distinto al actual y que no este vacio..
-        if( !this.campo_nombres.getText().equals(this.session_activa.getStrNombres()) ){
-            if( !this.campo_nombres.getText().isEmpty() ){
-                this.session_activa.setStrNombres( this.campo_nombres.getText() );
-                campos_modificados ++;
-            }else {
-                this.campo_nombres.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
-                //this.campo_nombres.setBorder(  BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED,2,true), BorderFactory.createLoweredBevelBorder()) );
-                //this.campo_nombres.setBorder(  BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED,1), new JTextField().getBorder()  ) );
-                
-                campos_vacios++;
-            }
-        }
-        
-        // Verificar que el campo apellidos sea distinto al actual y que no este vacio..
-        if( !this.campo_apellidos.getText().equals(this.session_activa.getStrApellidos()) ){
-            if( !this.campo_apellidos.getText().isEmpty() ){
-                this.session_activa.setStrApellidos(this.campo_apellidos.getText() );
-                campos_modificados ++;
-            }else {
-                this.campo_apellidos.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
-                //this.campo_apellidos.setBorder( BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.RED, Color.RED) );
-                //this.campo_apellidos.setBorder(  BorderFactory.createCompoundBorder( BorderFactory.createLineBorder(Color.RED,2), BorderFactory.createLineBorder(Color.WHITE,3)  ) );
-                campos_vacios++;
-            }
-        }
-        
-        // Verificar que el campo sexo sea distinto al actual y que no este vacio..
-        if( !this.campo_sexo.getSelectedItem().toString().equals(this.session_activa.getStrSexo()) ){
-            if( !this.campo_sexo.getSelectedItem().toString().isEmpty() ){
-                this.session_activa.setStrSexo(this.campo_sexo.getSelectedItem().toString());
-                campos_modificados++;
-            }else campos_vacios++;
-        }
+        System.out.println("texot :: " + this.btnModificarCuenta.getText());
+        // Si modificar_cuenta es false 
+        if( !this.modificar_cuenta && this.btnModificarCuenta.getText().equals("Modificar") ){
+            
+            // Activar los campos para actualizar datos. 
+            this.fncCambiarEstados(!this.modificar_cuenta);
+            this.btnModificarCuenta.setText("Actualizar");
+            JOptionPane.showMessageDialog(null, "Campos activados, capture los nuevos datos.");
 
-        // Si hay un solo campo modificado.. se actualizan los datos..
-        int respuesta = -1;
-        if(campos_vacios > 0){
-            
-            respuesta = JOptionPane.showConfirmDialog(null, "Tienes campos vacios deseas actualizar de todos modos ? ", null ,JOptionPane.YES_NO_OPTION);
-            
-            if(respuesta == 0){
-                
-                // Quitamos los border rojos de error en caso de existir
-                this.campo_nombres.setBorder( new JTextField().getBorder() );
-                this.campo_apellidos.setBorder( new JTextField().getBorder() );
-
-                // Cambiamos de estados 
-                this.fncCambiarEstados(false);
-                this.btnModificar.setEnabled(true);
-                this.btnActualizar.setEnabled(false);
-                
-                this.session_activa.fncActualizarDatos();
-                this.fncInstertarDatosDeSession();
-                JOptionPane.showMessageDialog(null, "Tus datos se han actualizado exitosamente.");
-                
-            }else JOptionPane.showMessageDialog(null, "Complete los datos solicitados.");
-            
-        // Si hay un solo campo modificado.. se actualizan los datos..
-        }else
-        if(campos_modificados > 0 ){
-            
-            // Quitamos los border rojos de error en caso de existir
-            this.campo_nombres.setBorder( new JTextField().getBorder() );
-            this.campo_apellidos.setBorder( new JTextField().getBorder() );
-                
-            // Cambiamos de estados 
-            this.fncCambiarEstados(false);
-            this.btnModificar.setEnabled(true);
-            this.btnActualizar.setEnabled(false);
-            
-            this.session_activa.fncActualizarDatos();
-            this.fncInstertarDatosDeSession();
-            JOptionPane.showMessageDialog(null, "Tus datos se han actualizado exitosamente.");
-
+            this.modificar_cuenta = true;
+            this.fncCambiarEstados(modificar_cuenta);
         }else{
             
-            // Cambiamos de estados 
-            this.fncCambiarEstados(false);
-            this.btnModificar.setEnabled(true);
-            this.btnActualizar.setEnabled(false);
+            System.out.println("Estado: " + this.fncVerificarCampos());
+            
+            
+            if(this.fncVerificarCampos() == 400){
+                JOptionPane.showMessageDialog(null, "Complete los datos solicitado.");
+            }else
+            if( this.fncVerificarCampos() == 100 || this.fncVerificarCampos() == 0 ){
+                
+                
+                // Enviar los datos del formulario a session
+                this.session_activa.setStrNombres(this.campo_nombres.getText());
+                this.session_activa.setStrApellidos(this.campo_apellidos.getText());
+                this.session_activa.setStrEmail(this.campo_email.getText());
+                this.session_activa.setStrContrasenha(String.valueOf(this.campo_contrasenha.getPassword()));
+                
+                this.session_activa.fncActualizarDatos();
+                JOptionPane.showMessageDialog(null, "Tus datos sean actualizado exito.");
+                
+                 // Desactivamos los campos para modificar datos
+                this.btnModificarCuenta.setText("Modificar");
+                this.modificar_cuenta = false;
+                this.fncCambiarEstados(modificar_cuenta);
+                
+            }
             
         }
-        
-        
-
-    }//GEN-LAST:event_btnActualizarMouseReleased
+                
+    }//GEN-LAST:event_btnModificarCuentaMouseReleased
 
     private void btnCerrarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSessionMouseReleased
         // TODO add your handling code here:
@@ -599,19 +559,20 @@ public class SingUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntAmigos;
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCerrarSession;
     private javax.swing.JButton btnEliminarCuenta;
-    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnModificarCuenta;
     private javax.swing.JButton btnPeople;
     private javax.swing.JTextField campo_apellidos;
-    private javax.swing.JTextField campo_correo;
+    private javax.swing.JPasswordField campo_contrasenha;
+    private javax.swing.JTextField campo_email;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private jpanelimagen.JPanelImagen panel_2_Background;
     private javax.swing.JPanel panel_foto_de_perfil;
@@ -621,10 +582,9 @@ public class SingUp extends javax.swing.JFrame {
     DefaultListModel mensajes = new DefaultListModel();
     DefaultListModel amigos = new DefaultListModel();
     private long size_friendship=0;
-    
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
-    private boolean ver_amigos=false;
+    private boolean modificar_cuenta=false;
     
     private void InicializarVentana(){
         
@@ -647,10 +607,7 @@ public class SingUp extends javax.swing.JFrame {
         this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
         
         // Este es para JFrame SingUp (No depende de Session)
-        this.btnModificar.setEnabled(true);
-        this.btnActualizar.setEnabled(false);
         this.fncCambiarEstados(false);
-        this.campo_correo.setEnabled(false);
         
         // Este es para JFrame SingUp (Si depende de Session)
         this.fncInstertarDatosDeSession();
@@ -711,15 +668,20 @@ public class SingUp extends javax.swing.JFrame {
     }
     
     private void fncCambiarEstados(boolean opcion){
-        this.campo_nombres.setEditable(opcion);
-        this.campo_apellidos.setEditable(opcion);
-        this.campo_correo.setEditable(opcion);
+        
+        // Desactivamo o Activamos los campos de depende de opcion
+        this.campo_nombres.setEnabled(opcion);
+        this.campo_apellidos.setEnabled(opcion);
+        this.campo_email.setEnabled(opcion);
         this.campo_sexo.setEnabled(opcion);
+        this.campo_contrasenha.setEnabled(opcion);
  
     }
 
     private void fncInstertarDatosDeSession() {
         String img_profile = "";
+        
+        // Seleccionar el foto de perfil adecuado para el usuario
         if( this.session_activa.getStrImgPerfil().equals("user_default.png") ){
             img_profile = Rutas.path_user_default;
             this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
@@ -728,11 +690,95 @@ public class SingUp extends javax.swing.JFrame {
             this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
         }
         
+        // Insetar los datos personales del usuario
         this.campo_nombres.setText( session_activa.getStrNombres() );
         this.campo_apellidos.setText( session_activa.getStrApellidos());
-        this.campo_correo.setText( session_activa.getStrEmail());
+        this.campo_email.setText( session_activa.getStrEmail());
+        this.campo_contrasenha.setText( session_activa.getStrContrasenha() );
         this.campo_sexo.setSelectedItem(session_activa.getStrSexo());
+        
+        // Insertar el titulo de la ventana
         this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
+    }
+
+    private int fncVerificarCampos() {
+        
+         // Este es contar los campos modificados
+        int campos_modificados = 0;
+        int campos_vacios = 0;
+        int campos_identicos = 0;
+        
+        // Quitamos los border rojos de error en caso de existir
+        this.campo_nombres.setBorder( new JTextField().getBorder() );
+        this.campo_apellidos.setBorder( new JTextField().getBorder() );
+        this.campo_email.setBorder( new JTextField().getBorder() );
+        this.campo_contrasenha.setBorder( new JTextField().getBorder() );
+        
+        // Verificar que el campo nombre sea distinto al actual y que no este vacio..
+        if( !this.campo_nombres.getText().equals(this.session_activa.getStrNombres()) ){
+            if( !this.campo_nombres.getText().isEmpty() ){
+                //this.session_activa.setStrNombres( this.campo_nombres.getText() );
+                campos_modificados ++;
+            }else {
+                this.campo_nombres.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
+                campos_vacios++;
+            }
+        } else campos_identicos++;
+        
+        // Verificar que el campo apellidos sea distinto al actual y que no este vacio..
+        if( !this.campo_apellidos.getText().equals(this.session_activa.getStrApellidos()) ){
+            if( !this.campo_apellidos.getText().isEmpty() ){
+                //this.session_activa.setStrApellidos(this.campo_apellidos.getText() );
+                campos_modificados ++;
+            }else {
+                this.campo_apellidos.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
+                campos_vacios++;
+            }
+        } else campos_identicos++;
+        
+        // Verificar que el campo email sea distinto al actual y que no este vacio..
+        if( !this.campo_email.getText().equals(this.session_activa.getStrEmail()) ){
+            if( !this.campo_email.getText().isEmpty() ){
+                //this.session_activa.setStrEmail(this.campo_email.getText() );
+                campos_modificados ++;
+            }else {
+                this.campo_email.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
+                campos_vacios++;
+            }
+        } else campos_identicos++;
+        
+        // Verificar que el campo contrseña sea distinto al actual y que no este vacio..
+        String password = String.valueOf(this.campo_contrasenha.getPassword());
+        if( !password.equals(this.session_activa.getStrContrasenha()) ){
+            if( !password.isEmpty() ){
+                //this.session_activa.setStrContrasenha(password);
+                campos_modificados ++;
+            }else {
+                this.campo_contrasenha.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
+                campos_vacios++;
+            }
+        } else campos_identicos++;
+        
+        // Verificar que el campo sexo sea distinto al actual y que no este vacio..
+        if( !this.campo_sexo.getSelectedItem().toString().equals(this.session_activa.getStrSexo()) ){
+            if( !this.campo_sexo.getSelectedItem().toString().isEmpty() ){
+                //this.session_activa.setStrSexo(this.campo_sexo.getSelectedItem().toString());
+                campos_modificados++;
+            }else campos_vacios++;
+        } else campos_identicos++;
+
+        // Si hay un solo campo modificado.. se actualizan los datos..
+        if(campos_vacios > 0){
+           return 400; // Retorna un estado 400, significa que hay campos vacios
+        // Si hay un solo campo modificado.. se actualizan los datos..
+        }else if(campos_modificados > 0 ){
+           return 100; // Retorna un estado 100, significa que hay campos modificados 
+        }else if(campos_identicos > 0 ){
+           return 0; // Retorna un estado 0, significa que hay campos modificados
+        }
+        
+        // Retorna un estado -1, estado no identificado
+        return -1;
     }
     
 }

@@ -64,27 +64,25 @@ public class Session {
         
         try {
             String path = this.stgData;
-            File myObj = new File(path);
+            File mis_datos = new File(path);
                 
-            if (myObj.exists()) {
-                FileWriter myWriter = new FileWriter(path);
+            if (mis_datos.exists()) {
+                FileWriter registrar_nuevos_datos = new FileWriter(path);
                 
                 System.out.println(">>>>> NAme " + strNombres);
                 System.out.println(">>>>> FirsrNAme " + strApellidos);
                 
-                myWriter.write(this.strNombres + "\n");
-                myWriter.write(this.strApellidos + "\n");
-                
-                
+                registrar_nuevos_datos.write(this.strNombres + "\n");
+                registrar_nuevos_datos.write(this.strApellidos + "\n"); 
         
-                myWriter.write(this.strNacimiento + "\n");
-                myWriter.write(this.strSexo + "\n");
+                registrar_nuevos_datos.write(this.strNacimiento + "\n");
+                registrar_nuevos_datos.write(this.strSexo + "\n");
                 
-                myWriter.write(this.strContrasenha + "\n");
-                myWriter.write(this.strEmail + "\n");
-                myWriter.write(this.strImgPerfil + "\n");
+                registrar_nuevos_datos.write(this.strContrasenha + "\n");
+                registrar_nuevos_datos.write(this.strEmail + "\n");
+                registrar_nuevos_datos.write(this.strImgPerfil + "\n");
                 
-                myWriter.close();
+                registrar_nuevos_datos.close();
             }
                 
         } catch (IOException e) {
