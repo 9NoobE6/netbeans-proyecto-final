@@ -14,6 +14,7 @@ import javax.swing.Timer;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -144,6 +145,11 @@ public class Principal extends javax.swing.JFrame {
         btnIniciarSession.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnIniciarSessionMouseReleased(evt);
+            }
+        });
+        btnIniciarSession.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSessionActionPerformed(evt);
             }
         });
 
@@ -293,10 +299,20 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setText("Contraseña: ");
 
         campo_singup_email.setText("jTextField1");
+        campo_singup_email.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                campo_singup_emailKeyReleased(evt);
+            }
+        });
 
         jLabel8.setText("Email:");
 
         campo_singup_contrasenha.setText("jPasswordField1");
+        campo_singup_contrasenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                campo_singup_contrasenhaKeyReleased(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Inicio de session");
@@ -325,15 +341,15 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(panel_singupLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_singup_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_singup_contrasenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addContainerGap(284, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panel_1_BackgroundLayout = new javax.swing.GroupLayout(panel_1_Background);
@@ -394,11 +410,13 @@ public class Principal extends javax.swing.JFrame {
         }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca una contraseña, por favor...");
         }else if( this.campo_registro_email.getText().trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico, por favor...");
-        }else if( !this.campo_registro_email.getText().trim().contains("@quasar.org") || this.campo_registro_email.getText().length() < 14  ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico example@quasar.org, por favor...");
-        }else if( this.campo_registro_email.getText().trim().length() > (21 - 2) ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico menor o igual a 20 caracteres, por favor...");
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación @quasar.org , por favor...\n"
+                    +"por ejemplo example@quasar.org");
+        }else if( !this.campo_registro_email.getText().trim().contains("@quasar.org") || !this.fncVerificarEmail() ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación @quasar.org , por favor...\n" 
+                    +"por ejemplo example@quasar.org");
+        }else if( this.campo_registro_email.getText().trim().length() > 23 ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico menor o igual a 23 caracteres, por favor...");
         }else{
             
             try {
@@ -462,45 +480,14 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnIniciarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSessionMouseReleased
         // TODO add your handling code here:
-        if( String.valueOf(this.campo_singup_contrasenha.getPassword()).trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca su contraseña, por favor...");
-        }else if( this.campo_singup_email.getText().trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
-        }else{
-            String _contenedor = Rutas.storage_profiles + this.campo_singup_email.getText();
-            String _data = Storage.fncStorageObtenerRutaData(this.campo_singup_email.getText());
-            
-            File contenedor = new File(_contenedor);
-            File file_data = new File(_data);
-            
-            // Verificar si existe el usuario
-            if ( contenedor.isDirectory() && contenedor.exists() && file_data.exists() ) {
-                
-                // Verificar si la contraseña es correcta
-                if( !fncVerificarContrasehna(_data) ){
-                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta... \n");
-                }else{
-                   // JOptionPane.showMessageDialog(null, "Iniciando session... \n");
-                   
-                   SingUp session = new SingUp( new Session( this.campo_singup_email.getText() ));
-                   session.setVisible(true);
-                   this.dispose();
-                   session.fncMostrarMensajeDeBienvenida();
-                   
-                }
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario no existente...\nRegistre un nuevo usuario.");
-            }
-            
-        }
+        this.fncIniciarSession();
     }//GEN-LAST:event_btnIniciarSessionMouseReleased
 
     private void campo_nombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_nombresKeyTyped
 
         // Solo se aceptan caracteres y un espacios        
         char car = evt.getKeyChar();
-        if(Character.isLetter(car) || Character.isDigit(car) || evt.getKeyChar() == ' ' ){
+        if(Character.isLetter(car) || evt.getKeyChar() == ' ' ){
 
         }else{
             evt.consume();
@@ -542,7 +529,7 @@ public class Principal extends javax.swing.JFrame {
 
         // Solo se aceptan caracteres y un espacios        
         char car = evt.getKeyChar();
-        if(Character.isLetter(car) || Character.isDigit(car) || evt.getKeyChar() == ' ' ){
+        if(Character.isLetter(car) || evt.getKeyChar() == ' ' ){
 
         }else{
             evt.consume();
@@ -550,6 +537,22 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_campo_apellidosKeyTyped
+
+    private void campo_singup_emailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_singup_emailKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_campo_singup_emailKeyReleased
+
+    private void campo_singup_contrasenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_singup_contrasenhaKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.fncIniciarSession();
+        }
+    }//GEN-LAST:event_campo_singup_contrasenhaKeyReleased
+
+    private void btnIniciarSessionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSessionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIniciarSessionActionPerformed
     
     private boolean fncVerificarContrasehna(String file){
         Scanner scanner;
@@ -654,5 +657,51 @@ public class Principal extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void fncIniciarSession() {
+        if( String.valueOf(this.campo_singup_contrasenha.getPassword()).trim().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Introduzca su contraseña, por favor...");
+        }else if( this.campo_singup_email.getText().trim().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
+        }else{
+            
+            String email = this.campo_singup_email.getText().trim();
+            // Crear path y crear objeto archivo
+            String contenedor_perfil = Rutas.storage_profiles + email;
+            String path_data_perfil = Storage.fncStorageObtenerRutaData(email);
+            
+            File contenedor = new File(contenedor_perfil);
+            File file_data = new File(path_data_perfil);
+            
+            // Verificar si existe el usuario, mediante los path creados...
+            if ( contenedor.isDirectory() && contenedor.exists() && file_data.exists() ) {
+                
+                // Verificar si la contraseña es correcta
+                if( !fncVerificarContrasehna(path_data_perfil) ){
+                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta... \n");
+                }else{
+                   // JOptionPane.showMessageDialog(null, "Iniciando session... \n");
+                   
+                   SingUp session = new SingUp( new Session( email ));
+                   session.setVisible(true);
+                   this.dispose();
+                   session.fncMostrarMensajeDeBienvenida();
+                   
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario no existente...\nRegistre un nuevo usuario.");
+            }
+            
+        }
+    }
+    
+    private boolean fncVerificarEmail(){
+        
+        // Verificar que el email termine con @quasar.org
+        String email = this.campo_registro_email.getText().trim();
+        return (email.indexOf("@quasar.org") + 11) == email.length();
+        
     }
 }
