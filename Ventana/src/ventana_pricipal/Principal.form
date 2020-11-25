@@ -140,8 +140,8 @@
                                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                              <Component id="campo_nombres" alignment="0" pref="326" max="32767" attributes="0"/>
-                                              <Component id="campo_apellidos" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="campo_registro_nombres" alignment="0" pref="326" max="32767" attributes="0"/>
+                                              <Component id="campo_registro_apellidos" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="campo_registro_contrasenha" alignment="0" max="32767" attributes="0"/>
@@ -149,16 +149,16 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="cmbox_dia" min="-2" pref="60" max="-2" attributes="0"/>
+                                              <Component id="cmbox_registro_dia" min="-2" pref="60" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="cmbox_mes" min="-2" pref="60" max="-2" attributes="0"/>
+                                              <Component id="cmbox_registro_mes" min="-2" pref="60" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="sexo_femenino" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="sexo_registro_femenino" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="sexo_masculino" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cmbox_anho" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <Component id="sexo_registro_masculino" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cmbox_registro_anho" min="-2" pref="100" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -180,25 +180,25 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="campo_nombres" min="-2" max="-2" attributes="0"/>
+                      <Component id="campo_registro_nombres" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="campo_apellidos" min="-2" max="-2" attributes="0"/>
+                      <Component id="campo_registro_apellidos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmbox_dia" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbox_mes" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbox_anho" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbox_registro_dia" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbox_registro_mes" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbox_registro_anho" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="sexo_femenino" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="sexo_masculino" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sexo_registro_femenino" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sexo_registro_masculino" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -214,12 +214,12 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="campo_nombres">
+            <Component class="javax.swing.JTextField" name="campo_registro_nombres">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jTextField1"/>
               </Properties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campo_nombresKeyTyped"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campo_registro_nombresKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -232,12 +232,12 @@
                 <Property name="text" type="java.lang.String" value="Apellidos: "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="campo_apellidos">
+            <Component class="javax.swing.JTextField" name="campo_registro_apellidos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jTextField1"/>
               </Properties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campo_apellidosKeyTyped"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campo_registro_apellidosKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
@@ -252,7 +252,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="campo_registro_email">
               <Properties>
-                <Property name="text" type="java.lang.String" value="abc@quasar.org"/>
+                <Property name="text" type="java.lang.String" value="abc@gobim.dev"/>
               </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campo_registro_emailKeyTyped"/>
@@ -271,7 +271,7 @@
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campo_registro_contrasenhaKeyTyped"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbox_dia">
+            <Component class="javax.swing.JComboBox" name="cmbox_registro_dia">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="10">
@@ -292,7 +292,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbox_mes">
+            <Component class="javax.swing.JComboBox" name="cmbox_registro_mes">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="10">
@@ -313,7 +313,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbox_anho">
+            <Component class="javax.swing.JComboBox" name="cmbox_registro_anho">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="10">
@@ -339,21 +339,21 @@
                 <Property name="text" type="java.lang.String" value="Sexo: "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="sexo_femenino">
+            <Component class="javax.swing.JRadioButton" name="sexo_registro_femenino">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Femenino"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sexo_femeninoMouseReleased"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sexo_registro_femeninoMouseReleased"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="sexo_masculino">
+            <Component class="javax.swing.JRadioButton" name="sexo_registro_masculino">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Masculino"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sexo_masculinoMouseReleased"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sexo_registro_masculinoMouseReleased"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">

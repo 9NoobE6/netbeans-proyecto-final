@@ -42,7 +42,7 @@ public class Session {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        // storage_profiles/abcd@quasar.org/profile/example@quasar.org.data
+        // storage_profiles/abcd@extesion/profile/example@extesion.data
         this.stgData = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_data;
         this.stgFriends = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_friends;
         this.stgChats = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_chats;

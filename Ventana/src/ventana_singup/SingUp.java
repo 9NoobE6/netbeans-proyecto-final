@@ -674,7 +674,7 @@ public class SingUp extends javax.swing.JFrame {
         BufferedOutputStream bou = new BufferedOutputStream(ou);
         
         // Establecer el nuevo nombre del foto de perfil (Email + .svg)
-        // como ... example@quasar.org.svg 
+        // como ... example@extension 
         session_activa.setStrImgPerfil(session_activa.getStrEmail() + Rutas.extesion_svg);
         
         int b=0;

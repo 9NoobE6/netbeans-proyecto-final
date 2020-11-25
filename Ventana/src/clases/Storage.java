@@ -54,7 +54,8 @@ public class Storage {
     public static void fncStorageAcoplarUnaLinea(String pathA, String linea){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(pathA, true));
-            bw.append(linea + "\n");
+            // ** Antes **; + "\n"
+            bw.append(linea);
             bw.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -70,7 +71,7 @@ public class Storage {
 
             while ((linea = br.readLine()) != null){
                 // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
-                if( linea.equals(linea_buscado) && !linea.isEmpty() && linea.contains("@quasar.org") ){
+                if( linea.equals(linea_buscado) && !linea.isEmpty() && linea.contains(Rutas.extension_rs) ){
                    respuesta = true;
                    return true;
                 }

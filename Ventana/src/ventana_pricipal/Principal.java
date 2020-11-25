@@ -41,7 +41,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.fncEstablecerItems();
-        this.cmbox_anho.setSelectedIndex( this.cmbox_anho.getItemCount() - 19);
+        this.cmbox_registro_anho.setSelectedIndex( this.cmbox_registro_anho.getItemCount() - 19);
         this.setLocationRelativeTo(null);
         this.fncInsertarPicture(this.panel_1_Background, "/img/b2.jpg", false);
         
@@ -54,28 +54,28 @@ public class Principal extends javax.swing.JFrame {
     }
     
     private void fncEstablecerItems(){
-        this.cmbox_dia.removeAllItems();
-        this.cmbox_mes.removeAllItems();
-        this.cmbox_anho.removeAllItems();
+        this.cmbox_registro_dia.removeAllItems();
+        this.cmbox_registro_mes.removeAllItems();
+        this.cmbox_registro_anho.removeAllItems();
         
         for(int item = 1; item <= 32; item++  ){
             if(item <= 9){
-                this.cmbox_dia.addItem("0"+item);
+                this.cmbox_registro_dia.addItem("0"+item);
             }else{
-                this.cmbox_dia.addItem(""+item);
+                this.cmbox_registro_dia.addItem(""+item);
             }
         }
         
         for(int item = 1; item <= 12; item++  ){
             if(item <= 9){
-                this.cmbox_mes.addItem("0"+item);
+                this.cmbox_registro_mes.addItem("0"+item);
             }else{
-                this.cmbox_mes.addItem(""+item);
+                this.cmbox_registro_mes.addItem(""+item);
             }
         }
         
         for(int item = 1985; item <= 2020; item++  ){
-            this.cmbox_anho.addItem(""+item);
+            this.cmbox_registro_anho.addItem(""+item);
         }
         
     }
@@ -108,21 +108,21 @@ public class Principal extends javax.swing.JFrame {
         btnRegistrarme = new javax.swing.JButton();
         btnIniciarSession = new javax.swing.JButton();
         panel_registro = new jpanelimagen.JPanelImagen();
-        campo_nombres = new javax.swing.JTextField();
+        campo_registro_nombres = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        campo_apellidos = new javax.swing.JTextField();
+        campo_registro_apellidos = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         campo_registro_email = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         campo_registro_contrasenha = new javax.swing.JPasswordField();
-        cmbox_dia = new javax.swing.JComboBox<>();
-        cmbox_mes = new javax.swing.JComboBox<>();
-        cmbox_anho = new javax.swing.JComboBox<>();
+        cmbox_registro_dia = new javax.swing.JComboBox<>();
+        cmbox_registro_mes = new javax.swing.JComboBox<>();
+        cmbox_registro_anho = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        sexo_femenino = new javax.swing.JRadioButton();
-        sexo_masculino = new javax.swing.JRadioButton();
+        sexo_registro_femenino = new javax.swing.JRadioButton();
+        sexo_registro_masculino = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         panel_singup = new jpanelimagen.JPanelImagen();
         jLabel7 = new javax.swing.JLabel();
@@ -160,10 +160,10 @@ public class Principal extends javax.swing.JFrame {
 
         panel_registro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 51), 2, true));
 
-        campo_nombres.setText("jTextField1");
-        campo_nombres.addKeyListener(new java.awt.event.KeyAdapter() {
+        campo_registro_nombres.setText("jTextField1");
+        campo_registro_nombres.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campo_nombresKeyTyped(evt);
+                campo_registro_nombresKeyTyped(evt);
             }
         });
 
@@ -171,10 +171,10 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setText("Apellidos: ");
 
-        campo_apellidos.setText("jTextField1");
-        campo_apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+        campo_registro_apellidos.setText("jTextField1");
+        campo_registro_apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campo_apellidosKeyTyped(evt);
+                campo_registro_apellidosKeyTyped(evt);
             }
         });
 
@@ -182,7 +182,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Contraseña:");
 
-        campo_registro_email.setText("abc@quasar.org");
+        campo_registro_email.setText("abc@gobim.dev");
         campo_registro_email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_emailKeyTyped(evt);
@@ -198,26 +198,26 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        cmbox_dia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        cmbox_registro_dia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
-        cmbox_mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        cmbox_registro_mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
-        cmbox_anho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        cmbox_registro_anho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jLabel6.setText("Sexo: ");
 
-        sexo_femenino.setSelected(true);
-        sexo_femenino.setText("Femenino");
-        sexo_femenino.addMouseListener(new java.awt.event.MouseAdapter() {
+        sexo_registro_femenino.setSelected(true);
+        sexo_registro_femenino.setText("Femenino");
+        sexo_registro_femenino.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                sexo_femeninoMouseReleased(evt);
+                sexo_registro_femeninoMouseReleased(evt);
             }
         });
 
-        sexo_masculino.setText("Masculino");
-        sexo_masculino.addMouseListener(new java.awt.event.MouseAdapter() {
+        sexo_registro_masculino.setText("Masculino");
+        sexo_registro_masculino.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                sexo_masculinoMouseReleased(evt);
+                sexo_registro_masculinoMouseReleased(evt);
             }
         });
 
@@ -245,20 +245,20 @@ public class Principal extends javax.swing.JFrame {
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel1)
-                                        .addComponent(campo_nombres, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
-                                        .addComponent(campo_apellidos)))
+                                        .addComponent(campo_registro_nombres, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                                        .addComponent(campo_registro_apellidos)))
                                 .addComponent(campo_registro_contrasenha))
                             .addGroup(panel_registroLayout.createSequentialGroup()
                                 .addGroup(panel_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panel_registroLayout.createSequentialGroup()
-                                        .addComponent(cmbox_dia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbox_registro_dia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(cmbox_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(sexo_femenino))
+                                        .addComponent(cmbox_registro_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(sexo_registro_femenino))
                                 .addGap(18, 18, 18)
                                 .addGroup(panel_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(sexo_masculino)
-                                    .addComponent(cmbox_anho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(sexo_registro_masculino)
+                                    .addComponent(cmbox_registro_anho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_registroLayout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -272,24 +272,24 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campo_registro_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campo_registro_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panel_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbox_dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbox_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbox_anho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbox_registro_dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbox_registro_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbox_registro_anho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panel_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sexo_femenino)
-                    .addComponent(sexo_masculino))
+                    .addComponent(sexo_registro_femenino)
+                    .addComponent(sexo_registro_masculino))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -416,91 +416,122 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnRegistrarmeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarmeMouseReleased
         // TODO add your handling code here:
-        int anho = Integer.parseInt( this.cmbox_anho.getItemAt( this.cmbox_anho.getSelectedIndex() ) );
+        int anho = Integer.parseInt( this.cmbox_registro_anho.getItemAt( this.cmbox_registro_anho.getSelectedIndex() ) );
         
         if( (2020-anho) < 18 ){
             JOptionPane.showMessageDialog(null, "Eres menor de edad!");
-        }else if( this.campo_nombres.getText().trim().isEmpty() ){
+        }else if( this.campo_registro_nombres.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su(s) nombre(s), por favor...");
-        }else if( this.campo_apellidos.getText().trim().isEmpty() ){
+        }else if( this.campo_registro_apellidos.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su(s) apellido(s), por favor...");
         }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca una contraseña, por favor...");
         }else if( this.campo_registro_email.getText().trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación @quasar.org , por favor...\n"
-                    +"por ejemplo example@quasar.org");
-        }else if( !this.campo_registro_email.getText().trim().contains("@quasar.org") || !this.fncVerificarEmail() ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación @quasar.org , por favor...\n" 
-                    +"por ejemplo example@quasar.org");
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Rutas.extension_rs+" , por favor...\n"
+                    +"por ejemplo example"+Rutas.extension_rs+"");
+        }else if( !this.campo_registro_email.getText().trim().contains(Rutas.extension_rs) || !this.fncVerificarEmail() ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Rutas.extension_rs+" , por favor...\n" 
+                    +"por ejemplo example"+Rutas.extension_rs+"");
         }else if( this.campo_registro_email.getText().trim().length() > 23 ){
             JOptionPane.showMessageDialog(null, "Introduzca un correo electronico menor o igual a 23 caracteres, por favor...");
         }else{
+                
+            // Crear rutas para verificar su existencia
+            File archivo_data = new File( Storage.fncStorageObtenerRutaData(this.campo_registro_email.getText()) );
+            File contendor_perfil = new File( Rutas.storage_profiles + this.campo_registro_email.getText());
+            boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, this.campo_registro_email.getText());
+
+            System.out.println("Data :: " + archivo_data);
+            System.out.println("Contenedor :: " + contendor_perfil);
+            System.out.println("Crear cuenta :: " + cuenta_registrado);
             
-            try {
-                
-                this.fncCrearCuentaNueva();
-                String path = Storage.fncStorageObtenerRutaData(this.campo_registro_email.getText());
-                
-                File myObj = new File(path);
-                
-                // Registrar datos de usuario (.data)
-                if (myObj.createNewFile()) {
-                    FileWriter myWriter = new FileWriter(path);
-                    
-                    myWriter.write(this.campo_nombres.getText() + "\n");
-                    myWriter.write(this.campo_apellidos.getText() + "\n");
-
-                    String Fnacimiento = (String)this.cmbox_dia.getSelectedItem()+"/" + (String)this.cmbox_mes.getSelectedItem() +"/"+ (String)this.cmbox_anho.getSelectedItem();     
-                    myWriter.write(Fnacimiento + "\n");
-
-                    if( this.sexo_femenino.isSelected() ){
-                        myWriter.write("Femenino" + "\n");
-                    }else{
-                        myWriter.write("Masculino" + "\n");
-                    }
-
-                    myWriter.write(String.valueOf(this.campo_singup_contrasenha.getPassword()) + "\n");
-                    myWriter.write(this.campo_registro_email.getText() + "\n");
-                    myWriter.write(Rutas.default_img + "\n");
-                    
-                    myWriter.close();
-                                        
-                    Storage.fncStorageAcoplarUnaLinea(Rutas.path_profiles, this.campo_registro_email.getText());
-                    JOptionPane.showMessageDialog(null, "Usuario creado exitosamente...");
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
-                    Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), this.campo_registro_email.getText());
-                    myObj.delete();
-                    
-                }
-                
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+            // Si la cuenta no esta registrada como profile.txt .... 
+            // Significa que la cuenta no esta creado...
+            if( !cuenta_registrado ){
+                //System.out.println("Puedes eliminar la cuenta existente y crear uno nuevo...");
+                // Entonces si existe un contenedor perfil de la cuenta a crear
+                // se elimina para crear el nuevo perfil
+                Storage.fncStorageEliminarDirectorio(contendor_perfil);
             }
+                      
+            // Verificamos que el contenedor perfil a crear no exista y su archivo .data
+            if( ((contendor_perfil.isDirectory() || !contendor_perfil.exists()) && !archivo_data.exists())){
+                
+                // Si no existe se crea la cuenta
+                this.fncCrearCuentaNueva();
+                
+                // Interntar crear archivo .data, donde se almacenan los datos personales del usuario
+                try {
+                    // Registrar datos de usuario (.data)
+                    if (archivo_data.createNewFile()) {
+                        FileWriter myWriter = new FileWriter(archivo_data);
+                        
+                        // Registramos nombres y apellidos
+                        myWriter.write(this.campo_registro_nombres.getText() + "\n");
+                        myWriter.write(this.campo_registro_apellidos.getText() + "\n");
+                        
+                        // Reconstruimos la fecha de nacimiento y lo regisrtramos
+                        String Fnacimiento = (String)this.cmbox_registro_dia.getSelectedItem()+"/" + (String)this.cmbox_registro_mes.getSelectedItem() +"/"+ (String)this.cmbox_registro_anho.getSelectedItem();     
+                        myWriter.write(Fnacimiento + "\n");
+                        
+                        // Registrar el sexo seleccionado por el usuario
+                        if( this.sexo_registro_femenino.isSelected() ){
+                            myWriter.write("Femenino" + "\n");
+                        }else{
+                            myWriter.write("Masculino" + "\n");
+                        }
+                        
+                        // Registrar la contraseña
+                        myWriter.write(String.valueOf(this.campo_registro_contrasenha.getPassword()) + "\n");
+                        
+                        // Registrar el email
+                        myWriter.write(this.campo_registro_email.getText() + "\n");
+                        
+                        // Registrar un imagen de perfil por defecto
+                        myWriter.write(Rutas.default_img + "\n");
+                        
+                        // Cerrar el archivo .data con los datos personales del usuario.
+                        myWriter.close();
+
+                        // Actualizar y Registrar a this.campo_registro_email.getText()
+                        Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), this.campo_registro_email.getText());
+                        Storage.fncStorageAcoplarUnaLinea(Rutas.path_profiles, this.campo_registro_email.getText());
+                        
+                        JOptionPane.showMessageDialog(null, "Data:: Usuario creado exitosamente...");
+
+                    }else{System.out.println("Tuve un error..."); }
+                
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+            }else {
+                // Mostrar un mensaje de email registrado
+                JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
+            }
+            
         }
         
     }//GEN-LAST:event_btnRegistrarmeMouseReleased
 
-    private void sexo_femeninoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_femeninoMouseReleased
+    private void sexo_registro_femeninoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_registro_femeninoMouseReleased
         // TODO add your handling code here:
-        this.sexo_femenino.setSelected(true);
-        this.sexo_masculino.setSelected(false);
-    }//GEN-LAST:event_sexo_femeninoMouseReleased
+        this.sexo_registro_femenino.setSelected(true);
+        this.sexo_registro_masculino.setSelected(false);
+    }//GEN-LAST:event_sexo_registro_femeninoMouseReleased
 
-    private void sexo_masculinoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_masculinoMouseReleased
+    private void sexo_registro_masculinoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_registro_masculinoMouseReleased
         // TODO add your handling code here:
-        this.sexo_femenino.setSelected(false);
-        this.sexo_masculino.setSelected(true);
-    }//GEN-LAST:event_sexo_masculinoMouseReleased
+        this.sexo_registro_femenino.setSelected(false);
+        this.sexo_registro_masculino.setSelected(true);
+    }//GEN-LAST:event_sexo_registro_masculinoMouseReleased
 
     private void btnIniciarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSessionMouseReleased
         // TODO add your handling code here:
         this.fncIniciarSession();
     }//GEN-LAST:event_btnIniciarSessionMouseReleased
 
-    private void campo_nombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_nombresKeyTyped
+    private void campo_registro_nombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_registro_nombresKeyTyped
 
         // Solo se aceptan caracteres y un espacios        
         char car = evt.getKeyChar();
@@ -511,7 +542,7 @@ public class Principal extends javax.swing.JFrame {
             getToolkit().beep();
         }
         
-    }//GEN-LAST:event_campo_nombresKeyTyped
+    }//GEN-LAST:event_campo_registro_nombresKeyTyped
 
     private void campo_registro_emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_registro_emailKeyTyped
    
@@ -542,7 +573,7 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_campo_registro_contrasenhaKeyTyped
 
-    private void campo_apellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_apellidosKeyTyped
+    private void campo_registro_apellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_registro_apellidosKeyTyped
 
         // Solo se aceptan caracteres y un espacios        
         char car = evt.getKeyChar();
@@ -553,7 +584,7 @@ public class Principal extends javax.swing.JFrame {
             getToolkit().beep();
         }
         
-    }//GEN-LAST:event_campo_apellidosKeyTyped
+    }//GEN-LAST:event_campo_registro_apellidosKeyTyped
 
     private void campo_singup_emailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campo_singup_emailKeyReleased
         // TODO add your handling code here:
@@ -637,15 +668,15 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciarSession;
     private javax.swing.JButton btnRegistrarme;
-    private javax.swing.JTextField campo_apellidos;
-    private javax.swing.JTextField campo_nombres;
+    private javax.swing.JTextField campo_registro_apellidos;
     private javax.swing.JPasswordField campo_registro_contrasenha;
     private javax.swing.JTextField campo_registro_email;
+    private javax.swing.JTextField campo_registro_nombres;
     private javax.swing.JPasswordField campo_singup_contrasenha;
     private javax.swing.JTextField campo_singup_email;
-    private javax.swing.JComboBox<String> cmbox_anho;
-    private javax.swing.JComboBox<String> cmbox_dia;
-    private javax.swing.JComboBox<String> cmbox_mes;
+    private javax.swing.JComboBox<String> cmbox_registro_anho;
+    private javax.swing.JComboBox<String> cmbox_registro_dia;
+    private javax.swing.JComboBox<String> cmbox_registro_mes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -660,8 +691,8 @@ public class Principal extends javax.swing.JFrame {
     private jpanelimagen.JPanelImagen panel_logo;
     private jpanelimagen.JPanelImagen panel_registro;
     private jpanelimagen.JPanelImagen panel_singup;
-    private javax.swing.JRadioButton sexo_femenino;
-    private javax.swing.JRadioButton sexo_masculino;
+    private javax.swing.JRadioButton sexo_registro_femenino;
+    private javax.swing.JRadioButton sexo_registro_masculino;
     // End of variables declaration//GEN-END:variables
     private ActionListener escucha;
     public Timer tiempo = new Timer(1000, escucha);
@@ -719,9 +750,9 @@ public class Principal extends javax.swing.JFrame {
     
     private boolean fncVerificarEmail(){
         
-        // Verificar que el email termine con @quasar.org
+        // Verificar que el email termine con extension_rs
         String email = this.campo_registro_email.getText().trim();
-        return (email.indexOf("@quasar.org") + 11) == email.length();
-        
+        return (email.indexOf(Rutas.extension_rs) + Rutas.extension_rs.length()) == email.length();
+           
     }
 }
