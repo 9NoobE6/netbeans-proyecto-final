@@ -437,9 +437,10 @@ public class Principal extends javax.swing.JFrame {
         }else{
                 
             // Crear rutas para verificar su existencia
-            File archivo_data = new File( Storage.fncStorageObtenerRutaData(this.campo_registro_email.getText()) );
-            File contendor_perfil = new File( Rutas.storage_profiles + this.campo_registro_email.getText());
-            boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, this.campo_registro_email.getText());
+            String email = this.campo_registro_email.getText();
+            File archivo_data = new File( Storage.fncStorageObtenerRutaData( email ) );
+            File contendor_perfil = new File( Rutas.storage_profiles + email);
+            boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, email );
 
             System.out.println("Data :: " + archivo_data);
             System.out.println("Contenedor :: " + contendor_perfil);
@@ -464,38 +465,40 @@ public class Principal extends javax.swing.JFrame {
                 try {
                     // Registrar datos de usuario (.data)
                     if (archivo_data.createNewFile()) {
-                        FileWriter myWriter = new FileWriter(archivo_data);
+                        FileWriter registrar_datos = new FileWriter(archivo_data);
                         
                         // Registramos nombres y apellidos
-                        myWriter.write(this.campo_registro_nombres.getText() + "\n");
-                        myWriter.write(this.campo_registro_apellidos.getText() + "\n");
+                        registrar_datos.write(this.campo_registro_nombres.getText() + "\n");
+                        registrar_datos.write(this.campo_registro_apellidos.getText() + "\n");
                         
                         // Reconstruimos la fecha de nacimiento y lo regisrtramos
-                        String Fnacimiento = (String)this.cmbox_registro_dia.getSelectedItem()+"/" + (String)this.cmbox_registro_mes.getSelectedItem() +"/"+ (String)this.cmbox_registro_anho.getSelectedItem();     
-                        myWriter.write(Fnacimiento + "\n");
+                        String Fnacimiento = (String)this.cmbox_registro_dia.getSelectedItem()
+                                +"/"+ (String)this.cmbox_registro_mes.getSelectedItem()
+                                +"/"+ (String)this.cmbox_registro_anho.getSelectedItem();     
+                        registrar_datos.write(Fnacimiento + "\n");
                         
                         // Registrar el sexo seleccionado por el usuario
                         if( this.sexo_registro_femenino.isSelected() ){
-                            myWriter.write("Femenino" + "\n");
+                            registrar_datos.write("Femenino" + "\n");
                         }else{
-                            myWriter.write("Masculino" + "\n");
+                            registrar_datos.write("Masculino" + "\n");
                         }
                         
                         // Registrar la contraseña
-                        myWriter.write(String.valueOf(this.campo_registro_contrasenha.getPassword()) + "\n");
+                        registrar_datos.write(String.valueOf(this.campo_registro_contrasenha.getPassword()) + "\n");
                         
                         // Registrar el email
-                        myWriter.write(this.campo_registro_email.getText() + "\n");
+                        registrar_datos.write(this.campo_registro_email.getText() + "\n");
                         
                         // Registrar un imagen de perfil por defecto
-                        myWriter.write(Rutas.default_img + "\n");
+                        registrar_datos.write(Rutas.default_img + "\n");
                         
                         // Cerrar el archivo .data con los datos personales del usuario.
-                        myWriter.close();
+                        registrar_datos.close();
 
                         // Actualizar y Registrar a this.campo_registro_email.getText()
-                        Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), this.campo_registro_email.getText());
-                        Storage.fncStorageAcoplarUnaLinea(Rutas.path_profiles, this.campo_registro_email.getText());
+                        Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), email );
+                        Storage.fncStorageAcoplarUnaLinea(Rutas.path_profiles, email );
                         
                         JOptionPane.showMessageDialog(null, "Data:: Usuario creado exitosamente...");
 
@@ -716,9 +719,9 @@ public class Principal extends javax.swing.JFrame {
         }else if( this.campo_singup_email.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su correo electronico, por favor...");
         }else{
-            
-            String email = this.campo_singup_email.getText().trim();
+
             // Crear path y crear objeto archivo
+            String email = this.campo_singup_email.getText().trim();
             String contenedor_perfil = Rutas.storage_profiles + email;
             String path_data_perfil = Storage.fncStorageObtenerRutaData(email);
             

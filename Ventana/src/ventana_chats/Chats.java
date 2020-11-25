@@ -346,11 +346,11 @@ public class Chats extends javax.swing.JFrame {
                 // sino que solo recibi un mensaje de él...
                 if(this.lista_de_amigos.getSelectedValue().contains("*")){
                     // Selecciona el chat desde perfil remitente
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(amigo, this.session_activa.getStrEmail(), Rutas.extesion_chats);
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(amigo, this.session_activa.getStrEmail());
                     this.es_amigo = false;
                 }else{
                     // Selecciona el chat desde mi cuenta principal
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo, Rutas.extesion_chats);
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo);
                     this.es_amigo = true;
                 }
                 
