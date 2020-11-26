@@ -210,8 +210,11 @@ public class PanelTarjeta extends javax.swing.JPanel {
             // Si el mensaje esta vacia o se cancela, no se envia... 
             if( mensaje == null ||  mensaje.trim().isEmpty()  ){
                 
-                if( !(mensaje == null) )
-                JOptionPane.showMessageDialog(null, "El mensaje esta vacio, no fue enviado");
+                if( !(mensaje == null) ){
+                    JOptionPane.showMessageDialog(null, "El mensaje esta vacio, no fue enviado");
+                }else{
+                    JOptionPane.showMessageDialog(null, "El mensaje no enviado");
+                }
                 
             }else{
                                 

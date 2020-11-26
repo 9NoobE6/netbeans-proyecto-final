@@ -70,7 +70,7 @@ public class Storage {
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(pathA, true));
                 // ** Antes **; + "\n"
-                bw.append(linea);
+                bw.append(linea + "\n");
                 bw.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
