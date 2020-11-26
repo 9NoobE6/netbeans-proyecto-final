@@ -22,7 +22,11 @@ import java.io.IOException;
  * @author max98
  */
 public class Storage {
-
+    
+    // * Esto son espacio que dejan entre los mensajes en el chat
+    public final static String espacios="\n\n\n";
+    
+    
     // ******* Método con retorno a boolean *******
     public static boolean fncStorageEliminarUnaLinea(File enArchivo, String eliminar_linea) {
         // Si el File no existe y el String es vacio retorna false
@@ -93,7 +97,7 @@ public class Storage {
                 while ((linea = br.readLine()) != null) {
                     // Si encuentra la cuenta se rompe el bucle
                     if (linea.equals(encontrar_cuenta) && !linea.isEmpty() && linea.contains(Rutas.extension_rs)) {
-                        break;
+                        return true;
                     }
                 }
 
@@ -104,7 +108,7 @@ public class Storage {
             return false;
         }
 
-        return true;
+        return false;
     }
 
     public static boolean fncStorageEncontrarUnaLinea(String enPath, String encontrar_linea) {
@@ -143,7 +147,7 @@ public class Storage {
                 while ((linea = br.readLine()) != null) {
                     // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
                     if (linea.contains(buscar_linea) && !linea.isEmpty()) {
-                        break;
+                        return true;
                     }
                 }
 
@@ -154,7 +158,7 @@ public class Storage {
             return false;
         }
 
-        return true;
+        return false;
     }
 
     public static boolean fncStorageEliminarDirectorio(File borrar_carpeta) {
@@ -169,7 +173,8 @@ public class Storage {
                     }
                 }
             }
-        }
+        } else return false;
+        
         return (borrar_carpeta.delete());
     }
 
@@ -215,24 +220,27 @@ public class Storage {
         return true;
     }
 
-    public static boolean fncStorageCopiarArchivo(File enArchivoA, String aArchivoB) {
+    public static boolean fncStorageCopiarArchivo(File deArchivoA, String aArchivoB) {
 
-        if (!enArchivoA.exists()) {
+        if (!deArchivoA.exists()) {
             System.out.println("archivoA no existe.");
 
             return false;
-        } else if (!new File(aArchivoB).exists()) {
-            System.out.println("pathB no existe.");
-
-            return false;
-        } else if (enArchivoA.exists() && !aArchivoB.isEmpty()) {
+        } else if (deArchivoA.exists() && !aArchivoB.isEmpty()) {
             try {
-
-                File archivo_tmp = new File(enArchivoA.getPath() + "_tmp000.txt");
+                
+                // * Si existe el archivo de destino se elimina
+                /*
+                if(new File(aArchivoB).exists()){
+                    new File(aArchivoB).delete();
+                }
+                */
+                    
+                File archivo_tmp = new File(deArchivoA.getPath() + "_tmp000.txt");
                 if (archivo_tmp.createNewFile()) {
 
-                    try (FileWriter sobrescribirArchivo = new FileWriter(enArchivoA.getPath() + "_tmp000.txt")) {
-                        BufferedReader leerArchivo = new BufferedReader(new FileReader(enArchivoA.getPath()));
+                    try (FileWriter sobrescribirArchivo = new FileWriter(deArchivoA.getPath() + "_tmp000.txt")) {
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(deArchivoA.getPath()));
                         String linea;
 
                         while ((linea = leerArchivo.readLine()) != null) {

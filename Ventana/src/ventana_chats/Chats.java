@@ -447,9 +447,13 @@ public class Chats extends javax.swing.JFrame {
                 // Enviamos una notificación en .friends
                 Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgChats  ), this.session_activa.getStrEmail() + "*");
                 Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgChats, this.session_activa.getStrEmail() + "*");
-
+                
+                // Registrar un menaje
                 remitente = this.session_activa.getStrNombres() +" "+this.session_activa.getStrApellidos() + "  (" + this.session_activa.getStrEmail() + ")";
-                Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, remitente + ": " + "\n" + this.txt_mensaje.getText().trim() + "\n");          
+                String mensaje = remitente + ": " + "\n" + this.txt_mensaje.getText().trim() + Storage.espacios;
+                Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, mensaje);          
+                
+                // Clonar la conversion de session_activa a perfil
                 Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo) );
             
             }else{
@@ -678,9 +682,10 @@ public class Chats extends javax.swing.JFrame {
 
                 File archivo = new File( path );
                 BufferedReader br = new BufferedReader( new FileReader(archivo) );
-                String st; 
-                while ((st = br.readLine()) != null){
-                    this.mensajes.addElement(st);
+                String linea; 
+                while ((linea = br.readLine()) != null){
+                    System.out.println(linea);
+                    this.mensajes.addElement(linea);
                 }
 
                 this.lista_mensajes.setModel(this.mensajes);
