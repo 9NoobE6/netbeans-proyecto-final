@@ -20,15 +20,15 @@ import ventana_people.People;
  *
  * @author max98
  */
-public class WatcherProfile extends Observador{
+public class peopleWatcherProfile extends Observador{
     private JPanel panel_perfiles;
     private int coordenadaY = 20;
     
-    public WatcherProfile(File path) {
+    public peopleWatcherProfile(File path) {
         super(path);
     }
 
-    public WatcherProfile(String path, JPanel perfiles) {
+    public peopleWatcherProfile(String path, JPanel perfiles) {
         super(new File(path));
         this.panel_perfiles = perfiles;
     }

@@ -35,7 +35,7 @@ import ventana_pricipal.Principal;
 import ventana_singup.SingUp;
 import clases.Observador;
 import clases.ObservadorInterface;
-import watcher.WatcherProfile;
+import watcher.peopleWatcherProfile;
 
 /**
  *
@@ -299,7 +299,7 @@ public class People extends javax.swing.JFrame {
         this.panel_contenedor_perfiles.add(jsp);
         
         // * Crear el observador de perfiles
-        WatcherProfile observador_de_perfiles = new WatcherProfile(Rutas.path_profiles, this.panel_perfiles);
+        peopleWatcherProfile observador_de_perfiles = new peopleWatcherProfile(Rutas.path_profiles, this.panel_perfiles);
         
         // Intentar ejecutar los observadores
         try {
