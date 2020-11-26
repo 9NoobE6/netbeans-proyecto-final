@@ -406,6 +406,7 @@ public class Chats extends javax.swing.JFrame {
             String yoker = this.session_activa.getStrEmail();
             
             if( perfil.contains("*") ){
+                perfil = perfil.replace("*", "");
                 yoker += "*";
             }else{
                 perfil = perfil.substring(0, perfil.indexOf("@"));
@@ -415,23 +416,25 @@ public class Chats extends javax.swing.JFrame {
             System.out.println("Eliminado a " + perfil);
             int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar a " + perfil 
                     +"\nDe lista de amigos, se borrara el chat completo." );
-            
-            String path_chat = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
+                   
             if( respuesta == 0){
                 
                 // * Eliminar el perfil de mis conversaciones
                 //boolean eliC = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgChats ) , perfil );
                 //System.out.println("Eliminado = " + eliC);
                 
-                // * Eliminar el perfil de mi lista de amigos
-                boolean eliF = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ) , perfil );
+                // * Eliminar el perfil de mi lista de amigos, Todo lo demas se conserva...
+                // Notase que se agrega un * esto es para indicar al programa que el no es mi amigo
+                boolean eliF = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ) , perfil + "*" );
                 System.out.println("Eliminado = " + eliF);
                 
-                // * Eliminar mi cuenta o session_activa en .friends de perfil
-                Storage.fncStorageEliminarUnaLinea( new File( new Session(perfil.replace("*","")).getStrEmail()) , yoker );
-                
                 /*
+                
+                // * Eliminar mi cuenta o session_activa en .friends de perfil
+                Storage.fncStorageEliminarUnaLinea( new File( new Session(perfil).getStrEmail()) , yoker );
+                
                 // * Verificar si existe una conversacion con el perfil
+                String path_chat = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
                 if( new File(path_chat).exists() ){
                     
                     // * Copia la conversacion que tengo de perfil hacia perfil

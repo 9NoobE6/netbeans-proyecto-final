@@ -307,12 +307,43 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     // Sin que me responda perfil
                     System.out.println("STAGE 4");
                     
-                    // Agrego un nuevo mensaje a mi conversacion pendiente
-                    String chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
-                    Storage.fncStorageAcoplarUnaLinea(chat, mensaje);
+                    // Verificar que pefil aun conserva la conversion original entre session_activa y perfil
+                    if( Storage.fncStorageEncontrarUnaLinea(this.perfil.stgFriends, yoker) == true && 
+                        Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, yoker) == false
+                    ){
+                        
+                        System.out.println("STAGE 4 - FFFF");
+                        
+                        // Agrego un nuevo mensaje a la conversion original
+                        // por que si perfil me tiene como amigo pudo estar enviado mesajes... (Entonces es el más actualizado)
+                        String chat_original = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
+                        Storage.fncStorageAcoplarUnaLinea(chat_original, mensaje);
+
+                        // Registrar a perfil en mi cuenta o session_activa
+                        Storage.fncStorageActualizarUnaLinea(People.session_activa.stgFriends, perfil);
+                        
+                        // Regitrar a perfil en mi cuenta o session_activa (Este no es necesario)
+                        // Storage.fncStorageActualizarUnaLinea(People.session_activa.stgChats, perfil);
+                        
+                        // Clonar la conversion de perfil a session_activa  (Entonces es el más actualizado)
+                        String chat_clone = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
+                        Storage.fncStorageCopiarArchivo(new File(chat_original), chat_clone);
+                        
+                        JOptionPane.showMessageDialog(null, "Tienes una conversacion pendiente con \n"+ this.perfil.getStrEmail()
+                                + "\nPuedes chatear con el usuario en las lista de amigos.");
+                    }else{ 
+                        
+                        // Agrego un nuevo mensaje en la conversacion de session_activa
+                        String chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
+                        Storage.fncStorageAcoplarUnaLinea(chat, mensaje);
+                        
+                        // Clonar la conversion de session_activa a perfil 
+                        String chat_clone = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
+                        Storage.fncStorageCopiarArchivo(new File(chat), chat_clone);
+
+                        JOptionPane.showMessageDialog(null, "Mensaje enviado.");
                     
-                    JOptionPane.showMessageDialog(null, "Mensaje enviado.");
-                    
+                    }
                     
                     
                 }else if( db_friends == false && db_chats == false ){
