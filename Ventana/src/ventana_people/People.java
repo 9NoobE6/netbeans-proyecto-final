@@ -35,6 +35,7 @@ import ventana_pricipal.Principal;
 import ventana_singup.SingUp;
 import clases.Observador;
 import clases.ObservadorInterface;
+import clases.WatcherProfile;
 
 /**
  *
@@ -265,8 +266,6 @@ public class People extends javax.swing.JFrame {
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
     private JPanelImagen panel_perfiles;
-    private Observador observadorPerfiles;
-    private int coordenadaY = 20;
 
     private void fncInicializarVentana() {
 
@@ -282,8 +281,8 @@ public class People extends javax.swing.JFrame {
         this.panel_contenedor_perfiles.setImagenFondo(new ImagenFondo(new java.io.File(getClass().getResource("/img/b1.jpg").getPath()), 0.0f));
         
         // * Establecer los datos del usuario en campo de texto y titulo de la ventana
-        this.campo_email.setText(this.session_activa.getStrEmail());
-        this.setTitle(this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail());
+        this.campo_email.setText(People.session_activa.getStrEmail());
+        this.setTitle(People.session_activa.getStrNombres() + " - " + People.session_activa.getStrEmail());
         
         // * Crear un panel para mostrar las tarjetas de presentacion de los perfiles registrados
         panel_perfiles = new JPanelImagen();
@@ -298,17 +297,19 @@ public class People extends javax.swing.JFrame {
         jsp.setBounds(0, 0, this.panel_contenedor_perfiles.getWidth(), this.panel_contenedor_perfiles.getHeight());
         jsp.setAutoscrolls(true);
         this.panel_contenedor_perfiles.add(jsp);
-
-        // Creamos un observardor
-        observadorPerfiles = new Observador(new File(People.session_activa.stgFriends));
-        this.fncSetObservadorPerfiles();
+        
+        // * Crear el observador de perfiles
+        WatcherProfile observador_de_perfiles = new WatcherProfile(Rutas.path_profiles, this.panel_perfiles);
         
         // Intentar ejecutar los observadores
         try {
 
             ActionListener tarea = (ActionEvent e) -> {
                 System.out.println("::: Observador People :::");
-                this.observadorPerfiles.fncIniciarObservador();
+                
+                /// * Verifica si hubo algun cambio en archivo database.profiles
+                observador_de_perfiles.Inicializar();
+                
             };
 
             observador.addActionListener(tarea);
@@ -317,48 +318,5 @@ public class People extends javax.swing.JFrame {
         } catch (Exception error) {}
         
     }
-
-    private void fncSetObservadorPerfiles() {
-        
-        this.observadorPerfiles.setObservar(() -> {
-            try{
-                
-                panel_perfiles.removeAll();
-                File archivo = new File(People.session_activa.stgFriends);
-                BufferedReader br = new BufferedReader(new FileReader(archivo));
-                String linea;
-
-                while ((linea = br.readLine()) != null) {
-
-                    if (linea.equals(this.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Rutas.extension_rs)) {
-                        PanelTarjeta a = new PanelTarjeta(new Session(linea));
-                        a.setBounds(60, coordenadaY, 600, 135);
-                        panel_perfiles.add(a);
-                        panel_perfiles.validate();
-                        panel_perfiles.repaint();
-                        coordenadaY += 20 + a.getHeight();
-                    }
-                }
-
-
-                panel_perfiles.setPreferredSize(new Dimension(0, coordenadaY));
-                panel_perfiles.validate();
-                panel_perfiles.revalidate();
-                panel_perfiles.repaint();
-                coordenadaY = 20;
-                
-            }catch(Exception error){}
-        });
-        
-    }
-
-    public long fncObtenerTamahnoStorages(String file) {
-        Path path = Paths.get(file);
-        long bytes = 0;
-        try {
-            bytes = Files.size(path.toAbsolutePath());
-        } catch (Exception e) {
-        }
-        return bytes;
-    }
+    
 }

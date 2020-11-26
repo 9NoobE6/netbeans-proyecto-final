@@ -200,12 +200,19 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
     private void btnEnviarMensajeToMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeToMouseReleased
         // TODO add your handling code here:
-        
-        
-            String mensaje = JOptionPane.showInputDialog(null, "Saluda a "+ this.perfil.getStrNombres() + " " + this.perfil.getStrApellidos());
+            String mensaje =null;
+                
+            // Intentar capturar el mensaje
+            try {
+                mensaje = JOptionPane.showInputDialog(null, "Saluda a "+ this.perfil.getStrNombres() + " " + this.perfil.getStrApellidos());
+            } catch (Exception e) {}
             
-            if( mensaje.isEmpty() ){
-                JOptionPane.showMessageDialog(null, "El mensaje no fue enviado");
+            // Si el mensaje esta vacia o se cancela, no se envia... 
+            if( mensaje == null ||  mensaje.trim().isEmpty()  ){
+                
+                if( !(mensaje == null) )
+                JOptionPane.showMessageDialog(null, "El mensaje esta vacio, no fue enviado");
+                
             }else{
                                 
                 // Generar mensaje...
