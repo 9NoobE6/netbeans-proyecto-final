@@ -118,7 +118,7 @@ public class Storage {
                 while ((linea = br.readLine()) != null) {
                     // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
                     if (linea.equals(encontrar_linea) && !linea.isEmpty()) {
-                        break;
+                        return true;
                     }
                 }
 
@@ -130,7 +130,7 @@ public class Storage {
             return false;
         }
 
-        return true;
+        return false;
     }
 
     public static boolean fncStorageBuscarUnaLinea(String enPath, String buscar_linea) {
