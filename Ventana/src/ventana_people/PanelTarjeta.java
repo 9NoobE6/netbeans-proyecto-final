@@ -243,6 +243,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     // Tengo una conversacion
                     // Seleccionas al chat del perfil en mi session_activa
                     // y haces una copia a pefil
+                    System.out.println("STAGE 1");
                     
                     // * Agregar el mensaje en mi cuenta o session_activa
                     String chat = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
@@ -259,6 +260,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     // No tengo una conversacion, pero perfil si.
                     // Seleccionas al chat del perfil y agregas el mensaje
                     // despues notificas....
+                    System.out.println("STAGE 2");
                     
                     // Respodiendo a perfil 
                     String chat = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
@@ -266,6 +268,8 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     
                     
                     if( Storage.fncStorageEncontrarUnaLinea(this.perfil.stgFriends, People.session_activa.getStrEmail()+"*") == false ){
+                        
+                        System.out.println("STAGE 3");
                         
                         // Notifica a perfil que ya le conteste
                         Storage.fncStorageAcoplarUnaLinea(this.perfil.stgFriends, People.session_activa.getStrEmail()+"*");
@@ -281,6 +285,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     
                     // Tengo una conversion en session_activa
                     // Sin que me responda perfil
+                    System.out.println("STAGE 4");
                     
                     // Agrego un nuevo mensaje a mi conversacion pendiente
                     String chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
@@ -297,6 +302,8 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     
                     try {
                         if( new File(chat).createNewFile() ){
+                            
+                            System.out.println("STAGE 5");
                             
                             // * Agregar el mensaje
                             Storage.fncStorageAcoplarUnaLinea(chat, mensaje);
