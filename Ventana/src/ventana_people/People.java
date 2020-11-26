@@ -33,13 +33,17 @@ import jpanelimagen.ImagenFondo;
 import jpanelimagen.JPanelImagen;
 import ventana_pricipal.Principal;
 import ventana_singup.SingUp;
+import clases.Observador;
+import clases.ObservadorInterface;
 
 /**
  *
  * @author max98
  */
 public class People extends javax.swing.JFrame {
+
     JScrollPane scrollBar;
+
     /**
      * Creates new form Registro
      */
@@ -50,13 +54,13 @@ public class People extends javax.swing.JFrame {
         this.fncInicializarVentana();
 
     }
-    
+
     public People(Session session_activa) {
-        
+
         this.session_activa = session_activa;
         initComponents();
         this.fncInicializarVentana();
-        
+
     }
 
     public Session getSession_activa() {
@@ -66,9 +70,8 @@ public class People extends javax.swing.JFrame {
     public void setSession_activa(Session session_activa) {
         this.session_activa = session_activa;
     }
-   
-    
-    public void fncAgregarCuentas(){
+
+    public void fncAgregarCuentas() {
         /*
         int t=0;
         for(int item=0; item < 20; item++){
@@ -79,9 +82,9 @@ public class People extends javax.swing.JFrame {
             this.panel_cuentas.repaint();
             t += 200 + 20;
         }
-        */
+         */
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -203,9 +206,9 @@ public class People extends javax.swing.JFrame {
 
     private void bntVolverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntVolverMouseReleased
         // TODO add your handling code here:
-        SingUp ventana_singup = new SingUp( new Session( this.session_activa.getStrEmail() ));
+        SingUp ventana_singup = new SingUp(new Session(this.session_activa.getStrEmail()));
         ventana_singup.setVisible(true);
-        
+
         this.observador.stop();
         ventana_singup.setSession_activa(this.session_activa);
         this.dispose();
@@ -261,86 +264,101 @@ public class People extends javax.swing.JFrame {
     public static Session session_activa;
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
-    JPanelImagen panel_perfiles;
-    
-    private void fncInicializarVentana(){
-        this.setLocationRelativeTo(null);
-        this.panel_3_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
-        this.panel_contenedor_perfiles.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.0f ));
-        this.campo_email.setText( this.session_activa.getStrEmail() );
-        this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
+    private JPanelImagen panel_perfiles;
+    private Observador observadorPerfiles;
+    private int coordenadaY = 20;
+
+    private void fncInicializarVentana() {
+
+        // Modificamos las propiedades para la ventana JFrame)
         
+        // * Posicionarlo en el centro
+        this.setLocationRelativeTo(null);
+        
+        // * Establece el imagen de fodo para el JFrame usando el pane Background
+        this.panel_3_Background.setImagenFondo(new ImagenFondo(new java.io.File(getClass().getResource("/img/b4.jpg").getPath()), 1.0f));
+        
+        // * Establecer el imagen de fodo para contenedor_perfiles
+        this.panel_contenedor_perfiles.setImagenFondo(new ImagenFondo(new java.io.File(getClass().getResource("/img/b1.jpg").getPath()), 0.0f));
+        
+        // * Establecer los datos del usuario en campo de texto y titulo de la ventana
+        this.campo_email.setText(this.session_activa.getStrEmail());
+        this.setTitle(this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail());
+        
+        // * Crear un panel para mostrar las tarjetas de presentacion de los perfiles registrados
         panel_perfiles = new JPanelImagen();
         panel_perfiles.setPreferredSize(new Dimension(0, 0));
-        panel_perfiles.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
+        panel_perfiles.setImagenFondo(new ImagenFondo(new java.io.File(getClass().getResource("/img/b4.jpg").getPath()), 1.0f));
         panel_perfiles.setLayout(null);
-        
+            
+        // * Crear un scroll para dezplazarme hacia abajo y ver más perfiles
+        // si ya no cabe en el panel contenedor_perfiles
         // ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
-        JScrollPane jsp = new JScrollPane(panel_perfiles, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED );
+        JScrollPane jsp = new JScrollPane(panel_perfiles, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         jsp.setBounds(0, 0, this.panel_contenedor_perfiles.getWidth(), this.panel_contenedor_perfiles.getHeight());
         jsp.setAutoscrolls(true);
         this.panel_contenedor_perfiles.add(jsp);
+
+        // Creamos un observardor
+        observadorPerfiles = new Observador(new File(People.session_activa.stgFriends));
+        this.fncSetObservadorPerfiles();
         
-        try{
-             
+        // Intentar ejecutar los observadores
+        try {
+
             ActionListener tarea = (ActionEvent e) -> {
-                try {
-                    this.fncSincronizandoPerfiles();
-                } catch (IOException ex) {
-                    Logger.getLogger(People.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                System.out.println("::: Observador People :::");
+                this.observadorPerfiles.fncIniciarObservador();
             };
 
-           observador.addActionListener(tarea);
-           observador.start();
-           
-        }catch(Exception a){}
-    }
-    
-    private long size_friendship;
-    private int coordenadaY=20;
-    
-    private void fncSincronizandoPerfiles() throws FileNotFoundException, IOException {
-        System.out.println("::: Observador People :::");
-        String path = Rutas.path_profiles;
-        long _size_ = this.fncObtenerTamahnoStorages(path);
-        
-        if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
-            
-            panel_perfiles.removeAll();
-            File archivo = new File( path );
-            BufferedReader br = new BufferedReader( new FileReader(archivo) );
-            String linea; 
+            observador.addActionListener(tarea);
+            observador.start();
 
-            while ((linea = br.readLine()) != null){
+        } catch (Exception error) {}
+        
+    }
+
+    private void fncSetObservadorPerfiles() {
+        
+        this.observadorPerfiles.setObservar(() -> {
+            try{
                 
-                if( linea.equals(this.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Rutas.extension_rs) ){
-                    PanelTarjeta a = new PanelTarjeta(new Session(linea));
-                    a.setBounds(60, coordenadaY, 600, 135);
-                    panel_perfiles.add(a);
-                    panel_perfiles.validate();
-                    panel_perfiles.repaint();
-                    coordenadaY += 20 + a.getHeight();
-                }
-            }
+                panel_perfiles.removeAll();
+                File archivo = new File(People.session_activa.stgFriends);
+                BufferedReader br = new BufferedReader(new FileReader(archivo));
+                String linea;
 
-            this.size_friendship = _size_;
-            panel_perfiles.setPreferredSize(new Dimension(0, this.coordenadaY ));
-            panel_perfiles.validate();
-            panel_perfiles.revalidate();
-            panel_perfiles.repaint();
-            this.coordenadaY = 20;
-            
-        }
+                while ((linea = br.readLine()) != null) {
+
+                    if (linea.equals(this.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Rutas.extension_rs)) {
+                        PanelTarjeta a = new PanelTarjeta(new Session(linea));
+                        a.setBounds(60, coordenadaY, 600, 135);
+                        panel_perfiles.add(a);
+                        panel_perfiles.validate();
+                        panel_perfiles.repaint();
+                        coordenadaY += 20 + a.getHeight();
+                    }
+                }
+
+
+                panel_perfiles.setPreferredSize(new Dimension(0, coordenadaY));
+                panel_perfiles.validate();
+                panel_perfiles.revalidate();
+                panel_perfiles.repaint();
+                coordenadaY = 20;
+                
+            }catch(Exception error){}
+        });
         
     }
-    
-    public long fncObtenerTamahnoStorages(String file){
+
+    public long fncObtenerTamahnoStorages(String file) {
         Path path = Paths.get(file);
-        long bytes =0;
-        try{
-             bytes = Files.size(path.toAbsolutePath());
-        }catch(Exception e){}
+        long bytes = 0;
+        try {
+            bytes = Files.size(path.toAbsolutePath());
+        } catch (Exception e) {
+        }
         return bytes;
     }
 }
