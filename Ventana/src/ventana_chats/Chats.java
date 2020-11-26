@@ -405,7 +405,10 @@ public class Chats extends javax.swing.JFrame {
                     + "Se eliminará el chat.");
             if( respuesta == 0){
                 
-              
+                // *** Recrear el codigo.
+                
+                
+                /*
                 // Eliminar una conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
                 // * Eliminar a this.lista_de_amigos.getSelectedValue() en la lista de amigos de this.session_activa
                 // * Eliminar a this.lista_de_amigos.getSelectedValue() en .chats de this.session_activa
@@ -421,6 +424,9 @@ public class Chats extends javax.swing.JFrame {
                         System.out.println("elimando de mi .friends a " + amigo_eliminar );
                     }
                 }
+                */
+                
+                
                 
             }
         }
