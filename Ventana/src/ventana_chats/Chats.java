@@ -401,34 +401,51 @@ public class Chats extends javax.swing.JFrame {
         if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
           && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
             
-            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas elimiar a tu amigo?\n"
-                    + "Se eliminará el chat.");
+            // *** Recrear el codigo.
+            String perfil = this.lista_de_amigos.getSelectedValue();
+            String yoker = this.session_activa.getStrEmail();
+            
+            if( perfil.contains("*") ){
+                yoker += "*";
+            }else{
+                perfil = perfil.substring(0, perfil.indexOf("@"));
+                perfil += Rutas.extension_rs;
+            }
+            
+            System.out.println("Eliminado a " + perfil);
+            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar a " + perfil 
+                    +"\nDe lista de amigos, se borrara el chat completo." );
+            
+            String path_chat = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
             if( respuesta == 0){
                 
-                // *** Recrear el codigo.
+                // * Eliminar el perfil de mis conversaciones
+                //boolean eliC = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgChats ) , perfil );
+                //System.out.println("Eliminado = " + eliC);
                 
+                // * Eliminar el perfil de mi lista de amigos
+                boolean eliF = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ) , perfil );
+                System.out.println("Eliminado = " + eliF);
+                
+                // * Eliminar mi cuenta o session_activa en .friends de perfil
+                Storage.fncStorageEliminarUnaLinea( new File( new Session(perfil.replace("*","")).getStrEmail()) , yoker );
                 
                 /*
-                // Eliminar una conversacion de this.session_activa con this.lista_de_amigos.getSelectedValue()
-                // * Eliminar a this.lista_de_amigos.getSelectedValue() en la lista de amigos de this.session_activa
-                // * Eliminar a this.lista_de_amigos.getSelectedValue() en .chats de this.session_activa
-                
-                // ****** TESTING
-                System.out.println("Eliminando a ..." + this.lista_de_amigos.getSelectedValue() );
-                
-                // * Eliminar a this.lista_de_amigos.getSelectedValue() en la lista de amigos de this.session_activa
-                String amigo_eliminar = this.lista_de_amigos.getSelectedValue();
-                if( amigo_eliminar.contains("*") ){
-                    if(Storage.fncStorageEncontrarUnaLinea(pathA, amigo_eliminar)){
-                        Storage.fncStorageEliminarUnaLinea(new File(pathA), amigo_eliminar);
-                        System.out.println("elimando de mi .friends a " + amigo_eliminar );
-                    }
+                // * Verificar si existe una conversacion con el perfil
+                if( new File(path_chat).exists() ){
+                    
+                    // * Copia la conversacion que tengo de perfil hacia perfil
+                    String perfil_chat = Storage.fncStorageCrearRutaChats(perfil, perfil);
+                    Storage.fncStorageCopiarArchivo(new File(path_chat), perfil_chat );
+
+                    // * Eliminar chat de mi cuenta o session_activa
+                    new File(path_chat).delete();
+                    
                 }
                 */
-                
-                
-                
+
             }
+
         }
         
     }//GEN-LAST:event_bntEliminarMouseReleased
