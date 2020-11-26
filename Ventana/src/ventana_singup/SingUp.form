@@ -266,7 +266,7 @@
             <Component class="javax.swing.JButton" name="btnModificarCuenta">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="cc" red="cc" type="rgb"/>
+                  <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -317,13 +317,13 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bntAmigos" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnPeople" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
-                      <Component id="btnCerrarSession" min="-2" pref="134" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-                      <Component id="btnEliminarCuenta" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnEliminarCuenta" min="-2" pref="136" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCerrarSession" min="-2" pref="135" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

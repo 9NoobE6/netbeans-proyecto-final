@@ -157,7 +157,7 @@ public class SingUp extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel4.setText("Correo electronico:");
 
-        btnModificarCuenta.setBackground(new java.awt.Color(204, 204, 0));
+        btnModificarCuenta.setBackground(new java.awt.Color(153, 153, 153));
         btnModificarCuenta.setForeground(new java.awt.Color(255, 255, 255));
         btnModificarCuenta.setText("Modificar");
         btnModificarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -304,13 +304,13 @@ public class SingUp extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(bntAmigos)
-                .addGap(155, 155, 155)
+                .addGap(18, 18, 18)
                 .addComponent(btnPeople)
-                .addGap(111, 111, 111)
-                .addComponent(btnCerrarSession, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(btnEliminarCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(35, 35, 35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCerrarSession, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,11 +404,12 @@ public class SingUp extends javax.swing.JFrame {
             
             // Activar los campos para actualizar datos. 
             this.fncCambiarEstados(!this.modificar_cuenta);
-            this.btnModificarCuenta.setText("Actualizar");
             JOptionPane.showMessageDialog(null, "Campos activados, capture los nuevos datos.");
 
             this.modificar_cuenta = true;
             this.fncCambiarEstados(modificar_cuenta);
+            this.btnModificarCuenta.setText("Actualizar");
+            this.btnModificarCuenta.setBackground(new Color(153,153,153));
         }else{
             
             System.out.println("Estado: " + this.fncVerificarCampos());
@@ -430,9 +431,10 @@ public class SingUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Tus datos sean actualizado exito.");
                 
                  // Desactivamos los campos para modificar datos
-                this.btnModificarCuenta.setText("Modificar");
                 this.modificar_cuenta = false;
                 this.fncCambiarEstados(modificar_cuenta);
+                this.btnModificarCuenta.setText("Modificar");
+                this.btnModificarCuenta.setBackground(new Color(102,102,102));
                 
             }
             
@@ -587,6 +589,7 @@ public class SingUp extends javax.swing.JFrame {
     private boolean modificar_cuenta=false;
     
     private void InicializarVentana(){
+        // springwd13@gmail.com
         
         try{
              
@@ -611,6 +614,9 @@ public class SingUp extends javax.swing.JFrame {
         
         // Este es para JFrame SingUp (Si depende de Session)
         this.fncInstertarDatosDeSession();
+        
+        // Establecer color para el boton Modificar
+        this.btnModificarCuenta.setBackground(new Color(102,102,102));
         
     }
     
