@@ -35,7 +35,7 @@ import ventana_pricipal.Principal;
 import ventana_singup.SingUp;
 import clases.Observador;
 import clases.ObservadorInterface;
-import clases.WatcherProfile;
+import watcher.WatcherProfile;
 
 /**
  *

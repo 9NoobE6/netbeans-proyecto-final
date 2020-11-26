@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package watcher;
 
+import clases.Observador;
+import clases.Rutas;
+import clases.Session;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,17 +36,16 @@ public class WatcherProfile extends Observador{
     public void Inicializar(){
         
         if(this.fncVerificarCambiosEnElArchivoPath()){
-            System.out.println("Agregando perfiles...");
+
             try {
                 
-            
                 panel_perfiles.removeAll();
                 File archivo = new File(Rutas.path_profiles);
                 BufferedReader br = new BufferedReader(new FileReader(archivo));
                 String linea;
 
                 while ((linea = br.readLine()) != null) {
-                    System.out.println("Perfil de " + linea);
+
                     if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Rutas.extension_rs)) {
                         PanelTarjeta a = new PanelTarjeta(new Session(linea));
                         a.setBounds(60, coordenadaY, 600, 135);
@@ -52,8 +54,8 @@ public class WatcherProfile extends Observador{
                         panel_perfiles.repaint();
                         coordenadaY += 20 + a.getHeight();
                     }
+                    
                 }
-
 
                 panel_perfiles.setPreferredSize(new Dimension(0, coordenadaY));
                 panel_perfiles.validate();
