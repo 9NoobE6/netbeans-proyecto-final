@@ -16,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,6 +28,7 @@ public class Storage {
     
     // * Esto son espacio que dejan entre los mensajes en el chat
     public final static String espacios="\n\n";
+    public final static int longitud = 60;
     
     
     // ******* Método con retorno a boolean *******
@@ -309,11 +312,9 @@ public class Storage {
     
     public static String fncStorageFormatearMensaje(String msg){
         String mensaje_nuevo="";
-        int longitud = 70;
         int posicion = longitud;
         
         if(!msg.isEmpty()){
-            int linea=0;
             for(int item = 0; item < msg.length(); item++){
                 
                 // Insertar saltos de linea en cada 60 caracteres... 
@@ -330,15 +331,36 @@ public class Storage {
                 }
                 
                 mensaje_nuevo += msg.charAt(item);
-                
-                
-                //System.out.println(":::"+mensaje_nuevo);
             }
             
         }else return null;
         
         return mensaje_nuevo;
     }
+    
+    public static String fncStorageCrearMensaje(Session session_activa, String mensaje){
+        String remitente = "("+ session_activa.getStrEmail()+")";      
+        return remitente + " " + fncObtenerFechayHora() +": \n" + Storage.fncStorageFormatearMensaje(mensaje.trim()) + Storage.espacios;
+    }
+    
+    public static String fncObtenerFechayHora(){
+        
+        Calendar fechaActual = Calendar.getInstance();
+        String cadenaFecha = String.format("%04d-%02d-%02d",
+          fechaActual.get(Calendar.YEAR),
+          fechaActual.get(Calendar.MONTH)+1,
+          fechaActual.get(Calendar.DAY_OF_MONTH));
+        
+        Calendar a = Calendar.getInstance();
+        String horaActual = String.format("%02d:%02d:%02d",
+          fechaActual.get(Calendar.HOUR_OF_DAY),
+          fechaActual.get(Calendar.MINUTE),
+          fechaActual.get(Calendar.SECOND));
+        
+        return "["+cadenaFecha+" "+horaActual+"]";
+    }
+    
+    
 
     // ******* Método con retorno a String *******
     public static String fncStorageObtenerRutaData(String email) {

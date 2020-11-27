@@ -457,33 +457,32 @@ public class Chats extends javax.swing.JFrame {
 
     private void bntEnviarMensajeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEnviarMensajeMouseReleased
         // TODO add your handling code here:
+        String msg_body = this.txt_mensaje.getText();
         
         // ****** Testing
-        System.out.println("** tamaño del mensaje : " + this.txt_mensaje.getText().length());
-        System.out.println("## tamaño del mensaje : " + this.txt_mensaje.getText().trim().length() );
+        System.out.println("** tamaño del mensaje : " + msg_body.length());
+        System.out.println("## tamaño del mensaje : " + msg_body.trim().length() );
+        
         
         if( this.es_amigo == false && this.chat_activado == true ){
-            if(this.txt_mensaje.getText().trim().length() > 0){
-                String remitente = "";
-                String amigo = this.lista_de_amigos.getSelectedValue();
-                amigo = amigo.replace("*", ""); 
+            if( msg_body.trim().length() > 0 ){
+                String perfil = this.lista_de_amigos.getSelectedValue();
+                perfil = perfil.replace("*", ""); 
 
                 // Eniviamos una notificacion en .chats
-                Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgFriends  ), this.session_activa.getStrEmail() + "*");
-                Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgFriends, this.session_activa.getStrEmail() + "*");
+                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgFriends  ), this.session_activa.getStrEmail() + "*");
+                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgFriends, this.session_activa.getStrEmail() + "*");
                 
                 // Enviamos una notificación en .friends
-                Storage.fncStorageEliminarUnaLinea(new File( new Session(amigo).stgChats  ), this.session_activa.getStrEmail() + "*");
-                Storage.fncStorageAcoplarUnaLinea(new Session(amigo).stgChats, this.session_activa.getStrEmail() + "*");
+                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgChats  ), this.session_activa.getStrEmail() + "*");
+                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgChats, this.session_activa.getStrEmail() + "*");
                 
                 // Registrar un menaje
-                remitente = this.session_activa.getStrNombres() +" "+this.session_activa.getStrApellidos() + "  (" + this.session_activa.getStrEmail() + ")";
-                String mensaje = remitente + ": " + "\n" + Storage.fncStorageFormatearMensaje(this.txt_mensaje.getText().trim()) + Storage.espacios;
+                String mensaje = Storage.fncStorageCrearMensaje(session_activa, msg_body);
                 Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, mensaje);          
-                
-                
+
                 // Clonar la conversion de session_activa a perfil
-                Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo) );
+                Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil) );
             
             }else{
                 JOptionPane.showMessageDialog(null, "No se puede enviar mensajes vacios.");
