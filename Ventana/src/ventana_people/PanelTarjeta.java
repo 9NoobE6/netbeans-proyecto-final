@@ -79,7 +79,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         }
         */
         
-        // Verificar si tengo conversacion
+        // Verificar si tengo conversación
         if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){
             this.btnEnviarMensajeTo.setText("Mensaje+1");
             
@@ -245,7 +245,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 
                 if(db_friends == true && db_chats == true){
                     
-                    // Tengo una conversacion
+                    // Tengo una conversación
                     // Seleccionas al chat del perfil en mi session_activa
                     // y haces una copia a pefil
                     System.out.println("STAGE 1");
@@ -263,7 +263,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     
                 }else if( db_friends == true && db_chats == false ){
                     
-                    // No tengo una conversacion, pero perfil si.
+                    // No tengo una conversación, pero perfil si.
                     // Seleccionas al chat del perfil y agregas el mensaje
                     // despues notificas....
                     System.out.println("STAGE 2");
@@ -285,7 +285,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                         Storage.fncStorageAcoplarUnaLinea(this.perfil.stgFriends, yoker);
                         
                         // Notificar - Registrar perfil en .chats de session_activa  
-                        // es decir, perfil se registra en la lista de conversaciones de session_activa
+                        // es decir, perfil se registra en la lista de conversaciónes de session_activa
                         Storage.fncStorageAcoplarUnaLinea(People.session_activa.stgChats, perfil);
                         
                         // Clonar la conversion de perfil a session_activa
@@ -293,7 +293,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                         Storage.fncStorageCopiarArchivo(new File(chat), chat_clone);
                         
                         JOptionPane.showMessageDialog(null, "Este usuario te habia enviado un mensaje\n"+
-                                "Puedes chatear con el en las lista de amigos.");
+                                "Puedes chatear pueden conservar en en las lista de amigos.");
                     }else{
                         
                         System.out.println("STAGE 2 - BBBB");
@@ -309,7 +309,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                     
                     // Verificar que pefil aun conserva la conversion original entre session_activa y perfil
                     if( Storage.fncStorageEncontrarUnaLinea(this.perfil.stgFriends, yoker) == true && 
-                        Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, yoker) == false
+                        Storage.fncStorageEncontrarUnaLinea(this.perfil.stgChats, yoker) == true
                     ){
                         
                         System.out.println("STAGE 4 - FFFF");
@@ -329,11 +329,12 @@ public class PanelTarjeta extends javax.swing.JPanel {
                         String chat_clone = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
                         Storage.fncStorageCopiarArchivo(new File(chat_original), chat_clone);
                         
-                        JOptionPane.showMessageDialog(null, "Tienes una conversacion pendiente con \n"+ this.perfil.getStrEmail()
-                                + "\nPuedes chatear con el usuario en las lista de amigos.");
+                        JOptionPane.showMessageDialog(null, "Tienes una conversación pendiente con "
+                                + "\n\t\t\t\t" + this.perfil.getStrEmail()
+                                + "\nPuedes chatear pueden conservar en usuario en las lista de amigos.");
                     }else{ 
                         
-                        // Agrego un nuevo mensaje en la conversacion de session_activa
+                        // Agrego un nuevo mensaje en la conversación de session_activa
                         String chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
                         Storage.fncStorageAcoplarUnaLinea(chat, mensaje);
                         
@@ -341,17 +342,33 @@ public class PanelTarjeta extends javax.swing.JPanel {
                         String chat_clone = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail());
                         Storage.fncStorageCopiarArchivo(new File(chat), chat_clone);
 
-                        JOptionPane.showMessageDialog(null, "Mensaje enviado.");
+                        // * Verificar que los puedan conversar entre ellos ....
+                        if( Storage.fncStorageEncontrarUnaLinea(this.perfil.stgFriends, yoker) == false && 
+                        Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, perfil) == false
+                        ){
+                            
+                          Storage.fncStorageActualizarUnaLinea(this.perfil.stgFriends, yoker);
+                          Storage.fncStorageActualizarUnaLinea(People.session_activa.stgFriends, perfil);
+                          
+                          JOptionPane.showMessageDialog(null, "Haz recuperado la conversación con "
+                                  + "\n\t\t\t\t" + this.perfil.getStrEmail()
+                                  + "\nPuedes chatear pueden conservar en usuario en las lista de amigos.");
+
+                        }else{
+                            
+                            JOptionPane.showMessageDialog(null, "Mensaje enviado.");
+                        
+                        }
                     
                     }
-                    
-                    
+                     
                 }else if( db_friends == false && db_chats == false ){
                     
-                    // Crear una conversacion
+                    // Crear una conversación
                     String chat = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
                     
                     try {
+                        
                         if( new File(chat).createNewFile() ){
                             
                             System.out.println("STAGE 5");
@@ -360,7 +377,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                             Storage.fncStorageAcoplarUnaLinea(chat, mensaje);
                             
                             // * Notificar - Registra a perfil en el .chats de session_activa
-                            // es decir session_activa abre una conversacion....
+                            // es decir session_activa abre una conversación....
                             Storage.fncStorageAcoplarUnaLinea(People.session_activa.stgChats, perfil);
                             
                             // * Notificar - Registra a perfil en el .friends de session_activa
@@ -372,6 +389,9 @@ public class PanelTarjeta extends javax.swing.JPanel {
                                     "Espera su respuesta para conversar.");
                             
                         }
+                        
+                        
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(PanelTarjeta.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -396,7 +416,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 // Eliminar de mi lista de amigos
                 //Storage.fncStorageEliminarUnaLinea(new File(session_friends), this.perfil.getStrEmail() );
                 
-                // Si tenemos una conversacion pendiente, entonces te los paso
+                // Si tenemos una conversación pendiente, entonces te los paso
                 if( Storage.fncStorageBuscarUnaLinea(session_chats, this.perfil.getStrEmail()) ){
                     
                     try {
