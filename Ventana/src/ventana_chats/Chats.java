@@ -705,13 +705,31 @@ public class Chats extends javax.swing.JFrame {
                 
                 this.mensajes.removeAllElements();
                 this.lista_mensajes.removeAll();
-
+                
+                // Covertir el item selecciona en un correo de con extension
+                String perfil = lista_de_amigos.getSelectedValue();
+                perfil = perfil.substring(0, perfil.lastIndexOf("@"));
+                perfil = perfil + Rutas.extension_rs;
+               
                 File archivo = new File( path );
                 BufferedReader br = new BufferedReader( new FileReader(archivo) );
                 String linea; 
                 while ((linea = br.readLine()) != null){
                     System.out.println(linea);
-                    this.mensajes.addElement(linea);
+                    
+                    if( linea.contains(this.session_activa.getStrEmail()) ){
+                        this.mensajes.addElement(" # " + linea);
+                        linea = br.readLine();
+                        this.mensajes.addElement(linea);
+                    }else if( linea.contains( perfil ) ){ 
+                        String a = "%-" + Math.abs(linea.length() - 90) + "s";
+                        this.mensajes.addElement( linea.format(a, "").replace(' ',' ') + linea + " * ");
+                        linea = br.readLine();
+                        this.mensajes.addElement( linea + linea.format(a, "").replace(' ',' '));
+                    }else{
+                        this.mensajes.addElement(linea);
+                    }
+                    
                 }
 
                 this.lista_mensajes.setModel(this.mensajes);

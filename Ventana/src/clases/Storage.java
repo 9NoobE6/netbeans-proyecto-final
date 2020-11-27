@@ -24,7 +24,7 @@ import java.io.IOException;
 public class Storage {
     
     // * Esto son espacio que dejan entre los mensajes en el chat
-    public final static String espacios="\n\n\n";
+    public final static String espacios="\n\n";
     
     
     // ******* Método con retorno a boolean *******
