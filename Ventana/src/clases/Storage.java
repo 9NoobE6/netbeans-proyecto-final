@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -304,6 +305,39 @@ public class Storage {
         }
 
         return true;
+    }
+    
+    public static String fncStorageFormatearMensaje(String msg){
+        String mensaje_nuevo="";
+        int longitud = 70;
+        int posicion = longitud;
+        
+        if(!msg.isEmpty()){
+            int linea=0;
+            for(int item = 0; item < msg.length(); item++){
+                
+                // Insertar saltos de linea en cada 60 caracteres... 
+                if( item == posicion ){
+                    
+                    // Intentar eliminar los saltos de linea...
+                    if( msg.charAt(item) == '\n' ){
+                        JOptionPane.showMessageDialog(null, "B {Salto de linea "+ msg.charAt(item) +" encontrado en " + item +" }");
+                    } 
+                    
+                    mensaje_nuevo += "-\n";
+                    posicion = (item + longitud);
+                    
+                }
+                
+                mensaje_nuevo += msg.charAt(item);
+                
+                
+                //System.out.println(":::"+mensaje_nuevo);
+            }
+            
+        }else return null;
+        
+        return mensaje_nuevo;
     }
 
     // ******* Método con retorno a String *******

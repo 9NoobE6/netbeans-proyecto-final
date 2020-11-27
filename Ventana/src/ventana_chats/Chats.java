@@ -478,8 +478,9 @@ public class Chats extends javax.swing.JFrame {
                 
                 // Registrar un menaje
                 remitente = this.session_activa.getStrNombres() +" "+this.session_activa.getStrApellidos() + "  (" + this.session_activa.getStrEmail() + ")";
-                String mensaje = remitente + ": " + "\n" + this.txt_mensaje.getText().trim() + Storage.espacios;
+                String mensaje = remitente + ": " + "\n" + Storage.fncStorageFormatearMensaje(this.txt_mensaje.getText().trim()) + Storage.espacios;
                 Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, mensaje);          
+                
                 
                 // Clonar la conversion de session_activa a perfil
                 Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo) );
