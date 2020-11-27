@@ -39,10 +39,12 @@ import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
@@ -403,7 +405,7 @@ public class SingUp extends javax.swing.JFrame {
         if( !this.modificar_cuenta && this.btnModificarCuenta.getText().equals("Modificar") ){
             
             // Activar los campos para actualizar datos. 
-            this.fncCambiarEstados(!this.modificar_cuenta);
+            this.fncCambiarEstados(!this.modificar_cuenta);            
             JOptionPane.showMessageDialog(null, "Campos activados, capture los nuevos datos.");
 
             this.modificar_cuenta = true;
@@ -412,31 +414,7 @@ public class SingUp extends javax.swing.JFrame {
             this.btnModificarCuenta.setBackground(new Color(153,153,153));
         }else{
             
-            System.out.println("Estado: " + this.fncVerificarCampos());
-            
-            
-            if(this.fncVerificarCampos() == 400){
-                JOptionPane.showMessageDialog(null, "Complete los datos solicitado.");
-            }else
-            if( this.fncVerificarCampos() == 100 || this.fncVerificarCampos() == 0 ){
-                
-                
-                // Enviar los datos del formulario a session
-                this.session_activa.setStrNombres(this.campo_nombres.getText());
-                this.session_activa.setStrApellidos(this.campo_apellidos.getText());
-                this.session_activa.setStrEmail(this.campo_email.getText());
-                this.session_activa.setStrContrasenha(String.valueOf(this.campo_contrasenha.getPassword()));
-                
-                this.session_activa.fncActualizarDatos();
-                JOptionPane.showMessageDialog(null, "Tus datos sean actualizado exito.");
-                
-                 // Desactivamos los campos para modificar datos
-                this.modificar_cuenta = false;
-                this.fncCambiarEstados(modificar_cuenta);
-                this.btnModificarCuenta.setText("Modificar");
-                this.btnModificarCuenta.setBackground(new Color(102,102,102));
-                
-            }
+            this.fncModificarDatosDeSession();
             
         }
                 
@@ -678,7 +656,7 @@ public class SingUp extends javax.swing.JFrame {
         // Desactivamo o Activamos los campos de depende de opcion
         this.campo_nombres.setEnabled(opcion);
         this.campo_apellidos.setEnabled(opcion);
-        this.campo_email.setEnabled(opcion);
+        this.campo_email.setEnabled(false);
         this.campo_sexo.setEnabled(opcion);
         this.campo_contrasenha.setEnabled(opcion);
  
@@ -785,6 +763,59 @@ public class SingUp extends javax.swing.JFrame {
         
         // Retorna un estado -1, estado no identificado
         return -1;
+    }
+
+    private void fncModificarDatosDeSession() {
+        System.out.println("Estado: " + this.fncVerificarCampos());
+            
+            int resultado = this.fncVerificarCampos();
+            
+            if(resultado == 400){
+                JOptionPane.showMessageDialog(null, "Complete los datos solicitado.");
+            }else
+            if( resultado == 100 || resultado == 0 ){
+                
+                Box box = Box.createVerticalBox();
+                JLabel t = new JLabel("Introduzca la contraseña");
+                box.add(t);
+                JPasswordField jpf = new JPasswordField(24);
+                box.add(jpf);
+                int button = -1;
+                box.setLocation( this.getLocation() );
+                
+                int intentos = 0;
+                do{
+                    if( resultado == 100)
+                    button = JOptionPane.showConfirmDialog(null, box, "Confirmar...", JOptionPane.OK_CANCEL_OPTION);
+                   
+                    if (button == JOptionPane.OK_OPTION) {
+                        char[] input = jpf.getPassword();
+                        if(input.equals(this.session_activa.getStrContrasenha())) {
+                            // Enviar los datos del formulario a session
+                            this.session_activa.setStrNombres(this.campo_nombres.getText());
+                            this.session_activa.setStrApellidos(this.campo_apellidos.getText());
+                            this.session_activa.setStrEmail(this.campo_email.getText());
+                            this.session_activa.setStrContrasenha(String.valueOf(this.campo_contrasenha.getPassword()));
+
+                            this.session_activa.fncActualizarDatos();
+                            JOptionPane.showMessageDialog(null, "Tus datos sean actualizado exito.");
+
+                        }else{
+                            intentos++;
+                            JOptionPane.showMessageDialog(null, "Contraseña incorrecta, datos no actualizados.\n"
+                                    + "Puedes volver internarlo en "+ (3 - intentos) +" intentos mas.");
+                             
+                        }
+                    }
+                }while(button == JOptionPane.OK_OPTION && intentos < 3 );
+                
+                // Desactivamos los campos para modificar datos
+                this.modificar_cuenta = false;
+                this.fncCambiarEstados(modificar_cuenta);
+                this.btnModificarCuenta.setText("Modificar");
+                this.btnModificarCuenta.setBackground(new Color(102,102,102));
+                this.fncInstertarDatosDeSession();
+            }
     }
     
 }
