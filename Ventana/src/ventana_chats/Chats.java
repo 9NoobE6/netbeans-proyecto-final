@@ -94,7 +94,7 @@ public class Chats extends javax.swing.JFrame {
 
         panel_3_Background = new jpanelimagen.JPanelImagen();
         jPanel1 = new javax.swing.JPanel();
-        campo_email = new javax.swing.JTextField();
+        campo_email_chat = new javax.swing.JTextField();
         bntVolver = new javax.swing.JButton();
         panel_lista_de_amigos = new jpanelimagen.JPanelImagen();
         jLabel1 = new javax.swing.JLabel();
@@ -116,8 +116,10 @@ public class Chats extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        campo_email.setEditable(false);
-        campo_email.setText("jTextField1");
+        campo_email_chat.setEditable(false);
+        campo_email_chat.setBackground(new java.awt.Color(0, 204, 204));
+        campo_email_chat.setForeground(new java.awt.Color(255, 255, 255));
+        campo_email_chat.setText("jTextField1");
 
         bntVolver.setBackground(new java.awt.Color(0, 102, 153));
         bntVolver.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,7 +136,7 @@ public class Chats extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campo_email_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 391, Short.MAX_VALUE)
                 .addComponent(bntVolver)
                 .addContainerGap())
@@ -144,7 +146,7 @@ public class Chats extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campo_email_chat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntVolver))
                 .addContainerGap())
         );
@@ -340,19 +342,21 @@ public class Chats extends javax.swing.JFrame {
             
             if(Storage.fncStorageEncontrarUnaCuenta(path, this.lista_de_amigos.getSelectedValue() )){
                 
-                String amigo = this.lista_de_amigos.getSelectedValue();
-                amigo = amigo.replace("*", "");
-                
+                String perfil = this.lista_de_amigos.getSelectedValue();
+                                
                 // Verificar si el perfil seleccionado tiene un (*) eso significa
                 // que el perfil no lo tengo agrego en mi lista de amigos, 
                 // sino que solo recibi un mensaje de él...
                 if(this.lista_de_amigos.getSelectedValue().contains("*")){
+                    perfil = perfil.replace("*", "");
                     // Selecciona el chat desde perfil remitente
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(amigo, this.session_activa.getStrEmail());
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
                     this.es_amigo = false;
                 }else{
+                    perfil = perfil.substring(0, perfil.lastIndexOf("@"));
+                    perfil = perfil + Rutas.extension_rs;
                     // Selecciona el chat desde mi cuenta principal
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), amigo);
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
                     this.es_amigo = true;
                 }
                 
@@ -361,6 +365,16 @@ public class Chats extends javax.swing.JFrame {
                 this.chat_activado = true;
                 this.fncCambiarEstadoPanelAmigos(false);
                 this.fncCambiarEstadoPanelChat(true);
+                
+                // * Se activa el campo para ver el usuario co el queien estan conversando..
+                String titulo = new Session(perfil).getStrNombres() + " " + new Session(perfil).getStrApellidos();
+                this.campo_email_chat.setText(titulo);
+                this.campo_email_chat.setBackground(new Color(0,204,204));
+                this.campo_email_chat.setEnabled(true);
+                this.campo_email_chat.setEditable(false);
+                
+                // Se activa el area de mensaje...
+                this.txt_mensaje.setFocusable(true);
                 
                 System.out.println("Ruta del chat: " + this.chat_path_activo  );
                 //System.out.println("Iniciando conversacion...");
@@ -389,6 +403,14 @@ public class Chats extends javax.swing.JFrame {
             this.chat_activado = false;
             this.chat_path_activo = "";
             this.size_chats = 0;
+            
+            // Deshabitamos el panel del titulo, cambiando los colores
+            this.campo_email_chat.setBackground(new Color(204,204,204));
+            this.campo_email_chat.setEditable(false);
+            this.campo_email_chat.setText(null);
+            
+            // Desactivamos el area de mensaje...
+            this.txt_mensaje.setFocusable(false);
         }
        
     }//GEN-LAST:event_btnCerrarChatMouseReleased
@@ -558,7 +580,7 @@ public class Chats extends javax.swing.JFrame {
     private javax.swing.JButton bntVerPerfil;
     private javax.swing.JButton bntVolver;
     private javax.swing.JButton btnCerrarChat;
-    private javax.swing.JTextField campo_email;
+    private javax.swing.JTextField campo_email_chat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -587,13 +609,17 @@ public class Chats extends javax.swing.JFrame {
         this.panel_3_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
         this.panel_contenedor_chat.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.1f ));
         this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.1f ));
-        this.campo_email.setText( this.session_activa.getStrEmail() );
         this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         this.fncCambiarEstadoPanelChat(false);
+        this.campo_email_chat.setFocusable(false);
         
         this.bntAbrirChat.setEnabled(false);
         this.bntEliminar.setEnabled(false);
         this.bntVerPerfil.setEnabled(false);
+        this.campo_email_chat.setText("");
+        this.campo_email_chat.setBackground(new Color(204,204,204));
+        this.campo_email_chat.setEditable(false);
+        
         
         try{
              

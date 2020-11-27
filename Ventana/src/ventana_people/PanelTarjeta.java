@@ -219,26 +219,23 @@ public class PanelTarjeta extends javax.swing.JPanel {
             }else{
                                 
                 // Generar mensaje...
-                mensaje = People.session_activa.getStrNombres() + 
-                        People.session_activa.getStrApellidos() + 
-                        " ("+ People.session_activa.getStrEmail() + "): \n" +
-                        mensaje + Storage.espacios;
+                mensaje = Storage.fncStorageCrearMensaje(People.session_activa, mensaje);
                 
-                String perfil = this.perfil.getStrEmail();
+                String perfil_seleccionado = this.perfil.getStrEmail();
                 String yoker = People.session_activa.getStrEmail();
                 
                 // Verificar si es perfil es amigo
-                if( Storage.fncStorageEncontrarUnaCuenta(People.session_activa.stgFriends, perfil) == false ){
+                if( Storage.fncStorageEncontrarUnaCuenta(People.session_activa.stgFriends, perfil_seleccionado) == false ){
                     // Si no somos amigos nos ponemos un *
-                    perfil += "*"; // Si perfil selecciona no es amigo mio se pone un *
+                    perfil_seleccionado += "*"; // Si perfil selecciona no es amigo mio se pone un *
                     yoker += "*";
                 }
                 
                 // Buscar el chat
-                boolean db_chats = Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgChats, perfil);
-                boolean db_friends = Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, perfil);
+                boolean db_chats = Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgChats, perfil_seleccionado);
+                boolean db_friends = Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, perfil_seleccionado);
                 
-                System.out.println(" amigo = "+ perfil);
+                System.out.println(" amigo = "+ perfil_seleccionado);
                 System.out.println(" amigo = "+ yoker);
                 System.out.println(" db_chats = " + db_chats);
                 System.out.println(" db_friends = " + db_friends);
@@ -286,7 +283,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                         
                         // Notificar - Registrar perfil en .chats de session_activa  
                         // es decir, perfil se registra en la lista de conversaciónes de session_activa
-                        Storage.fncStorageAcoplarUnaLinea(People.session_activa.stgChats, perfil);
+                        Storage.fncStorageAcoplarUnaLinea(People.session_activa.stgChats, perfil_seleccionado);
                         
                         // Clonar la conversion de perfil a session_activa
                         String chat_clone = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail());
@@ -320,7 +317,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                         Storage.fncStorageAcoplarUnaLinea(chat_original, mensaje);
 
                         // Registrar a perfil en mi cuenta o session_activa
-                        Storage.fncStorageActualizarUnaLinea(People.session_activa.stgFriends, perfil);
+                        Storage.fncStorageActualizarUnaLinea(People.session_activa.stgFriends, perfil_seleccionado);
                         
                         // Regitrar a perfil en mi cuenta o session_activa (Este no es necesario)
                         // Storage.fncStorageActualizarUnaLinea(People.session_activa.stgChats, perfil);
@@ -344,11 +341,11 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
                         // * Verificar que los puedan conversar entre ellos ....
                         if( Storage.fncStorageEncontrarUnaLinea(this.perfil.stgFriends, yoker) == false && 
-                        Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, perfil) == false
+                        Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, perfil_seleccionado) == false
                         ){
                             
                           Storage.fncStorageActualizarUnaLinea(this.perfil.stgFriends, yoker);
-                          Storage.fncStorageActualizarUnaLinea(People.session_activa.stgFriends, perfil);
+                          Storage.fncStorageActualizarUnaLinea(People.session_activa.stgFriends, perfil_seleccionado);
                           
                           JOptionPane.showMessageDialog(null, "Haz recuperado la conversación con "
                                   + "\n\t\t\t\t" + this.perfil.getStrEmail()
@@ -378,7 +375,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                             
                             // * Notificar - Registra a perfil en el .chats de session_activa
                             // es decir session_activa abre una conversación....
-                            Storage.fncStorageAcoplarUnaLinea(People.session_activa.stgChats, perfil);
+                            Storage.fncStorageAcoplarUnaLinea(People.session_activa.stgChats, perfil_seleccionado);
                             
                             // * Notificar - Registra a perfil en el .friends de session_activa
                             // es decir session_activa se registra en lista de amigos de pefil....

@@ -776,7 +776,7 @@ public class SingUp extends javax.swing.JFrame {
             if( resultado == 100 || resultado == 0 ){
                 
                 Box box = Box.createVerticalBox();
-                JLabel t = new JLabel("Introduzca la contraseña");
+                JLabel t = new JLabel("Introduzca la contraseña actual");
                 box.add(t);
                 JPasswordField jpf = new JPasswordField(24);
                 box.add(jpf);
@@ -784,21 +784,23 @@ public class SingUp extends javax.swing.JFrame {
                 box.setLocation( this.getLocation() );
                 
                 int intentos = 0;
+                boolean modificado=false;
                 do{
                     if( resultado == 100)
-                    button = JOptionPane.showConfirmDialog(null, box, "Confirmar...", JOptionPane.OK_CANCEL_OPTION);
+                    button = JOptionPane.showConfirmDialog(null, box, "Confirmar los nuevos datos...", JOptionPane.OK_CANCEL_OPTION);
                    
                     if (button == JOptionPane.OK_OPTION) {
-                        char[] input = jpf.getPassword();
-                        if(input.equals(this.session_activa.getStrContrasenha())) {
+                        if( String.valueOf(this.campo_contrasenha.getPassword()).equals(this.session_activa.getStrContrasenha()) ) {
                             // Enviar los datos del formulario a session
                             this.session_activa.setStrNombres(this.campo_nombres.getText());
                             this.session_activa.setStrApellidos(this.campo_apellidos.getText());
                             this.session_activa.setStrEmail(this.campo_email.getText());
-                            this.session_activa.setStrContrasenha(String.valueOf(this.campo_contrasenha.getPassword()));
+                            this.session_activa.setStrContrasenha( String.valueOf(this.campo_contrasenha.getPassword()) );
+                            this.session_activa.setStrSexo( this.campo_sexo.getSelectedItem().toString() );
 
                             this.session_activa.fncActualizarDatos();
                             JOptionPane.showMessageDialog(null, "Tus datos sean actualizado exito.");
+                            modificado  = true;
 
                         }else{
                             intentos++;
@@ -807,7 +809,7 @@ public class SingUp extends javax.swing.JFrame {
                              
                         }
                     }
-                }while(button == JOptionPane.OK_OPTION && intentos < 3 );
+                }while(button == JOptionPane.OK_OPTION && intentos < 3 && modificado == false );
                 
                 // Desactivamos los campos para modificar datos
                 this.modificar_cuenta = false;

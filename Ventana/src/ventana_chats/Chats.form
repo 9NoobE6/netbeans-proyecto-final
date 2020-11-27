@@ -81,7 +81,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="campo_email" min="-2" pref="269" max="-2" attributes="0"/>
+                      <Component id="campo_email_chat" min="-2" pref="269" max="-2" attributes="0"/>
                       <EmptySpace pref="391" max="32767" attributes="0"/>
                       <Component id="bntVolver" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -93,7 +93,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="campo_email" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campo_email_chat" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bntVolver" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -102,9 +102,15 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="campo_email">
+            <Component class="javax.swing.JTextField" name="campo_email_chat">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="0" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="jTextField1"/>
               </Properties>
             </Component>
