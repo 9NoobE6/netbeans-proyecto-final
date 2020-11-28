@@ -714,6 +714,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void fncIniciarSession() {
+        
+        // * Verificar restricciones
         if( String.valueOf(this.campo_singup_contrasenha.getPassword()).trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su contraseña, por favor...");
         }else if( this.campo_singup_email.getText().trim().isEmpty() ){
@@ -725,6 +727,7 @@ public class Principal extends javax.swing.JFrame {
             String contenedor_perfil = Rutas.storage_profiles + email;
             String path_data_perfil = Storage.fncStorageObtenerRutaData(email);
             
+            // Crear objetos para verificar existencias
             File contenedor = new File(contenedor_perfil);
             File file_data = new File(path_data_perfil);
             
@@ -735,12 +738,16 @@ public class Principal extends javax.swing.JFrame {
                 if( !fncVerificarContrasehna(path_data_perfil) ){
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta... \n");
                 }else{
-                   // JOptionPane.showMessageDialog(null, "Iniciando session... \n");
+                    // JOptionPane.showMessageDialog(null, "Iniciando session... \n");
                    
-                   SingUp session = new SingUp( new Session( email ));
-                   session.setVisible(true);
-                   this.dispose();
-                   session.fncMostrarMensajeDeBienvenida();
+                    // Se borra la ventana Principal liberando memoria
+                    this.setVisible(false); // Desaparece la ventana
+                    this.dispose(); // Se libera la memoria
+                   
+                    // * Inicializa la ventana de SingUp
+                    SingUp ventana = new SingUp( new Session( email ));
+                    ventana.setVisible(true);
+                    ventana.fncMostrarMensajeDeBienvenida();
                    
                 }
                 

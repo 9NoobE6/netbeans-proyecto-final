@@ -421,14 +421,16 @@ public class SingUp extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarCuentaMouseReleased
 
     private void btnCerrarSessionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSessionMouseReleased
-        // TODO add your handling code here:
-        Principal ventana_principal = new Principal();
-        ventana_principal.setVisible(true);
+
+        // Se borra la ventana SingUp liberando memoria
+        this.observador.stop(); // Se detiene los observadores
+        this.setVisible(false); // Desaparece la ventana
+        this.dispose(); // Se libera la memoria
         
-        this.observador.stop();
-        this.session_activa.CerrarSession();
-        this.dispose();
-        System.out.println("*** SingUp:::Session cerrado");
+        // Se inicializa la vetana Pricipal
+        Principal ventana = new Principal();
+        this.session_activa = null; // En la ventana SingUp se elimina la session activa
+        ventana.setVisible(true);
         
     }//GEN-LAST:event_btnCerrarSessionMouseReleased
 
@@ -445,27 +447,33 @@ public class SingUp extends javax.swing.JFrame {
             int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la cuenta?");
             
             if( respuesta == 0 ){
-                Principal ventana_principal = new Principal();
-                ventana_principal.setVisible(true);
-                observador.stop();
                 
+                // Se borra la ventana SingUp liberando memoria
+                this.observador.stop(); // Se detiene los observadores
+                this.setVisible(false); // Desaparece la ventana
+                this.dispose(); // Se libera la memoria
                 
+                // * Si el foto de perfil que tiene session_activa es la de por defecto, no se elimina
                 if( !this.session_activa.getStrImgPerfil().equals("user_default.png") ){
                     new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_svg) ).delete(); 
                 }
                 
+                // * Eliminar todso los datos de session_activa
                 new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_chats) ).delete();
                 new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_friends) ).delete();
                 new File( Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_data) ).delete();
                 
+                // * Eliminar el contenedor de session_activa y del registro de perfiles o cuentas .profiles
                 Storage.fncStorageEliminarDirectorio( new File(Rutas.storage_profiles + this.session_activa.getStrEmail()) );
-               
-                
                 Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), this.session_activa.getStrEmail());
-                ventana_principal.tiempo.stop();
-                this.session_activa.CerrarSession();
-                this.dispose();
+
+                // Se inicializa la vetana Pricipal
+                Principal ventana = new Principal();
+                this.session_activa = null; // En la ventana SingUp se elimina la session activa
+                ventana.tiempo.stop();
+                ventana.setVisible(true);
                 System.out.println("*** SingUp:::Cuenta eliminada");
+                
             }
         
         }catch(Exception e){}
@@ -473,32 +481,31 @@ public class SingUp extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarCuentaMouseReleased
 
     private void btnPeopleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPeopleMouseReleased
-        // TODO add your handling code here:
-        People cuentas = new People( new Session( this.session_activa.getStrEmail() ) );
-        cuentas.setVisible(true);
         
-        this.observador.stop();
-        this.dispose();
+        // Se borra la ventana SingUp liberando memoria
+        this.observador.stop(); // Se detiene los observadores
+        this.setVisible(false); // Desaparece la ventana
+        this.dispose(); // Se libera la memoria
+        
+        // Se inicializa la vetana People
+        People cuentas = new People( this.session_activa );
+        this.session_activa = null; // En la ventana SingUp se elimina la session activa
+        cuentas.setVisible(true);
         
     }//GEN-LAST:event_btnPeopleMouseReleased
 
     private void bntAmigosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAmigosMouseReleased
         // TODO add your handling code here:
         
-        /*
-        if( this.ver_amigos == false ){
-            panel_mis_amigos.setVisible(true);
-            this.ver_amigos = true;
-        }else{
-            panel_mis_amigos.setVisible(false);
-            this.ver_amigos = false;
-        }
-        */
-        Chats chatear = new Chats( new Session( this.session_activa.getStrEmail() ) );
-        chatear.setVisible(true);
+        // Se borra la ventana SingUp liberando memoria
+        this.observador.stop(); // Se detiene los observadores
+        this.setVisible(false); // Desaparece la ventana
+        this.dispose(); // Se libera la memoria
         
-        this.observador.stop();
-        this.dispose();
+        // Se inicializa la vetana People
+        Chats ventana = new Chats( this.session_activa );
+        this.session_activa = null; // En la ventana SingUp se elimina la session activa
+        ventana.setVisible(true);
         
     }//GEN-LAST:event_bntAmigosMouseReleased
     

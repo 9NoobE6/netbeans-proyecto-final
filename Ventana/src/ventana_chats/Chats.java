@@ -311,14 +311,15 @@ public class Chats extends javax.swing.JFrame {
 
     private void bntVolverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntVolverMouseReleased
         
-        // Alpresionar el boton Volver se ejecuta el siguiente código...
-        this.observador.stop(); // Se detiene el timer o todos los observadores
+        // Se borra la ventana Chats liberando memoria
+        this.observador.stop(); // Se detiene los observadores
         this.setVisible(false); // Desaparece la ventana
-        this.dispose(); // Se elimina la ventana de Chats liberando la memoria 
+        this.dispose(); // Se libera la memoria 
         
         // Se inicializa la ventana de SingUp
-        SingUp ventana_singup = new SingUp(this.session_activa);
-        ventana_singup.setVisible(true); // Se visualiza
+        SingUp ventana = new SingUp(this.session_activa);
+        this.session_activa = null; // En la ventana Chats se elimina la sesssion_activa
+        ventana.setVisible(true); // Se visualiza
         
         System.out.println("*** People:::De vuelto a ventana SingUp");
 
