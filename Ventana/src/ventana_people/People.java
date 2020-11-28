@@ -247,6 +247,7 @@ public class People extends javax.swing.JFrame {
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
     private JPanelImagen panel_perfiles;
+    public static boolean CerrarVentana = false;
 
     private void fncInicializarVentana() {
 
@@ -289,6 +290,13 @@ public class People extends javax.swing.JFrame {
                 
                 /// * Verifica si hubo algun cambio en archivo database.profiles
                 observador_de_perfiles.Inicializar();
+                
+                if(People.CerrarVentana == true){
+                    // Se borra la ventana People liberando memoria
+                    this.observador.stop(); // Se detiene los observadores
+                    this.setVisible(false); // Desaparece la ventana
+                    this.dispose(); // Se libera la memoria
+                }
                 
             };
 

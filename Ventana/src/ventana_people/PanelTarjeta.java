@@ -16,9 +16,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import ventana_profile.Profile;
 
 /**
  *
@@ -115,7 +117,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         campo_nombres = new javax.swing.JTextField();
         campo_sexo = new javax.swing.JTextField();
         campo_email = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        btnVerPerfil = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -156,9 +158,14 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
         campo_email.setText("jTextField1");
 
-        jButton3.setBackground(new java.awt.Color(0, 153, 204));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Ver perfil");
+        btnVerPerfil.setBackground(new java.awt.Color(0, 153, 204));
+        btnVerPerfil.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerPerfil.setText("Ver perfil");
+        btnVerPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnVerPerfilMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -175,7 +182,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEnviarMensajeTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAgregarAmigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnVerPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
@@ -184,7 +191,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(btnVerPerfil))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -435,14 +442,26 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnAgregarAmigoMouseReleased
 
+    private void btnVerPerfilMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerPerfilMouseReleased
+        
+        // Se borra la ventana People liberando memoria
+        People.CerrarVentana = true;
+        
+        // Se inicializa la vetana People
+        Profile ventana = new Profile( People.session_activa, this.perfil );
+        People.session_activa = null; // En la ventana SingUp se elimina la session activa
+        ventana.setVisible(true);
+        
+    }//GEN-LAST:event_btnVerPerfilMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
+    private javax.swing.JButton btnVerPerfil;
     private javax.swing.JTextField campo_email;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JTextField campo_sexo;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel panel_foto;
     // End of variables declaration//GEN-END:variables
     private Session perfil;
@@ -450,6 +469,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
     private boolean solicitud_enviada = false;
     private boolean somos_amigos = false;
     private boolean chat_pendiente = false;
+    private JFrame padre;
     
     private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
         
