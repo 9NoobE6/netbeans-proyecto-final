@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,21 +73,6 @@ public class Chats extends javax.swing.JFrame {
     public void setSession_activa(Session session_activa) {
         this.session_activa = session_activa;
     }
-   
-    
-    public void fncAgregarCuentas(){
-        /*
-        int t=0;
-        for(int item=0; item < 20; item++){
-            PanelCuenta a = new PanelCuenta();
-            a.setBounds(item, t , 600, 200);
-            this.panel_cuentas.add(a);
-            this.panel_cuentas.validate();
-            this.panel_cuentas.repaint();
-            t += 200 + 20;
-        }
-        */
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -117,8 +103,8 @@ public class Chats extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         campo_email_chat.setEditable(false);
-        campo_email_chat.setBackground(new java.awt.Color(0, 204, 204));
-        campo_email_chat.setForeground(new java.awt.Color(255, 255, 255));
+        campo_email_chat.setBackground(new java.awt.Color(204, 255, 204));
+        campo_email_chat.setForeground(new java.awt.Color(0, 0, 0));
         campo_email_chat.setText("jTextField1");
 
         bntVolver.setBackground(new java.awt.Color(0, 102, 153));
@@ -230,6 +216,11 @@ public class Chats extends javax.swing.JFrame {
 
         txt_mensaje.setColumns(20);
         txt_mensaje.setRows(5);
+        txt_mensaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_mensajeKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(txt_mensaje);
 
         jScrollPane3.setViewportView(lista_mensajes);
@@ -319,69 +310,24 @@ public class Chats extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntVolverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntVolverMouseReleased
-        // TODO add your handling code here:
-        SingUp ventana_singup = new SingUp( new Session( this.session_activa.getStrEmail() ));
-        ventana_singup.setVisible(true);
         
-        this.observador.stop();
-        ventana_singup.setSession_activa(this.session_activa);
-        this.dispose();
+        // Alpresionar el boton Volver se ejecuta el siguiente código...
+        this.observador.stop(); // Se detiene el timer o todos los observadores
+        this.setVisible(false); // Desaparece la ventana
+        this.dispose(); // Se elimina la ventana de Chats liberando la memoria 
+        
+        // Se inicializa la ventana de SingUp
+        SingUp ventana_singup = new SingUp(this.session_activa);
+        ventana_singup.setVisible(true); // Se visualiza
+        
         System.out.println("*** People:::De vuelto a ventana SingUp");
 
     }//GEN-LAST:event_bntVolverMouseReleased
 
     private void bntAbrirChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAbrirChatMouseReleased
 
-        // Crear path y objeto archivo de mi storage .chats para ver los chats que tengo registrados
-        String path = this.session_activa.stgFriends;
-        File chats = new File( path );
-        
-        // Si mi archivo de mi storage .chats y el perfil selecciona no es vacio...
-        if(chats.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
-        && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
-            
-            if(Storage.fncStorageEncontrarUnaCuenta(path, this.lista_de_amigos.getSelectedValue() )){
-                
-                String perfil = this.lista_de_amigos.getSelectedValue();
-                                
-                // Verificar si el perfil seleccionado tiene un (*) eso significa
-                // que el perfil no lo tengo agrego en mi lista de amigos, 
-                // sino que solo recibi un mensaje de él...
-                if(this.lista_de_amigos.getSelectedValue().contains("*")){
-                    perfil = perfil.replace("*", "");
-                    // Selecciona el chat desde perfil remitente
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
-                    this.es_amigo = false;
-                }else{
-                    perfil = perfil.substring(0, perfil.lastIndexOf("@"));
-                    perfil = perfil + Rutas.extension_rs;
-                    // Selecciona el chat desde mi cuenta principal
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
-                    this.es_amigo = true;
-                }
-                
-                // Se activa el chat, esto cancela los eventos de los botones 
-                // del panel lista de amigos...
-                this.chat_activado = true;
-                this.fncCambiarEstadoPanelAmigos(false);
-                this.fncCambiarEstadoPanelChat(true);
-                
-                // * Se activa el campo para ver el usuario co el queien estan conversando..
-                String titulo = new Session(perfil).getStrNombres() + " " + new Session(perfil).getStrApellidos();
-                this.campo_email_chat.setText(titulo);
-                this.campo_email_chat.setBackground(new Color(0,204,204));
-                this.campo_email_chat.setEnabled(true);
-                this.campo_email_chat.setEditable(false);
-                
-                // Se activa el area de mensaje...
-                this.txt_mensaje.setFocusable(true);
-                
-                System.out.println("Ruta del chat: " + this.chat_path_activo  );
-                //System.out.println("Iniciando conversacion...");
-            }else{
-                JOptionPane.showMessageDialog(null, "Lo siento, el chat no existe.");
-            }
-        }
+        // Al presionar en el boton Abrir chat se ejecuta este método
+        this.fncAbrirChatTo();
         
         
     }//GEN-LAST:event_bntAbrirChatMouseReleased
@@ -405,9 +351,10 @@ public class Chats extends javax.swing.JFrame {
             this.size_chats = 0;
             
             // Deshabitamos el panel del titulo, cambiando los colores
+            // Este color indica si el chat esta desactivado...
             this.campo_email_chat.setBackground(new Color(204,204,204));
-            this.campo_email_chat.setEditable(false);
-            this.campo_email_chat.setText(null);
+            this.campo_email_chat.setEditable(false); // Se desactiva el JTexField
+            this.campo_email_chat.setText(null); // Se elimina el titulo
             
             // Desactivamos el area de mensaje...
             this.txt_mensaje.setFocusable(false);
@@ -418,99 +365,16 @@ public class Chats extends javax.swing.JFrame {
     private void bntEliminarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEliminarMouseReleased
         // TODO add your handling code here:
         
-        String pathA = this.session_activa.stgFriends;
-        File amistades = new File(pathA);
-        System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
-        
-        if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
-          && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
-            
-            // *** Recrear el codigo.
-            String perfil = this.lista_de_amigos.getSelectedValue();
-            String yoker = this.session_activa.getStrEmail();
-            
-            if( perfil.contains("*") ){
-                perfil = perfil.replace("*", "");
-                yoker += "*";
-            }else{
-                perfil = perfil.substring(0, perfil.indexOf("@"));
-                perfil += Rutas.extension_rs;
-            }
-            
-            System.out.println("Eliminado a " + perfil);
-            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar a " + perfil 
-                    +"\nDe lista de amigos, se borrara el chat completo." );
-                   
-            if( respuesta == 0){
-                
-                // * Eliminar el perfil de mis conversaciones
-                //boolean eliC = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgChats ) , perfil );
-                //System.out.println("Eliminado = " + eliC);
-                
-                // * Eliminar el perfil de mi lista de amigos, Todo lo demas se conserva...
-                // Notase que se agrega un * esto es para indicar al programa que el no es mi amigo
-                boolean eliF = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ) , perfil + "*" );
-                System.out.println("Eliminado = " + eliF);
-                
-                /*
-                
-                // * Eliminar mi cuenta o session_activa en .friends de perfil
-                Storage.fncStorageEliminarUnaLinea( new File( new Session(perfil).getStrEmail()) , yoker );
-                
-                // * Verificar si existe una conversacion con el perfil
-                String path_chat = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
-                if( new File(path_chat).exists() ){
-                    
-                    // * Copia la conversacion que tengo de perfil hacia perfil
-                    String perfil_chat = Storage.fncStorageCrearRutaChats(perfil, perfil);
-                    Storage.fncStorageCopiarArchivo(new File(path_chat), perfil_chat );
-
-                    // * Eliminar chat de mi cuenta o session_activa
-                    new File(path_chat).delete();
-                    
-                }
-                */
-
-            }
-
-        }
+        // Cuando se presiona el boton eliminar, se ejecuta este método
+        this.fncEliminarPerfilTo();
         
     }//GEN-LAST:event_bntEliminarMouseReleased
 
     private void bntEnviarMensajeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntEnviarMensajeMouseReleased
-        // TODO add your handling code here:
-        String msg_body = this.txt_mensaje.getText();
         
-        // ****** Testing
-        System.out.println("** tamaño del mensaje : " + msg_body.length());
-        System.out.println("## tamaño del mensaje : " + msg_body.trim().length() );
-        
-        
-        if( this.es_amigo == false && this.chat_activado == true ){
-            if( msg_body.trim().length() > 0 ){
-                String perfil = this.lista_de_amigos.getSelectedValue();
-                perfil = perfil.replace("*", ""); 
-
-                // Eniviamos una notificacion en .chats
-                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgFriends  ), this.session_activa.getStrEmail() + "*");
-                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgFriends, this.session_activa.getStrEmail() + "*");
-                
-                // Enviamos una notificación en .friends
-                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgChats  ), this.session_activa.getStrEmail() + "*");
-                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgChats, this.session_activa.getStrEmail() + "*");
-                
-                // Registrar un menaje
-                String mensaje = Storage.fncStorageCrearMensaje(session_activa, msg_body);
-                Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, mensaje);          
-
-                // Clonar la conversion de session_activa a perfil
-                Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil) );
-            
-            }else{
-                JOptionPane.showMessageDialog(null, "No se puede enviar mensajes vacios.");
-            }
-            this.txt_mensaje.setText("");
-        }
+        // Al presionar el botono Eviar mensaje se ejecuata este método
+        // para posteriormente enviar mensaje...
+        this.fncEnviarMensajeTo();
         
     }//GEN-LAST:event_bntEnviarMensajeMouseReleased
 
@@ -519,17 +383,38 @@ public class Chats extends javax.swing.JFrame {
         System.out.println("Quien seleccione ... " + this.lista_de_amigos.getSelectedValue() );
         String mi_amigo = this.lista_de_amigos.getSelectedValue();
         
+        // * Se verifica que el perfil seleccionado en la lista de amigos ...
+        // existene mi lista de amigos en decir en session_activa
+        // * Se verifica que el chat esta desactivado
         if( Storage.fncStorageEncontrarUnaCuenta(this.session_activa.stgFriends, mi_amigo) && this.chat_activado == false ){
+            
+            // * Se habilitan todos los botones 
             this.bntAbrirChat.setEnabled(true);
             this.bntVerPerfil.setEnabled(true);
             this.bntEliminar.setEnabled(true);
+        
         }else{
+            
+            // * Se desabilitan todos los botones
             this.bntAbrirChat.setEnabled(false);
             this.bntVerPerfil.setEnabled(false);
             this.bntEliminar.setEnabled(false);
+        
         }
         
     }//GEN-LAST:event_lista_de_amigosMouseReleased
+
+    private void txt_mensajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_mensajeKeyReleased
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            
+            // Al presionar presiona el enter en el area de mensaje se ejecuata este método
+            // para posteriormente enviar mensaje...
+            this.fncEnviarMensajeTo();
+            
+        }   
+        
+    }//GEN-LAST:event_txt_mensajeKeyReleased
 
     /**
      * @param args the command line arguments
@@ -623,17 +508,24 @@ public class Chats extends javax.swing.JFrame {
         
         try{
              
-            ActionListener tarea = (ActionEvent e) -> {
-                try {
-                    System.out.println("::: Observador Chats :::");
-                     
-                    // Sincronizar los mensajes
-                    if( chat_activado == true )
-                        this.fncSincronizarMensajes();
+            ActionListener tarea = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        System.out.println("::: Observador Chats :::");
+                        // * Ejecutar los observadores
+                        
+                        if (chat_activado == true) {   
+                            // Sincronizar los mensajes si chat esta activado
+                            Chats.this.fncSincronizarMensajes(); 
+                        }
+                        
+                        // Sincronizar lista de amigos de session_activa
+                        Chats.this.fncSincronizarAmigos();
                     
-                    this.fncSincronizarAmigos();
-                } catch (IOException ex) {
-                    Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
+                    }catch (IOException ex) {
+                        Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             };
 
@@ -699,7 +591,9 @@ public class Chats extends javax.swing.JFrame {
             String st; 
 
             while ((st = br.readLine()) != null){
-                this.amigos.addElement(st);
+                if( !st.contains(this.session_activa.getStrEmail()) ){
+                    this.amigos.addElement(st);
+                }
             }
             
             this.lista_de_amigos.setModel(this.amigos);
@@ -770,5 +664,166 @@ public class Chats extends javax.swing.JFrame {
                 
             }
         }
+    }
+
+    private void fncEnviarMensajeTo() {
+        
+        // Se obtiene el perfil seleccionado de lista de amigos..
+        String msg_body = this.txt_mensaje.getText();
+        
+        // ****** Testing
+        System.out.println("** tamaño del mensaje : " + msg_body.length());
+        System.out.println("## tamaño del mensaje : " + msg_body.trim().length() );
+        
+        // * Verificar que chat este activado, el chat se activa al Abrir el chat 
+        if( this.es_amigo == false && this.chat_activado == true ){
+            if( msg_body.trim().length() > 0 ){
+                String perfil = this.lista_de_amigos.getSelectedValue();
+                perfil = perfil.replace("*", ""); 
+
+                // Eniviamos una notificacion en .chats
+                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgFriends  ), this.session_activa.getStrEmail() + "*");
+                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgFriends, this.session_activa.getStrEmail() + "*");
+                
+                // Enviamos una notificación en .friends
+                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgChats  ), this.session_activa.getStrEmail() + "*");
+                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgChats, this.session_activa.getStrEmail() + "*");
+                
+                // Registrar un menaje
+                String mensaje = Storage.fncStorageCrearMensaje(session_activa, msg_body);
+                Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, mensaje);          
+
+                // Clonar la conversion de session_activa a perfil
+                Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil) );
+            
+            }else{
+                JOptionPane.showMessageDialog(null, "No se puede enviar mensajes vacios.");
+            }
+            this.txt_mensaje.setText("");
+        }
+        
+    }
+
+    private void fncAbrirChatTo() {
+       
+        // Crear path y objeto archivo de mi storage .chats para ver los chats que tengo registrados
+        String path = this.session_activa.stgFriends;
+        File chats = new File( path );
+        
+        // Si mi archivo de mi storage .chats y el perfil selecciona no es vacio...
+        if(chats.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
+        && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
+            
+            if(Storage.fncStorageEncontrarUnaCuenta(path, this.lista_de_amigos.getSelectedValue() )){
+                
+                String perfil = this.lista_de_amigos.getSelectedValue();
+                                
+                // Verificar si el perfil seleccionado tiene un (*) eso significa
+                // que el perfil no lo tengo agrego en mi lista de amigos, 
+                // sino que solo recibi un mensaje de él...
+                if(this.lista_de_amigos.getSelectedValue().contains("*")){
+                    perfil = perfil.replace("*", "");
+                    // Selecciona el chat desde perfil remitente
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
+                    this.es_amigo = false;
+                }else{
+                    perfil = perfil.substring(0, perfil.lastIndexOf("@"));
+                    perfil = perfil + Rutas.extension_rs;
+                    // Selecciona el chat desde mi cuenta principal
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
+                    this.es_amigo = true;
+                }
+                
+                // Se activa el chat, esto cancela los eventos de los botones 
+                // del panel lista de amigos...
+                this.chat_activado = true;
+                this.fncCambiarEstadoPanelAmigos(false);
+                this.fncCambiarEstadoPanelChat(true);
+                
+                // * Se activa el campo para ver el usuario co el queien estan conversando..
+                String titulo = new Session(perfil).getStrNombres() + " " + new Session(perfil).getStrApellidos();
+                this.campo_email_chat.setText(titulo);
+                
+                // * Este color indica, si el chat esta activa.
+                this.campo_email_chat.setBackground(new Color(204,255,204));
+                this.campo_email_chat.setEnabled(true); // Activiamos
+                this.campo_email_chat.setEditable(false); // Pero el titulo no se puede editar
+                
+                // Se activa el area de mensaje...
+                this.txt_mensaje.setFocusable(true);
+                
+                System.out.println("Ruta del chat: " + this.chat_path_activo  );
+                //System.out.println("Iniciando conversacion...");
+            }else{
+                JOptionPane.showMessageDialog(null, "Lo siento, el chat no existe.");
+            }
+        }
+        
+    }
+
+    private void fncEliminarPerfilTo() {
+        
+        // * Se la rutas obtiene la lista de amigos de mi cuenta p session_activa
+        // y se crear un objeto per verificar su existencia...
+        String pathA = this.session_activa.stgFriends;
+        File amistades = new File(pathA);
+        System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
+        
+        if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
+          && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
+            
+            // *** Recrear el codigo.
+            String perfil = this.lista_de_amigos.getSelectedValue();
+            String yoker = this.session_activa.getStrEmail();
+            
+            // Si el email del perfil contiene un * se elminina (No es amigo de session_activa) 
+            if( perfil.contains("*") ){
+                perfil = perfil.replace("*", "");
+                yoker += "*";
+            }
+            // Por el contario significa que si es amigo de session_activa y solo obtiene el email 
+            else{
+                perfil = perfil.substring(0, perfil.indexOf("@"));
+                perfil += Rutas.extension_rs;
+            }
+            
+            System.out.println("Eliminado a " + perfil);
+            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar a " + perfil 
+                    +"\nDe lista de amigos, se borrara el chat completo." );
+                   
+            if( respuesta == 0){
+                
+                // * Eliminar el perfil de mis conversaciones
+                //boolean eliC = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgChats ) , perfil );
+                //System.out.println("Eliminado = " + eliC);
+                
+                // * Eliminar el perfil de mi lista de amigos, Todo lo demas se conserva...
+                // Notase que se agrega un * esto es para indicar al programa que el no es mi amigo
+                boolean eliF = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ) , perfil + "*" );
+                System.out.println("Eliminado = " + eliF);
+                
+                /*
+                
+                // * Eliminar mi cuenta o session_activa en .friends de perfil
+                Storage.fncStorageEliminarUnaLinea( new File( new Session(perfil).getStrEmail()) , yoker );
+                
+                // * Verificar si existe una conversacion con el perfil
+                String path_chat = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
+                if( new File(path_chat).exists() ){
+                    
+                    // * Copia la conversacion que tengo de perfil hacia perfil
+                    String perfil_chat = Storage.fncStorageCrearRutaChats(perfil, perfil);
+                    Storage.fncStorageCopiarArchivo(new File(path_chat), perfil_chat );
+
+                    // * Eliminar chat de mi cuenta o session_activa
+                    new File(path_chat).delete();
+                    
+                }
+                */
+
+            }
+
+        }
+        
     }
 }
