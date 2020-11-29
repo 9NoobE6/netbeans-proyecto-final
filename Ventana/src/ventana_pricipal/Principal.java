@@ -429,11 +429,11 @@ public class Principal extends javax.swing.JFrame {
         }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca una contraseña, por favor...");
         }else if( this.campo_registro_email.getText().trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Rutas.extension_rs+" , por favor...\n"
-                    +"por ejemplo example"+Rutas.extension_rs+"");
-        }else if( !this.campo_registro_email.getText().trim().contains(Rutas.extension_rs) || !this.fncVerificarEmail() ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Rutas.extension_rs+" , por favor...\n" 
-                    +"por ejemplo example"+Rutas.extension_rs+"");
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Storage.extension_rs+" , por favor...\n"
+                    +"por ejemplo example"+Storage.extension_rs+"");
+        }else if( !this.campo_registro_email.getText().trim().contains(Storage.extension_rs) || !this.fncVerificarEmail() ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Storage.extension_rs+" , por favor...\n" 
+                    +"por ejemplo example"+Storage.extension_rs+"");
         }else if( this.campo_registro_email.getText().trim().length() > 23 ){
             JOptionPane.showMessageDialog(null, "Introduzca un correo electronico menor o igual a 23 caracteres, por favor...");
         }else{
@@ -766,7 +766,7 @@ public class Principal extends javax.swing.JFrame {
         
         // Verificar que el email termine con extension_rs
         String email = this.campo_registro_email.getText().trim();
-        return (email.indexOf(Rutas.extension_rs) + Rutas.extension_rs.length()) == email.length();
+        return (email.indexOf(Storage.extension_rs) + Storage.extension_rs.length()) == email.length();
            
     }
 }

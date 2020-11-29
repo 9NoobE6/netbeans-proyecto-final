@@ -29,6 +29,7 @@ public class Storage {
     public final static String espacios="\n\n";
     public final static int longitud = 60;
     public final static String identificador_amigo = " - Saluda a tu amigo.";
+    public static final String extension_rs = "@gobim.dev";
     
     
     // ******* Método con retorno a boolean *******
@@ -92,13 +93,13 @@ public class Storage {
 
     public static boolean fncStorageEncontrarUnaCuenta(String enPath, String encontrar_cuenta) {
         // Si el File no existe y el String es vacio retorna false
-        if ( (new File(enPath).exists() || !encontrar_cuenta.isEmpty()) && encontrar_cuenta.contains(Rutas.extension_rs)) {
+        if ( (new File(enPath).exists() || !encontrar_cuenta.isEmpty()) && encontrar_cuenta.contains(extension_rs)) {
             try {
                 
                 // * Obtener la cuenta con extension
                 if( !encontrar_cuenta.contains("*") ){
                     encontrar_cuenta = encontrar_cuenta.substring(0, encontrar_cuenta.lastIndexOf("@"));
-                    encontrar_cuenta = encontrar_cuenta + Rutas.extension_rs;
+                    encontrar_cuenta = encontrar_cuenta + extension_rs;
                 } System.out.println("Encontrar la cuenta: " + encontrar_cuenta);
                 
                 BufferedReader br = new BufferedReader(new FileReader(new File(enPath)));
@@ -107,10 +108,10 @@ public class Storage {
                 while ((linea = br.readLine()) != null) {
                     
                     // Si encuentra la cuenta se rompe el bucle
-                    if (linea.equals(encontrar_cuenta) && !linea.isEmpty() && linea.contains(Rutas.extension_rs)) {
+                    if (linea.equals(encontrar_cuenta) && !linea.isEmpty() && linea.contains(extension_rs)) {
                         return true;
                     }else 
-                    if (linea.equals(encontrar_cuenta + Storage.identificador_amigo) && !linea.isEmpty() && linea.contains(Rutas.extension_rs)){
+                    if (linea.equals(encontrar_cuenta + Storage.identificador_amigo) && !linea.isEmpty() && linea.contains(extension_rs)){
                         return true;
                     }
                     

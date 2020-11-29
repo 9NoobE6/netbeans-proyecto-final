@@ -8,6 +8,7 @@ package watcher;
 import clases.Observador;
 import clases.Rutas;
 import clases.Session;
+import clases.Storage;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,7 +47,7 @@ public class peopleWatcherProfile extends Observador{
 
                 while ((linea = br.readLine()) != null) {
 
-                    if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Rutas.extension_rs)) {
+                    if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Storage.extension_rs)) {
                         PanelTarjeta a = new PanelTarjeta(new Session(linea));
                         a.setBounds(60, coordenadaY, 600, 135);
                         panel_perfiles.add(a);

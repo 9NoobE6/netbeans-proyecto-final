@@ -431,7 +431,7 @@ public class Amigos extends javax.swing.JFrame {
             perfil = perfil.replace("*", "");
         }else{
             perfil = perfil.substring(0, perfil.indexOf("@"));
-            perfil = perfil + Rutas.extension_rs;
+            perfil = perfil + Storage.extension_rs;
         }
         
         
@@ -675,7 +675,7 @@ public class Amigos extends javax.swing.JFrame {
                 // Covertir el item selecciona en un correo de con extension
                 String perfil = lista_de_amigos.getSelectedValue();
                 perfil = perfil.substring(0, perfil.lastIndexOf("@"));
-                perfil = perfil + Rutas.extension_rs;
+                perfil = perfil + Storage.extension_rs;
                
                 File archivo = new File( path );
                 BufferedReader br = new BufferedReader( new FileReader(archivo) );
@@ -772,7 +772,7 @@ public class Amigos extends javax.swing.JFrame {
                     this.es_amigo = false;
                 }else{
                     perfil = perfil.substring(0, perfil.lastIndexOf("@"));
-                    perfil = perfil + Rutas.extension_rs;
+                    perfil = perfil + Storage.extension_rs;
                     // Selecciona el chat desde mi cuenta principal
                     this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
                     this.es_amigo = true;
@@ -828,7 +828,7 @@ public class Amigos extends javax.swing.JFrame {
             // Por el contario significa que si es amigo de session_activa y solo obtiene el email 
             else{
                 perfil = perfil.substring(0, perfil.indexOf("@"));
-                perfil += Rutas.extension_rs;
+                perfil += Storage.extension_rs;
             }
             
             System.out.println("Eliminado a " + perfil);
