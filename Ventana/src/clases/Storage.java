@@ -93,7 +93,7 @@ public class Storage {
 
     public static boolean fncStorageEncontrarUnaCuenta(String enPath, String encontrar_cuenta) {
         // Si el File no existe y el String es vacio retorna false
-        if (new File(enPath).exists() || !encontrar_cuenta.isEmpty()) {
+        if ( (new File(enPath).exists() || !encontrar_cuenta.isEmpty()) && encontrar_cuenta.contains(Rutas.extension_rs)) {
             try {
                 
                 // * Obtener la cuenta con extension
