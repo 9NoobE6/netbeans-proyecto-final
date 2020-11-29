@@ -410,6 +410,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
     private void btnVerPerfilMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerPerfilMouseReleased
         
         // Se borra la ventana People liberando memoria
+        People.panel_background.getParent().setVisible(false);
         People.CerrarVentana = true;
         
         // Se inicializa la vetana People
