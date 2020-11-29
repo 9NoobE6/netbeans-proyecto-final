@@ -39,6 +39,7 @@ import javax.swing.Timer;
 import jpanelimagen.ImagenFondo;
 import jpanelimagen.JPanelImagen;
 import ventana_pricipal.Principal;
+import ventana_profile.Profile;
 import ventana_singup.SingUp;
 
 /**
@@ -157,6 +158,11 @@ public class Amigos extends javax.swing.JFrame {
         bntVerPerfil.setBackground(new java.awt.Color(0, 0, 102));
         bntVerPerfil.setForeground(new java.awt.Color(255, 255, 255));
         bntVerPerfil.setText("Ver perfil");
+        bntVerPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntVerPerfilMouseReleased(evt);
+            }
+        });
 
         bntAbrirChat.setBackground(new java.awt.Color(0, 102, 0));
         bntAbrirChat.setForeground(new java.awt.Color(255, 255, 255));
@@ -311,14 +317,14 @@ public class Amigos extends javax.swing.JFrame {
 
     private void bntVolverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntVolverMouseReleased
         
-        // Se borra la ventana Chats liberando memoria
+        // Se borra la ventana Amigos liberando memoria
         this.observador.stop(); // Se detiene los observadores
         this.setVisible(false); // Desaparece la ventana
         this.dispose(); // Se libera la memoria 
         
         // Se inicializa la ventana de SingUp
         SingUp ventana = new SingUp(this.session_activa);
-        this.session_activa = null; // En la ventana Chats se elimina la sesssion_activa
+        this.session_activa = null; // En la ventana SingUp se elimina la sesssion_activa
         ventana.setVisible(true); // Se visualiza
         
         System.out.println("*** People:::De vuelto a ventana SingUp");
@@ -416,6 +422,34 @@ public class Amigos extends javax.swing.JFrame {
         }   
         
     }//GEN-LAST:event_txt_mensajeKeyReleased
+
+    private void bntVerPerfilMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntVerPerfilMouseReleased
+        
+        // * Obtener el email de perfil selccionado
+        String perfil = this.lista_de_amigos.getSelectedValue();
+        if( perfil.contains("*") ){
+            perfil = perfil.replace("*", "");
+        }else{
+            perfil = perfil.substring(0, perfil.indexOf("@"));
+            perfil = perfil + Rutas.extension_rs;
+        }
+        
+        
+        // Se borra la ventana Amigos liberando memoria
+        this.observador.stop(); // Se detiene los observadores
+        this.setVisible(false); // Desaparece la ventana
+        this.dispose(); // Se libera la memoria 
+        
+        // Se inicializa la ventana de Profile
+        // De session_activa para perfil
+        Profile ventana = new Profile(this.session_activa, new Session(perfil));
+        this.session_activa = null; // En la ventana SingUp se elimina la sesssion_activa
+        ventana.ventana_Amigos = true; // Inidicar a la ventana que vuelva a SingUp
+        ventana.setVisible(true); // Se visualiza
+        
+        System.out.println("*** Amigos::: Abriendo el perfil de " + perfil);
+        
+    }//GEN-LAST:event_bntVerPerfilMouseReleased
 
     /**
      * @param args the command line arguments

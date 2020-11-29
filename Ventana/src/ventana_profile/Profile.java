@@ -113,7 +113,7 @@ public class Profile extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -246,12 +246,12 @@ public class Profile extends javax.swing.JFrame {
 
         jButton6.setText("Ver espacio");
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 153));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Volver");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnVolver.setBackground(new java.awt.Color(0, 102, 153));
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolver.setText("Volver");
+        btnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
+                btnVolverMouseReleased(evt);
             }
         });
 
@@ -265,7 +265,7 @@ public class Profile extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
         jPanel1Layout.setVerticalGroup(
@@ -275,7 +275,7 @@ public class Profile extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
                     .addComponent(jButton5)
-                    .addComponent(jButton1))
+                    .addComponent(btnVolver))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -325,25 +325,43 @@ public class Profile extends javax.swing.JFrame {
         
     }//GEN-LAST:event_opcionesDeCuentaMouseClicked
 
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+    private void btnVolverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseReleased
         
         // Se borra la ventana Profile liberando memoria
-        this.observador.stop(); // Se detiene los observadores
         this.setVisible(false); // Desaparece la ventana
         this.dispose(); // Se libera la memoria
         
-        // Evitamos que la ventana People se cierre
-        People.CerrarVentana = false; 
+        // Si la ventana Profile es abierto desde la ventana People
+        // se devulve a People
+        if( this.ventana_People == true ){
+            
+            // Evitamos que la ventana People se cierre
+            People.CerrarVentana = false; 
+
+            // Se inicializa la ventana de People
+            People ventana = new People(this.session_activa);
+            this.session_activa = null; // En la ventana Profile se elimina session_activa seleccionado
+            this.perfil = null; // En la ventana Profile se elimina de perfil seleccionado
+            ventana.setVisible(true); // Se visualiza
+            
+        }
         
-        // Se inicializa la ventana de People
-        People ventana = new People(this.perfil);
-        this.perfil = null; // En la ventana People se elimina la sesssion_activa
-        ventana.setVisible(true); // Se visualiza
+        // Si la ventana Profile es abierto desde la ventana SingUp
+        // se devulve a SingUp
+        else if( this.ventana_Amigos == true ){
+            
+            // Se inicializa la ventana de Amigos
+            Amigos ventana = new Amigos(this.session_activa);
+            this.session_activa = null; // En la ventana Profile se elimina session_activa seleccionado
+            this.perfil = null; // En la ventana Profile se elimina de perfil seleccionado
+            ventana.setVisible(true); // Se visualiza
+            
+        }
         
         System.out.println("*** Profile:::De vuelto a ventana People");
         
         
-    }//GEN-LAST:event_jButton1MouseReleased
+    }//GEN-LAST:event_btnVolverMouseReleased
     
     /**
      * @param args the command line arguments
@@ -382,12 +400,12 @@ public class Profile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JPasswordField campo_contrasenha;
     private javax.swing.JTextField campo_email;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -403,82 +421,19 @@ public class Profile extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     Session perfil;
     Session session_activa;
-    DefaultListModel mensajes = new DefaultListModel();
-    DefaultListModel amigos = new DefaultListModel();
-    private long size_friendship=0;
-    private ActionListener oyente;
-    private Timer observador = new Timer(1000, oyente);
-    private boolean modificar_cuenta=false;
+    public boolean ventana_Amigos=false;
+    public boolean ventana_People=false;
     
     private void InicializarVentana(){
-        // springwd13@gmail.com
-        
-        try{
-             
-            ActionListener tarea = (ActionEvent e) -> {
-                // Observadores o Watchers (Depende de Session)
-                this.fncSincronizandoMensajes();
-                //this.fncSincronizarAmigos();
-            };
-
-           observador.addActionListener(tarea);
-           observador.start();
-           
-        }catch(Exception a){}
         
         // Este es para JFrame SingUp (No depende de Session)
         this.setLocationRelativeTo(null);
         this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
         this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
         
-        // Este es para JFrame SingUp (No depende de Session)
-        this.fncCambiarEstados(false);
-        
         // Este es para JFrame SingUp (Si depende de Session)
-        this.fncInstertarDatosDeSession();
+        this.fncInstertarDatosDePerfilSeleccionado();
         
-        // Establecer color para el boton Modificar
-        //this.btnModificarCuenta.setBackground(new Color(102,102,102));
-        
-    }
-    
-    private void fncSincronizandoMensajes(){
-        System.out.println("::: Observador Profile :::");
-    }
-    
-    
-    
-    private void fncCopiarImagen(String img) throws FileNotFoundException, IOException{
-        
-        // Crear la nueva ruta del foto de perfil (Email + .svg)
-        String path = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_svg);
-        
-        FileInputStream in = new FileInputStream(img);
-        FileOutputStream ou = new FileOutputStream( path );
-        BufferedInputStream bin = new BufferedInputStream(in);
-        BufferedOutputStream bou = new BufferedOutputStream(ou);
-        
-        // Establecer el nuevo nombre del foto de perfil (Email + .svg)
-        // como ... example@extension 
-        perfil.setStrImgPerfil(perfil.getStrEmail() + Rutas.extesion_svg);
-        
-        int b=0;
-        while(b!=-1){
-         b=bin.read();
-         bou.write(b);
-        }
-        
-        bin.close();
-        bou.close();
-    }
-    
-    public long fncObtenerTamahnoStorages(String file){
-        Path path = Paths.get(file);
-        long bytes =0;
-        try{
-             bytes = Files.size(path.toAbsolutePath());
-        }catch(Exception e){}
-        return bytes;
     }
     
     private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
@@ -494,19 +449,8 @@ public class Profile extends javax.swing.JFrame {
         if(vaciar) contenedor.validate();
         if(vaciar) contenedor.repaint();
     }
-    
-    private void fncCambiarEstados(boolean opcion){
-        
-        // Desactivamo o Activamos los campos de depende de opcion
-        this.campo_nombres.setEnabled(opcion);
-        this.campo_apellidos.setEnabled(opcion);
-        this.campo_email.setEnabled(false);
-        this.campo_sexo.setEnabled(opcion);
-        this.campo_contrasenha.setEnabled(opcion);
- 
-    }
 
-    private void fncInstertarDatosDeSession() {
+    private void fncInstertarDatosDePerfilSeleccionado() {
         String img_profile = "";
         
         // Seleccionar el foto de perfil adecuado para el usuario
@@ -529,141 +473,6 @@ public class Profile extends javax.swing.JFrame {
         this.setTitle(this.perfil.getStrNombres() + " - " + this.perfil.getStrEmail()  );
     }
 
-    private int fncVerificarCampos() {
-        
-         // Este es contar los campos modificados
-        int campos_modificados = 0;
-        int campos_vacios = 0;
-        int campos_identicos = 0;
-        
-        // Quitamos los border rojos de error en caso de existir
-        this.campo_nombres.setBorder( new JTextField().getBorder() );
-        this.campo_apellidos.setBorder( new JTextField().getBorder() );
-        this.campo_email.setBorder( new JTextField().getBorder() );
-        this.campo_contrasenha.setBorder( new JTextField().getBorder() );
-        
-        // Verificar que el campo nombre sea distinto al actual y que no este vacio..
-        if( !this.campo_nombres.getText().equals(this.perfil.getStrNombres()) ){
-            if( !this.campo_nombres.getText().isEmpty() ){
-                //this.session_activa.setStrNombres( this.campo_nombres.getText() );
-                campos_modificados ++;
-            }else {
-                this.campo_nombres.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
-                campos_vacios++;
-            }
-        } else campos_identicos++;
-        
-        // Verificar que el campo apellidos sea distinto al actual y que no este vacio..
-        if( !this.campo_apellidos.getText().equals(this.perfil.getStrApellidos()) ){
-            if( !this.campo_apellidos.getText().isEmpty() ){
-                //this.session_activa.setStrApellidos(this.campo_apellidos.getText() );
-                campos_modificados ++;
-            }else {
-                this.campo_apellidos.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
-                campos_vacios++;
-            }
-        } else campos_identicos++;
-        
-        // Verificar que el campo email sea distinto al actual y que no este vacio..
-        if( !this.campo_email.getText().equals(this.perfil.getStrEmail()) ){
-            if( !this.campo_email.getText().isEmpty() ){
-                //this.session_activa.setStrEmail(this.campo_email.getText() );
-                campos_modificados ++;
-            }else {
-                this.campo_email.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
-                campos_vacios++;
-            }
-        } else campos_identicos++;
-        
-        // Verificar que el campo contrseña sea distinto al actual y que no este vacio..
-        String password = String.valueOf(this.campo_contrasenha.getPassword());
-        if( !password.equals(this.perfil.getStrContrasenha()) ){
-            if( !password.isEmpty() ){
-                //this.session_activa.setStrContrasenha(password);
-                campos_modificados ++;
-            }else {
-                this.campo_contrasenha.setBorder(  BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.RED) );
-                campos_vacios++;
-            }
-        } else campos_identicos++;
-        
-        // Verificar que el campo sexo sea distinto al actual y que no este vacio..
-        if( !this.campo_sexo.getSelectedItem().toString().equals(this.perfil.getStrSexo()) ){
-            if( !this.campo_sexo.getSelectedItem().toString().isEmpty() ){
-                //this.session_activa.setStrSexo(this.campo_sexo.getSelectedItem().toString());
-                campos_modificados++;
-            }else campos_vacios++;
-        } else campos_identicos++;
-
-        // Si hay un solo campo modificado.. se actualizan los datos..
-        if(campos_vacios > 0){
-           return 400; // Retorna un estado 400, significa que hay campos vacios
-        // Si hay un solo campo modificado.. se actualizan los datos..
-        }else if(campos_modificados > 0 ){
-           return 100; // Retorna un estado 100, significa que hay campos modificados 
-        }else if(campos_identicos > 0 ){
-           return 0; // Retorna un estado 0, significa que hay campos modificados
-        }
-        
-        // Retorna un estado -1, estado no identificado
-        return -1;
-    }
-
-    private void fncModificarDatosDeSession() {
-        System.out.println("Estado: " + this.fncVerificarCampos());
-            
-            int resultado = this.fncVerificarCampos();
-            
-            if(resultado == 400){
-                JOptionPane.showMessageDialog(null, "Complete los datos solicitado.");
-            }else
-            if( resultado == 100 || resultado == 0 ){
-                
-                Box box = Box.createVerticalBox();
-                JLabel t = new JLabel("Introduzca la contraseña actual");
-                box.add(t);
-                JPasswordField jpf = new JPasswordField(24);
-                box.add(jpf);
-                int button = -1;
-                box.setLocation( this.getLocation() );
-                
-                int intentos = 0;
-                boolean modificado=false;
-                do{
-                    if( resultado == 100)
-                    button = JOptionPane.showConfirmDialog(null, box, "Confirmar los nuevos datos...", JOptionPane.OK_CANCEL_OPTION);
-                   
-                    if (button == JOptionPane.OK_OPTION) {
-                        if( String.valueOf(this.campo_contrasenha.getPassword()).equals(this.perfil.getStrContrasenha()) ) {
-                            // Enviar los datos del formulario a session
-                            this.perfil.setStrNombres(this.campo_nombres.getText());
-                            this.perfil.setStrApellidos(this.campo_apellidos.getText());
-                            this.perfil.setStrEmail(this.campo_email.getText());
-                            this.perfil.setStrContrasenha( String.valueOf(this.campo_contrasenha.getPassword()) );
-                            this.perfil.setStrSexo( this.campo_sexo.getSelectedItem().toString() );
-
-                            this.perfil.fncActualizarDatos();
-                            JOptionPane.showMessageDialog(null, "Tus datos sean actualizado exito.");
-                            modificado  = true;
-
-                        }else{
-                            intentos++;
-                            JOptionPane.showMessageDialog(null, "Contraseña incorrecta, datos no actualizados.\n"
-                                    + "Puedes volver internarlo en "+ (3 - intentos) +" intentos mas.");
-                             
-                        }
-                    }
-                }while(button == JOptionPane.OK_OPTION && intentos < 3 && modificado == false );
-                
-                // Desactivamos los campos para modificar datos
-                this.modificar_cuenta = false;
-                this.fncCambiarEstados(modificar_cuenta);
-                //this.btnModificarCuenta.setText("Modificar");
-                //this.btnModificarCuenta.setBackground(new Color(102,102,102));
-                this.fncInstertarDatosDeSession();
-            }
-    }
-    
 
     
 }

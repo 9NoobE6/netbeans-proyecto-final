@@ -70,21 +70,17 @@ public class PanelTarjeta extends javax.swing.JPanel {
         }
         
         // Verificar si, si somos amigos...
-        /*
-        String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
-        if( Storage.fncStorageEncontrarUnaCuenta(session_friends, this.perfil.getStrEmail() ) ){
-            this.somos_amigos = true;
-            this.btnAgregarAmigo.setText("Somos amigos");
-        }else        
-        if( Storage.fncStorageEncontrarUnaCuenta(session_friends, this.perfil.getStrEmail() + "*") ){
-            this.btnAgregarAmigo.setText("Amigo+");
+        boolean amigoA= Storage.fncStorageEncontrarUnaCuenta(People.session_activa.stgFriends, this.perfil.getStrEmail());
+        boolean amigoB = Storage.fncStorageEncontrarUnaCuenta(this.perfil.stgFriends, People.session_activa.getStrEmail());
+        
+        if(amigoA == true && amigoB == true){
+            this.btnAgregarAmigo.setText("AmigosXsiempre");
+            this.amigos_x_simpre = true;
         }
-        */
         
         // Verificar si tengo conversación
         if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){
-            this.btnEnviarMensajeTo.setText("Mensaje+1");
-            
+            this.btnEnviarMensajeTo.setText("Mensaje+1");    
         }
         
         //
@@ -408,38 +404,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
     
     private void btnAgregarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAmigoMouseReleased
-        // TODO add your handling code here:
-        /*
-        String session_friends = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_friends);
-        String session_chats = Storage.fncStorageCrearRutaProfile(People.session_activa.getStrEmail(), Rutas.extesion_chats);
-        
-        if(this.somos_amigos == true){
-            int respuesta = JOptionPane.showConfirmDialog(null, this.perfil.getStrNombres() + " y tú son amigos.\nDeseas eliminar de tu lista de amigos?");
-            
-            if(respuesta == 0){
-                // Eliminar de mi lista de amigos
-                //Storage.fncStorageEliminarUnaLinea(new File(session_friends), this.perfil.getStrEmail() );
-                
-                // Si tenemos una conversación pendiente, entonces te los paso
-                if( Storage.fncStorageBuscarUnaLinea(session_chats, this.perfil.getStrEmail()) ){
-                    
-                    try {
-                        //Storage.fncStorageAcoplarUnaLinea(session_friends, this.perfil.getStrEmail() + "*" );
-                        String pathA = Storage.fncStorageCrearRutaChats(People.session_activa.getStrEmail(), this.perfil.getStrEmail(), Rutas.storage_chats);
-                        String pathB = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), People.session_activa.getStrEmail(), Rutas.storage_chats);
-                        Storage.fncStorageMoverArchivo(new File(pathA), pathB );
-                    } catch (IOException ex) {
-                        Logger.getLogger(PanelTarjeta.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                }
-                
-                //this.btnAgregarAmigo.setText("Amigos+");
-            }
-            
-        }
-       */
-        
+        this.fncAgregarAmigoPlus();
     }//GEN-LAST:event_btnAgregarAmigoMouseReleased
 
     private void btnVerPerfilMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerPerfilMouseReleased
@@ -449,6 +414,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         // Se inicializa la vetana People
         Profile ventana = new Profile( People.session_activa, this.perfil );
+        ventana.ventana_People = true; // Inidicar a la ventana que vuelva a People
         People.session_activa = null; // En la ventana SingUp se elimina la session activa
         ventana.setVisible(true);
         
@@ -467,7 +433,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
     private Session perfil;
     private Session session;
     private boolean solicitud_enviada = false;
-    private boolean somos_amigos = false;
+    private boolean amigos_x_simpre = false;
     private boolean chat_pendiente = false;
     private JFrame padre;
     
@@ -484,5 +450,22 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         if(vaciar) contenedor.validate();
         if(vaciar) contenedor.repaint();
+    }
+    
+    // ** Pendiente...
+    private void fncAgregarAmigoPlus() {
+        // Verificar si, si somos amigos...
+        boolean amigoA= Storage.fncStorageEncontrarUnaCuenta(People.session_activa.stgFriends, this.perfil.getStrEmail());
+        boolean amigoB = Storage.fncStorageEncontrarUnaCuenta(this.perfil.stgFriends, People.session_activa.getStrEmail());
+        
+        if( amigoA == true && amigoB ){
+             int respuesta = JOptionPane.showConfirmDialog(null, "Son amigos, deseas cancelarla?", null,JOptionPane.YES_NO_OPTION);
+             if(respuesta == JOptionPane.YES_OPTION){
+                JOptionPane.showMessageDialog(null, "Ya no son amigo...");
+                this.btnAgregarAmigo.setText("Amigo+");
+             }
+        }else{
+            
+        }
     }
 }
