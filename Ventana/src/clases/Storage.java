@@ -372,8 +372,6 @@ public class Storage {
         return "["+cadenaFecha+" "+horaActual+"]";
     }
     
-    
-
     // ******* Método con retorno a String *******
     public static String fncStorageObtenerRutaData(String email) {
         // System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );
@@ -387,5 +385,5 @@ public class Storage {
     public static String fncStorageCrearRutaChats(String emailA, String emailB) {
         return Rutas.storage_profiles + emailA + "/chats/" + emailB + Rutas.extesion_chats;
     }
-
+            
 }

@@ -82,10 +82,6 @@ public class Profile extends javax.swing.JFrame {
     public void setSession_activa(Session session_activa) {
         this.perfil = session_activa;
     }
-    
-    public void fncMostrarMensajeDeBienvenida(){
-        JOptionPane.showMessageDialog(null, "Hola, " + perfil.getStrNombres() + "\n" + "Bienvenido a RS Gobim.");
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,9 +103,9 @@ public class Profile extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         campo_sexo = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        campo_contrasenha = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        campo_nacimiento = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -158,12 +154,13 @@ public class Profile extends javax.swing.JFrame {
         campo_sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
         campo_sexo.setEnabled(false);
 
-        jLabel5.setText("Contraseña:");
-
-        campo_contrasenha.setText("jPasswordField1");
-        campo_contrasenha.setEnabled(false);
-
         jButton2.setText("Enviar mensaje");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel5.setText("Fecha de nacimiento");
+
+        campo_nacimiento.setText("jTextField1");
+        campo_nacimiento.setEnabled(false);
 
         javax.swing.GroupLayout panel_portadaLayout = new javax.swing.GroupLayout(panel_portada);
         panel_portada.setLayout(panel_portadaLayout);
@@ -172,35 +169,28 @@ public class Profile extends javax.swing.JFrame {
             .addGroup(panel_portadaLayout.createSequentialGroup()
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(jLabel2))
-                            .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel1))
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(jLabel4))
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addGap(105, 105, 105)
-                                .addComponent(jLabel5)
-                                .addGap(70, 70, 70))
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addGap(66, 66, 66)
-                                .addComponent(campo_contrasenha)))))
+                                .addGap(23, 23, 23)
+                                .addComponent(jLabel5))
+                            .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel2))
+                    .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel4))
+                    .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57)
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
@@ -230,13 +220,15 @@ public class Profile extends javax.swing.JFrame {
                             .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campo_contrasenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel_portadaLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -402,8 +394,8 @@ public class Profile extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
-    private javax.swing.JPasswordField campo_contrasenha;
     private javax.swing.JTextField campo_email;
+    private javax.swing.JTextField campo_nacimiento;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
     private javax.swing.JButton jButton2;
@@ -463,16 +455,18 @@ public class Profile extends javax.swing.JFrame {
         }
         
         // Insetar los datos personales del usuario
-        this.campo_nombres.setText(perfil.getStrNombres() );
-        this.campo_apellidos.setText(perfil.getStrApellidos());
-        this.campo_email.setText(perfil.getStrEmail());
-        this.campo_contrasenha.setText(perfil.getStrContrasenha() );
-        this.campo_sexo.setSelectedItem(perfil.getStrSexo());
+        this.campo_nombres.setText( perfil.getStrNombres() );
+        this.campo_apellidos.setText( perfil.getStrApellidos() );
+        this.campo_email.setText( perfil.getStrEmail() );
+        this.campo_nacimiento.setText( perfil.getStrNacimiento() );
+        this.campo_sexo.setSelectedItem( perfil.getStrSexo() );
         
         // Insertar el titulo de la ventana
         this.setTitle(this.perfil.getStrNombres() + " - " + this.perfil.getStrEmail()  );
     }
-
-
     
+    public void fncSaludarPerfil(){
+        JOptionPane.showMessageDialog(null, "Saluda a " + this.perfil.getStrNombres() + " " + this.perfil.getStrApellidos() );
+    }
+
 }
