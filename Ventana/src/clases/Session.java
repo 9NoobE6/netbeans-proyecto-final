@@ -29,13 +29,13 @@ public class Session {
             scanner.useDelimiter("\n");
                  
             // System.out.println("Activando session...");
-            this.strNombres = scanner.next();
-            this.strApellidos = scanner.next();
-            this.strNacimiento = scanner.next();
-            this.strSexo = scanner.next();
+            this.strNombres = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
+            this.strApellidos = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
+            this.strNacimiento = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
+            this.strSexo = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
             this.strContrasenha = scanner.next();
-            this.strEmail = scanner.next();
-            this.strImgPerfil = scanner.next();
+            this.strEmail = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
+            this.strImgPerfil = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
             
             scanner.close();
         } catch (FileNotFoundException ex) {

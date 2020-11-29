@@ -15,9 +15,11 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -608,28 +610,30 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSessionActionPerformed
     
     private boolean fncVerificarContrasehna(String file){
-        Scanner scanner;
-        String tmpcontrasenha = "";
-        try {
-            scanner = new Scanner(new File(file));
-            scanner.useDelimiter("\n");
-                 
-            int item = 0;
-            while(scanner.hasNext()){
-                String next = scanner.next();
-  
-                if( item == 4){
-                    tmpcontrasenha = next;
-                    break;
-                } item++;
-            }
-                    
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String contrasena="";
+        
+        // * Verificar si el archivo .data existe
+        if( new File(file).exists() || !file.isEmpty() ){           
+            try{
+                String pwd = String.valueOf(this.campo_singup_contrasenha.getPassword()).trim();
+                BufferedReader data = new BufferedReader(new FileReader(new File(file)));
+                String linea; int item=1;
                 
-        return String.valueOf(this.campo_singup_contrasenha.getPassword()).trim().equals( tmpcontrasenha );
+                while( (linea = data.readLine()) != null ){
+                    if(item == 5){
+                        contrasena = linea;
+                        break;
+                    }
+                    item++;
+                }
+                
+                data.close(); // Cerrar el archivo abierto
+            }catch(Exception e){}    
+        }else return false;
+        
+        System.out.println("Formulario: " + String.valueOf( this.campo_singup_contrasenha.getPassword() ).trim());
+        System.out.println("Data : " + contrasena.trim() );
+        return String.valueOf( this.campo_singup_contrasenha.getPassword() ).equals(contrasena);
     }
     
     /**

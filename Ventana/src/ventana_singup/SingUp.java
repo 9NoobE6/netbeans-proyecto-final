@@ -574,7 +574,6 @@ public class SingUp extends javax.swing.JFrame {
     private boolean modificar_cuenta=false;
     
     private void InicializarVentana(){
-        // springwd13@gmail.com
         
         try{
              
