@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ventana_chats;
+package ventana_amigos;
 
 import ventana_people.*;
 import clases.Rutas;
@@ -45,12 +45,12 @@ import ventana_singup.SingUp;
  *
  * @author max98
  */
-public class Chats extends javax.swing.JFrame {
+public class Amigos extends javax.swing.JFrame {
     JScrollPane scrollBar;
     /**
      * Creates new form Registro
      */
-    public Chats() {
+    public Amigos() {
 
         initComponents();
         this.setLocationRelativeTo(null);
@@ -58,7 +58,7 @@ public class Chats extends javax.swing.JFrame {
 
     }
     
-    public Chats(Session session_activa) {
+    public Amigos(Session session_activa) {
         
         this.session_activa = session_activa;
         initComponents();
@@ -434,14 +434,22 @@ public class Chats extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Chats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Amigos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Chats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Amigos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Chats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Amigos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Chats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Amigos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -454,7 +462,7 @@ public class Chats extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Chats().setVisible(true);
+                new Amigos().setVisible(true);
             }
         });
     }
@@ -518,14 +526,14 @@ public class Chats extends javax.swing.JFrame {
                         
                         if (chat_activado == true) {   
                             // Sincronizar los mensajes si chat esta activado
-                            Chats.this.fncSincronizarMensajes(); 
+                            Amigos.this.fncSincronizarMensajes(); 
                         }
                         
                         // Sincronizar lista de amigos de session_activa
-                        Chats.this.fncSincronizarAmigos();
+                        Amigos.this.fncSincronizarAmigos();
                     
                     }catch (IOException ex) {
-                        Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Amigos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             };

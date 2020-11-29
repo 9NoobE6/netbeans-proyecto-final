@@ -50,7 +50,7 @@ import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultCaret;
-import ventana_chats.Chats;
+import ventana_amigos.Amigos;
 import ventana_people.People;
 import ventana_singup.SingUp;
 

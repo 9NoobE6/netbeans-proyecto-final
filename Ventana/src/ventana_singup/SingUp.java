@@ -50,7 +50,7 @@ import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultCaret;
-import ventana_chats.Chats;
+import ventana_amigos.Amigos;
 import ventana_people.People;
 
 /**
@@ -503,7 +503,7 @@ public class SingUp extends javax.swing.JFrame {
         this.dispose(); // Se libera la memoria
         
         // Se inicializa la vetana People
-        Chats ventana = new Chats( this.session_activa );
+        Amigos ventana = new Amigos( this.session_activa );
         this.session_activa = null; // En la ventana SingUp se elimina la session activa
         ventana.setVisible(true);
         
