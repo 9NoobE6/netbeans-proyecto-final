@@ -211,8 +211,13 @@ public class PanelTarjeta extends javax.swing.JPanel {
             // * Intentar capturar el mensaje...
             String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
             
-            if( !mensaje.isEmpty() && mensaje != null){
-
+            if( mensaje.isEmpty() && mensaje != null ){
+                
+                if(mensaje.isEmpty())
+                JOptionPane.showMessageDialog(null, "El mensaje no puede estar vacio. No fue enviado.");
+                
+            }else{
+                
                 // * Enviar mensaje to ...
                 Mensaje conversacion = new Mensaje(People.session_activa, mensaje.trim());
                 conversacion.fncMensajeEnviarMensajeTo(this.perfil);  

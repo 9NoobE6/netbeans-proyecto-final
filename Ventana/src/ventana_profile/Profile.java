@@ -374,7 +374,12 @@ public class Profile extends javax.swing.JFrame {
             // * Intentar capturar el mensaje...
             String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
             
-            if( !mensaje.isEmpty() && mensaje != null){
+            if( mensaje.isEmpty() && mensaje != null ){
+                
+                if(mensaje.isEmpty())
+                JOptionPane.showMessageDialog(null, "El mensaje no puede estar vacio. No fue enviado.");
+                
+            }else{
 
                 // * Enviar mensaje to ...
                 Mensaje conversacion = new Mensaje(this.session_activa, mensaje.trim());
