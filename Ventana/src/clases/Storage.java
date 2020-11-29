@@ -17,7 +17,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -371,7 +370,7 @@ public class Storage {
         
         return "["+cadenaFecha+" "+horaActual+"]";
     }
-    
+        
     // ******* Método con retorno a String *******
     public static String fncStorageObtenerRutaData(String email) {
         // System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );

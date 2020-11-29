@@ -103,9 +103,10 @@ public class Profile extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         campo_sexo = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         campo_nacimiento = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        btnEnviarMensajeTo = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -125,7 +126,7 @@ public class Profile extends javax.swing.JFrame {
         );
         panel_foto_de_perfilLayout.setVerticalGroup(
             panel_foto_de_perfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 148, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         panel_portada.setBackground(new java.awt.Color(204, 255, 255));
@@ -154,34 +155,41 @@ public class Profile extends javax.swing.JFrame {
         campo_sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
         campo_sexo.setEnabled(false);
 
-        jButton2.setText("Enviar mensaje");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel5.setText("Fecha de nacimiento");
 
         campo_nacimiento.setText("jTextField1");
         campo_nacimiento.setEnabled(false);
 
+        jButton1.setBackground(new java.awt.Color(255, 102, 102));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Amigo+1");
+
+        btnEnviarMensajeTo.setBackground(new java.awt.Color(0, 153, 153));
+        btnEnviarMensajeTo.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviarMensajeTo.setText("Enviar mensaje");
+        btnEnviarMensajeTo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEnviarMensajeToMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_portadaLayout = new javax.swing.GroupLayout(panel_portada);
         panel_portada.setLayout(panel_portadaLayout);
         panel_portadaLayout.setHorizontalGroup(
             panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_portadaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
+                        .addGap(47, 47, 47)
                         .addComponent(jLabel1))
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_portadaLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel5))
-                            .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel5))
+                    .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -191,26 +199,21 @@ public class Profile extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jLabel4))
                     .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addGap(58, 58, 58)
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(campo_sexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel3))
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(campo_sexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(41, 41, 41))
+                    .addComponent(btnEnviarMensajeTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
         panel_portadaLayout.setVerticalGroup(
             panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_portadaLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
                         .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -219,7 +222,7 @@ public class Profile extends javax.swing.JFrame {
                         .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(campo_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(campo_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_portadaLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -228,8 +231,16 @@ public class Profile extends javax.swing.JFrame {
                             .addGroup(panel_portadaLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                                .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panel_portadaLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEnviarMensajeTo)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campo_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -257,8 +268,8 @@ public class Profile extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addComponent(btnVolver)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,8 +293,7 @@ public class Profile extends javax.swing.JFrame {
                     .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
                         .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panel_portada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panel_2_BackgroundLayout.setVerticalGroup(
@@ -295,7 +305,7 @@ public class Profile extends javax.swing.JFrame {
                     .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(305, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -354,6 +364,28 @@ public class Profile extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnVolverMouseReleased
+
+    private void btnEnviarMensajeToMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeToMouseReleased
+
+        // * Testing
+        System.out.println("Enviar mensaje a ....");
+       
+        try {
+            // * Intentar capturar el mensaje...
+            String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
+            
+            if( !mensaje.isEmpty() && mensaje != null){
+
+                System.out.println("MEsne " + mensaje);
+                // * Enviar mensaje to ...
+                Mensaje conversacion = new Mensaje(People.session_activa, mensaje.trim());
+                conversacion.fncMensajeEnviarMensajeTo(this.perfil);  
+
+            }
+            
+        } catch (Exception e) { }
+       
+    }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
     
     /**
      * @param args the command line arguments
@@ -392,13 +424,14 @@ public class Profile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEnviarMensajeTo;
     private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JTextField campo_email;
     private javax.swing.JTextField campo_nacimiento;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
@@ -425,6 +458,9 @@ public class Profile extends javax.swing.JFrame {
         
         // Este es para JFrame SingUp (Si depende de Session)
         this.fncInstertarDatosDePerfilSeleccionado();
+        
+        // Insertar el titulo de la ventana
+        this.setTitle(this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         
     }
     
@@ -460,9 +496,7 @@ public class Profile extends javax.swing.JFrame {
         this.campo_email.setText( perfil.getStrEmail() );
         this.campo_nacimiento.setText( perfil.getStrNacimiento() );
         this.campo_sexo.setSelectedItem( perfil.getStrSexo() );
-        
-        // Insertar el titulo de la ventana
-        this.setTitle(this.perfil.getStrNombres() + " - " + this.perfil.getStrEmail()  );
+ 
     }
     
     public void fncSaludarPerfil(){
