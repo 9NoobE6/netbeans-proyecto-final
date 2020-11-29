@@ -15,8 +15,8 @@ import java.nio.file.Paths;
  */
 public class Rutas {        
     public static final String default_img = "user_default.png";
-    public static final String path_profiles = "storage_profiles/___profiles.txt";
-    public static final String path_tmp_profiles = "storage_profiles/___0000000000.txt";
+    public static final String path_profiles = "storage_profiles/database.profiles";
+    public static final String path_tmp_profiles = "storage_profiles/_db.profiles";
     public static final String storage_profiles = "storage_profiles/";
     public static final String extesion_friends = ".friends";
     public static final String extesion_chats = ".chats";

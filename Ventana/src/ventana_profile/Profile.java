@@ -376,9 +376,8 @@ public class Profile extends javax.swing.JFrame {
             
             if( !mensaje.isEmpty() && mensaje != null){
 
-                System.out.println("MEsne " + mensaje);
                 // * Enviar mensaje to ...
-                Mensaje conversacion = new Mensaje(People.session_activa, mensaje.trim());
+                Mensaje conversacion = new Mensaje(this.session_activa, mensaje.trim());
                 conversacion.fncMensajeEnviarMensajeTo(this.perfil);  
 
             }
