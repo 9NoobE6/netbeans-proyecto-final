@@ -42,10 +42,10 @@ public class peopleWatcherProfile extends Observador{
                 
                 panel_perfiles.removeAll();
                 File archivo = new File(Rutas.path_profiles);
-                BufferedReader br = new BufferedReader(new FileReader(archivo));
+                BufferedReader db_profiles = new BufferedReader(new FileReader(archivo));
                 String linea;
 
-                while ((linea = br.readLine()) != null) {
+                while ((linea = db_profiles.readLine()) != null) {
 
                     if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Storage.extension_rs)) {
                         PanelTarjeta a = new PanelTarjeta(new Session(linea));
@@ -63,6 +63,7 @@ public class peopleWatcherProfile extends Observador{
                 panel_perfiles.revalidate();
                 panel_perfiles.repaint();
                 coordenadaY = 20;
+                db_profiles.close();
                 
             } catch (Exception e) {
             }

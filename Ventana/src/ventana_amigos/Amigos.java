@@ -631,10 +631,10 @@ public class Amigos extends javax.swing.JFrame {
             this.lista_de_amigos.removeAll();
 
             File archivo = new File( path );
-            BufferedReader br = new BufferedReader( new FileReader(archivo) );
+            BufferedReader friends = new BufferedReader( new FileReader(archivo) );
             String st; 
 
-            while ((st = br.readLine()) != null){
+            while ((st = friends.readLine()) != null){
                 if( !st.contains(this.session_activa.getStrEmail()) ){
                     this.amigos.addElement(st);
                 }
@@ -642,6 +642,7 @@ public class Amigos extends javax.swing.JFrame {
             
             this.lista_de_amigos.setModel(this.amigos);
             this.size_friendship = _size_;
+            friends.close();
         }
         
         
@@ -678,19 +679,19 @@ public class Amigos extends javax.swing.JFrame {
                 perfil = perfil + Storage.extension_rs;
                
                 File archivo = new File( path );
-                BufferedReader br = new BufferedReader( new FileReader(archivo) );
+                BufferedReader chat_activo = new BufferedReader( new FileReader(archivo) );
                 String linea; 
-                while ((linea = br.readLine()) != null){
+                while ((linea = chat_activo.readLine()) != null){
                     System.out.println(linea);
                     
                     if( linea.contains(this.session_activa.getStrEmail()) ){
                         this.mensajes.addElement(" # " + linea);
-                        linea = br.readLine();
+                        linea = chat_activo.readLine();
                         this.mensajes.addElement(linea);
                     }else if( linea.contains( perfil ) ){ 
                         String a = "%-" + Math.abs(linea.length() - 90) + "s";
                         this.mensajes.addElement( linea.format(a, "").replace(' ',' ') + linea + " * ");
-                        linea = br.readLine();
+                        linea = chat_activo.readLine();
                         this.mensajes.addElement( linea + linea.format(a, "").replace(' ',' '));
                     }else{
                         this.mensajes.addElement(linea);
@@ -700,6 +701,7 @@ public class Amigos extends javax.swing.JFrame {
 
                 this.lista_mensajes.setModel(this.mensajes);
                 this.size_chats = _size_;
+                chat_activo.close();
                 
                 int ultimo_mensaje = this.lista_mensajes.getModel().getSize() - 1;
                 if (ultimo_mensaje >= 0) {

@@ -616,10 +616,10 @@ public class Principal extends javax.swing.JFrame {
         if( new File(file).exists() || !file.isEmpty() ){           
             try{
                 String pwd = String.valueOf(this.campo_singup_contrasenha.getPassword()).trim();
-                BufferedReader data = new BufferedReader(new FileReader(new File(file)));
+                BufferedReader database = new BufferedReader(new FileReader(new File(file)));
                 String linea; int item=1;
                 
-                while( (linea = data.readLine()) != null ){
+                while( (linea = database.readLine()) != null ){
                     if(item == 5){
                         contrasena = linea;
                         break;
@@ -627,7 +627,7 @@ public class Principal extends javax.swing.JFrame {
                     item++;
                 }
                 
-                data.close(); // Cerrar el archivo abierto
+                database.close(); // Cerrar el archivo abierto
             }catch(Exception e){}    
         }else return false;
         

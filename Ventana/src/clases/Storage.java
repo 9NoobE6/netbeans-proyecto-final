@@ -77,10 +77,10 @@ public class Storage {
         // Si el File no existe y el String es vacio retorna false
         if (new File(pathA).exists() || !linea.isEmpty()) {
             try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(pathA, true));
+                BufferedWriter escribir = new BufferedWriter(new FileWriter(pathA, true));
                 // ** Antes **; + "\n"
-                bw.append(linea + "\n");
-                bw.close();
+                escribir.append(linea + "\n");
+                escribir.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -102,10 +102,10 @@ public class Storage {
                     encontrar_cuenta = encontrar_cuenta + extension_rs;
                 } System.out.println("Encontrar la cuenta: " + encontrar_cuenta);
                 
-                BufferedReader br = new BufferedReader(new FileReader(new File(enPath)));
+                BufferedReader db_archivo = new BufferedReader(new FileReader(new File(enPath)));
                 String linea;
 
-                while ((linea = br.readLine()) != null) {
+                while ((linea = db_archivo.readLine()) != null) {
                     
                     // Si encuentra la cuenta se rompe el bucle
                     if (linea.equals(encontrar_cuenta) && !linea.isEmpty() && linea.contains(extension_rs)) {
@@ -116,6 +116,8 @@ public class Storage {
                     }
                     
                 }
+                
+                db_archivo.close();
 
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -132,15 +134,17 @@ public class Storage {
         if (new File(enPath).exists() || !encontrar_linea.isEmpty()) {
 
             try {
-                BufferedReader br = new BufferedReader(new FileReader(new File(enPath)));
+                BufferedReader archivo = new BufferedReader(new FileReader(new File(enPath)));
                 String linea;
 
-                while ((linea = br.readLine()) != null) {
+                while ((linea = archivo.readLine()) != null) {
                     // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
                     if (linea.equals(encontrar_linea) && !linea.isEmpty()) {
                         return true;
                     }
                 }
+                
+                archivo.close();
 
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -157,16 +161,18 @@ public class Storage {
         // Si el File no existe y el String es vacio retorna false
         if (new File(enPath).exists() || !buscar_linea.isEmpty()) {
             try {
-                BufferedReader br = new BufferedReader(new FileReader(new File(enPath)));
+                BufferedReader archivo = new BufferedReader(new FileReader(new File(enPath)));
                 String linea;
 
-                while ((linea = br.readLine()) != null) {
+                while ((linea = archivo.readLine()) != null) {
                     // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
                     if (linea.contains(buscar_linea) && !linea.isEmpty()) {
                         return true;
                     }
                 }
-
+                
+                archivo.close();
+                
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -222,9 +228,12 @@ public class Storage {
                     b = bin.read();
                     bou.write(b);
                 }
+                
+                bin.close();
             }
 
             bou.close();
+            
 
             // Eliminar el archivo original
             enArchivoA.delete();
