@@ -71,19 +71,21 @@ public class PanelTarjeta extends javax.swing.JPanel {
             this.fncInsertarPicture(this.panel_foto, img_profile , false);
         }
         
-        // Verificar si, si somos amigos...
-        boolean amigoA= Storage.fncStorageEncontrarUnaCuenta(People.session_activa.stgFriends, this.perfil.getStrEmail());
-        boolean amigoB = Storage.fncStorageEncontrarUnaCuenta(this.perfil.stgFriends, People.session_activa.getStrEmail());
-        
-        if(amigoA == true && amigoB == true){
-            this.btnAgregarAmigo.setText("AmigosXsiempre");
-            this.amigos_x_simpre = true;
-        }
-        
-        // Verificar si tengo conversación
+        // * Verificar si hay una conversación con perfil
         if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){
             this.btnEnviarMensajeTo.setText("Mensaje+1");    
         }
+        
+        // * Verificar amistad con perfil
+        String estado = Storage.fncStorageVerificarAmistad(People.session_activa.stgFriends, this.perfil.getStrEmail());
+        if(estado.equals("amigos")){
+            PanelTarjeta.btnAgregarAmigo.setText("Son "+ estado + "...");
+        }if( estado.equals("none") || estado.equals("pendiente") ){
+            PanelTarjeta.btnAgregarAmigo.setText("Amigo+1");
+        }else{
+            PanelTarjeta.btnAgregarAmigo.setText("Solicitud "+estado);
+        }
+        
         
     }
 
@@ -237,8 +239,6 @@ public class PanelTarjeta extends javax.swing.JPanel {
     private Session perfil;
     private Session session;
     private boolean solicitud_enviada = false;
-    private boolean amigos_x_simpre = false;
-    private boolean chat_pendiente = false;
     private JFrame padre;
     
     private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){

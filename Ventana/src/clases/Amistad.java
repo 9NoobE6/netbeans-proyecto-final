@@ -59,15 +59,15 @@ public class Amistad {
         System.out.println("Ver db_chats = " + db_chats);
         System.out.println("Ver db_friends = " + db_friends);
         
-        if(db_chats == false && db_friends == false && amistad.equals("Recibido")){         
+        if(db_chats == false && db_friends == false && amistad.equals("recibido")){         
             this.fncSolicituDeAmistadRecibido();
             
         }else
-        if(db_chats == true && db_friends == false && amistad.equals("Enviado")){         
+        if(db_chats == true && db_friends == false && amistad.equals("enviado")){         
             this.fncSolicituDeAmistadEnviado();
             
         }else
-        if( db_chats == false && db_friends == false && amistad.equals("None") ){
+        if( db_chats == false && db_friends == false && amistad.equals("none") ){
             this.fncCrearUnaSolicitudDeAmistad();            
         }
         

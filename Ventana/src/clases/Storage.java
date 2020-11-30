@@ -154,15 +154,15 @@ public class Storage {
                     
                     // Si encuentra la cuenta se rompe el bucle
                     if (linea.equals(encontrar_cuenta+"*") && !linea.isEmpty() && linea.contains(extension_rs)) {
-                        return "Pendiente";
+                        return "pendiente";
                     }else if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo1 ) && !linea.isEmpty() && linea.contains(extension_rs)){
-                        return "Amigos";
+                        return "amigos";
                     }else 
                     if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo2 ) && !linea.isEmpty() && linea.contains(extension_rs)){
-                        return "Recibido";
+                        return "recibido";
                     }else 
                     if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo3 ) && !linea.isEmpty() && linea.contains(extension_rs)){
-                        return "Enviado";
+                        return "enviado";
                     }
                     
                 }
@@ -173,10 +173,10 @@ public class Storage {
                 System.out.println(e.getMessage());
             }
         } else {
-            return "Error";
+            return "error";
         }
 
-        return "None";
+        return "none";
     }
     
     public static boolean fncStorageEncontrarUnaLinea(String enPath, String encontrar_linea) {
