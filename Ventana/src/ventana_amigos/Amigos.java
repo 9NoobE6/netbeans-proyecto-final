@@ -5,6 +5,7 @@
  */
 package ventana_amigos;
 
+import clases.Mensaje;
 import ventana_people.*;
 import clases.Rutas;
 import clases.Session;
@@ -428,7 +429,8 @@ public class Amigos extends javax.swing.JFrame {
         // * Obtener el email de perfil selccionado
         String perfil = this.lista_de_amigos.getSelectedValue();
         if( perfil.contains("*") ){
-            perfil = perfil.replace("*", "");
+            perfil = perfil.substring(0, perfil.indexOf("@") );
+            perfil = perfil + Storage.extension_rs;
         }else{
             perfil = perfil.substring(0, perfil.indexOf("@"));
             perfil = perfil + Storage.extension_rs;
@@ -722,25 +724,16 @@ public class Amigos extends javax.swing.JFrame {
         System.out.println("## tamaño del mensaje : " + msg_body.trim().length() );
         
         // * Verificar que chat este activado, el chat se activa al Abrir el chat 
-        if( this.es_amigo == false && this.chat_activado == true ){
+        if( this.chat_activado == true ){
             if( msg_body.trim().length() > 0 ){
+                
+                // * Recrear codigo
                 String perfil = this.lista_de_amigos.getSelectedValue();
-                perfil = perfil.replace("*", ""); 
+                perfil = perfil.substring(0, perfil.indexOf("@") );
+                perfil = perfil + Storage.extension_rs;
 
-                // Eniviamos una notificacion en .chats
-                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgFriends  ), this.session_activa.getStrEmail() + "*");
-                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgFriends, this.session_activa.getStrEmail() + "*");
-                
-                // Enviamos una notificación en .friends
-                Storage.fncStorageEliminarUnaLinea(new File( new Session(perfil).stgChats  ), this.session_activa.getStrEmail() + "*");
-                Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgChats, this.session_activa.getStrEmail() + "*");
-                
-                // Registrar un menaje
-                String mensaje = Storage.fncStorageCrearMensaje(session_activa, msg_body);
-                Storage.fncStorageAcoplarUnaLinea(this.chat_path_activo, mensaje);          
-
-                // Clonar la conversion de session_activa a perfil
-                Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil) );
+                Mensaje conversacion = new Mensaje( this.session_activa, msg_body);
+                conversacion.fncMensajeEnviarMensajeTo( new Session(perfil) );
             
             }else{
                 JOptionPane.showMessageDialog(null, "No se puede enviar mensajes vacios.");
@@ -767,8 +760,17 @@ public class Amigos extends javax.swing.JFrame {
                 // Verificar si el perfil seleccionado tiene un (*) eso significa
                 // que el perfil no lo tengo agrego en mi lista de amigos, 
                 // sino que solo recibi un mensaje de él...
-                if(this.lista_de_amigos.getSelectedValue().contains("*")){
-                    perfil = perfil.replace("*", "");
+                if(this.lista_de_amigos.getSelectedValue().contains("*"+Storage.identificador_amigo3)){
+                    perfil = perfil.substring(0, perfil.indexOf("@") );
+                    perfil = perfil + Storage.extension_rs;
+                    // Selecciona el chat desde perfil remitente
+                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
+                    this.es_amigo = false;
+                }else
+                if(this.lista_de_amigos.getSelectedValue().contains("*") 
+                || this.lista_de_amigos.getSelectedValue().contains("*"+Storage.identificador_amigo2)){
+                    perfil = perfil.substring(0, perfil.indexOf("@") );
+                    perfil = perfil + Storage.extension_rs;
                     // Selecciona el chat desde perfil remitente
                     this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
                     this.es_amigo = false;
@@ -824,7 +826,8 @@ public class Amigos extends javax.swing.JFrame {
             
             // Si el email del perfil contiene un * se elminina (No es amigo de session_activa) 
             if( perfil.contains("*") ){
-                perfil = perfil.replace("*", "");
+                perfil = perfil.substring(0, perfil.indexOf("@"));
+                perfil += Storage.extension_rs;
                 yoker += "*";
             }
             // Por el contario significa que si es amigo de session_activa y solo obtiene el email 
@@ -838,35 +841,15 @@ public class Amigos extends javax.swing.JFrame {
                     +"\nDe lista de amigos, se borrara el chat completo." );
                    
             if( respuesta == 0){
-                
-                // * Eliminar el perfil de mis conversaciones
-                //boolean eliC = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgChats ) , perfil );
-                //System.out.println("Eliminado = " + eliC);
-                
+                 
                 // * Eliminar el perfil de mi lista de amigos, Todo lo demas se conserva...
                 // Notase que se agrega un * esto es para indicar al programa que el no es mi amigo
-                boolean eliF = Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ) , perfil + "*" );
-                System.out.println("Eliminado = " + eliF);
+                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*"+Storage.identificador_amigo1 );
+                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*"+Storage.identificador_amigo2 );
+                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*"+Storage.identificador_amigo3 );
+                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*" );
                 
-                /*
                 
-                // * Eliminar mi cuenta o session_activa en .friends de perfil
-                Storage.fncStorageEliminarUnaLinea( new File( new Session(perfil).getStrEmail()) , yoker );
-                
-                // * Verificar si existe una conversacion con el perfil
-                String path_chat = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
-                if( new File(path_chat).exists() ){
-                    
-                    // * Copia la conversacion que tengo de perfil hacia perfil
-                    String perfil_chat = Storage.fncStorageCrearRutaChats(perfil, perfil);
-                    Storage.fncStorageCopiarArchivo(new File(path_chat), perfil_chat );
-
-                    // * Eliminar chat de mi cuenta o session_activa
-                    new File(path_chat).delete();
-                    
-                }
-                */
-
             }
 
         }

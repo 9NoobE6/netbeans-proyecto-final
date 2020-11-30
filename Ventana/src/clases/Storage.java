@@ -28,7 +28,9 @@ public class Storage {
     // * Esto son espacio que dejan entre los mensajes en el chat
     public final static String espacios="\n\n";
     public final static int longitud = 60;
-    public final static String identificador_amigo = " - Saluda a tu amigo.";
+    public final static String identificador_amigo1 = " - Saluda a tu amigo.";
+    public final static String identificador_amigo2 = " - Amigo+1 Recibido.";
+    public final static String identificador_amigo3 = " - Amigo+1 Enviado.";
     public static final String extension_rs = "@gobim.dev";
     
     
@@ -72,6 +74,11 @@ public class Storage {
         // Devulve true si la condicion se cumple
         return Storage.fncStorageEliminarUnaLinea(new File(enArchivo), actualizar_linea) && Storage.fncStorageAcoplarUnaLinea(enArchivo, actualizar_linea);
     }
+    
+    public static boolean fncStorageReemplazarUnaLinea(String enArchivo, String enLineaA, String porLineaB) {
+        // Devulve true si la condicion se cumple
+        return Storage.fncStorageEliminarUnaLinea(new File(enArchivo), enLineaA) && Storage.fncStorageAcoplarUnaLinea(enArchivo, porLineaB);
+    }
 
     public static boolean fncStorageAcoplarUnaLinea(String pathA, String linea) {
         // Si el File no existe y el String es vacio retorna false
@@ -111,7 +118,7 @@ public class Storage {
                     if (linea.equals(encontrar_cuenta) && !linea.isEmpty() && linea.contains(extension_rs)) {
                         return true;
                     }else 
-                    if (linea.equals(encontrar_cuenta + Storage.identificador_amigo) && !linea.isEmpty() && linea.contains(extension_rs)){
+                    if (linea.equals(encontrar_cuenta + Storage.identificador_amigo1) && !linea.isEmpty() && linea.contains(extension_rs)){
                         return true;
                     }
                     
@@ -128,7 +135,50 @@ public class Storage {
 
         return false;
     }
+    
+    public static String fncStorageVerificarAmistad(String enPath, String encontrar_cuenta) {
+        // Si el File no existe y el String es vacio retorna false
+        if ( (new File(enPath).exists() || !encontrar_cuenta.isEmpty()) && encontrar_cuenta.contains(extension_rs)) {
+            try {
+                
+                // * Obtener la cuenta con extension
+                if( !encontrar_cuenta.contains("*") ){
+                    encontrar_cuenta = encontrar_cuenta.substring(0, encontrar_cuenta.lastIndexOf("@"));
+                    encontrar_cuenta = encontrar_cuenta + extension_rs;
+                } System.out.println("Encontrar la cuenta: " + encontrar_cuenta);
+                
+                BufferedReader db_archivo = new BufferedReader(new FileReader(new File(enPath)));
+                String linea;
 
+                while ((linea = db_archivo.readLine()) != null) {
+                    
+                    // Si encuentra la cuenta se rompe el bucle
+                    if (linea.equals(encontrar_cuenta+"*") && !linea.isEmpty() && linea.contains(extension_rs)) {
+                        return "Pendiente";
+                    }else if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo1 ) && !linea.isEmpty() && linea.contains(extension_rs)){
+                        return "Amigos";
+                    }else 
+                    if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo2 ) && !linea.isEmpty() && linea.contains(extension_rs)){
+                        return "Recibido";
+                    }else 
+                    if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo3 ) && !linea.isEmpty() && linea.contains(extension_rs)){
+                        return "Enviado";
+                    }
+                    
+                }
+                
+                db_archivo.close();
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            return "Error";
+        }
+
+        return "None";
+    }
+    
     public static boolean fncStorageEncontrarUnaLinea(String enPath, String encontrar_linea) {
         // Si el File no existe y el String es vacio retorna false
         if (new File(enPath).exists() || !encontrar_linea.isEmpty()) {

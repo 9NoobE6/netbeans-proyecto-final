@@ -5,6 +5,7 @@
  */
 package ventana_people;
 
+import clases.Amistad;
 import clases.Mensaje;
 import clases.Rutas;
 import clases.Session;
@@ -84,9 +85,11 @@ public class PanelTarjeta extends javax.swing.JPanel {
             this.btnEnviarMensajeTo.setText("Mensaje+1");    
         }
         
-        //
+        Amistad a = new Amistad(People.session_activa, this.perfil);
+        a.setActivar_msg(false);
+        a.ventana_People = true;
+        a.fncSolicituDeAmistadEnviarTo();
         
-       
     }
 
     public Session getSession() {
@@ -248,7 +251,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarAmigo;
+    public static javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
     private javax.swing.JButton btnVerPerfil;
     private javax.swing.JTextField campo_email;
@@ -280,18 +283,11 @@ public class PanelTarjeta extends javax.swing.JPanel {
     
     // ** Pendiente...
     private void fncAgregarAmigoPlus() {
-        // Verificar si, si somos amigos...
-        boolean amigoA= Storage.fncStorageEncontrarUnaCuenta(People.session_activa.stgFriends, this.perfil.getStrEmail());
-        boolean amigoB = Storage.fncStorageEncontrarUnaCuenta(this.perfil.stgFriends, People.session_activa.getStrEmail());
         
-        if( amigoA == true && amigoB ){
-             int respuesta = JOptionPane.showConfirmDialog(null, "Son amigos, deseas cancelarla?", null,JOptionPane.YES_NO_OPTION);
-             if(respuesta == JOptionPane.YES_OPTION){
-                JOptionPane.showMessageDialog(null, "Ya no son amigo...");
-                this.btnAgregarAmigo.setText("Amigo+");
-             }
-        }else{
-            
-        }
+        Amistad solicitud = new Amistad(People.session_activa, this.perfil);
+        solicitud.setActivar_msg(true);
+        solicitud.ventana_People = true;
+        solicitud.fncSolicituDeAmistadEnviarTo();
+        
     }
 }

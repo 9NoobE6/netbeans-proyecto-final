@@ -105,7 +105,7 @@ public class Profile extends javax.swing.JFrame {
         campo_sexo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         campo_nacimiento = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAgregarAmigo = new javax.swing.JButton();
         btnEnviarMensajeTo = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
@@ -161,9 +161,14 @@ public class Profile extends javax.swing.JFrame {
         campo_nacimiento.setText("jTextField1");
         campo_nacimiento.setEnabled(false);
 
-        jButton1.setBackground(new java.awt.Color(255, 102, 102));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Amigo+1");
+        btnAgregarAmigo.setBackground(new java.awt.Color(255, 102, 102));
+        btnAgregarAmigo.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarAmigo.setText("Amigo+1");
+        btnAgregarAmigo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnAgregarAmigoMouseReleased(evt);
+            }
+        });
 
         btnEnviarMensajeTo.setBackground(new java.awt.Color(0, 153, 153));
         btnEnviarMensajeTo.setForeground(new java.awt.Color(255, 255, 255));
@@ -206,7 +211,7 @@ public class Profile extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jLabel3))
                     .addComponent(btnEnviarMensajeTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAgregarAmigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
         panel_portadaLayout.setVerticalGroup(
@@ -233,7 +238,7 @@ public class Profile extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnAgregarAmigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEnviarMensajeTo)
                         .addGap(16, 16, 16)
@@ -390,6 +395,16 @@ public class Profile extends javax.swing.JFrame {
         } catch (Exception e) { }
        
     }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
+
+    private void btnAgregarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAmigoMouseReleased
+
+        // * Verificar estado de amistad
+        Amistad solicitud = new Amistad(this.session_activa, this.perfil);
+        solicitud.setActivar_msg(true);
+        solicitud.fncSolicituDeAmistadEnviarTo();
+        
+        
+    }//GEN-LAST:event_btnAgregarAmigoMouseReleased
     
     /**
      * @param args the command line arguments
@@ -428,6 +443,7 @@ public class Profile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
     private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
@@ -435,7 +451,6 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JTextField campo_nacimiento;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
