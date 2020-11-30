@@ -202,27 +202,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
     private void btnEnviarMensajeToMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeToMouseReleased
        
-        // * Testing
-        System.out.println("Enviar mensaje a ....");
-       
-        try {
-            // * Intentar capturar el mensaje...
-            String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
-            
-            if( mensaje.isEmpty() && mensaje != null ){
-                
-                if(mensaje.isEmpty())
-                JOptionPane.showMessageDialog(null, "El mensaje no puede estar vacio. No fue enviado.");
-                
-            }else{
-                
-                // * Enviar mensaje to ...
-                Mensaje conversacion = new Mensaje(People.session_activa, mensaje.trim());
-                conversacion.fncMensajeEnviarMensajeTo(this.perfil);  
-
-            }
-            
-        } catch (Exception e) { }
+        this.fncEnviarMensaje();
         
     }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
     
@@ -282,6 +262,38 @@ public class PanelTarjeta extends javax.swing.JPanel {
         Amistad solicitud = new Amistad(People.session_activa);
         solicitud.ventana_People = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
+           
+    }
+
+    private void fncEnviarMensaje(){
+            
+        // * Restriccion de mensaje
+        // Si el perfil seleccionado es amigo de session_activa puede enviar mensaje...
+        if(Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1)){
+            // * Testing
+            System.out.println("Enviar mensaje a ....");
+
+            try {
+                // * Intentar capturar el mensaje...
+                String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
+
+                if( mensaje.isEmpty() && mensaje != null ){
+
+                    if(mensaje.isEmpty())
+                    JOptionPane.showMessageDialog(null, "El mensaje no puede estar vacio. No fue enviado.");
+
+                }else{
+
+                    // * Enviar mensaje to ...
+                    Mensaje conversacion = new Mensaje(People.session_activa, mensaje.trim());
+                    conversacion.fncMensajeEnviarMensajeTo(this.perfil);  
+
+                }
+
+            } catch (Exception e) { }
+        }else{
+            JOptionPane.showMessageDialog(null, "Este perfil no es tu amigo, enviale una solicitud de amistad.");
+        }
         
     }
 }

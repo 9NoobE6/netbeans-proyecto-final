@@ -13,7 +13,16 @@ public class Mensaje {
     private Session session_activa = null;
     private String perfil_seleccionado;
     private String yoker;
-    
+    private boolean mostrar_msg = true;
+
+    public boolean isMostrar_msg() {
+        return mostrar_msg;
+    }
+
+    public void setMostrar_msg(boolean mostrar_msg) {
+        this.mostrar_msg = mostrar_msg;
+    }
+        
     public Mensaje(Session session_activa, String mensaje) {  
         
         if( Storage.fncStorageEncontrarUnaLinea( Rutas.path_profiles, session_activa.getStrEmail() ) ){
@@ -91,8 +100,8 @@ public class Mensaje {
         String chat_clone = Storage.fncStorageCrearRutaChats(session_activa.getStrEmail(), perfil.getStrEmail());
         Storage.fncStorageCopiarArchivo(new File(chat), chat_clone);
 
-
-        JOptionPane.showMessageDialog(null, "Mensaje+1");
+        if( this.mostrar_msg )
+            JOptionPane.showMessageDialog(null, "Mensaje+1");
         
     }
 
@@ -126,14 +135,16 @@ public class Mensaje {
             // Clonar la conversion de perfil a session_activa
             String chat_clone = Storage.fncStorageCrearRutaChats(session_activa.getStrEmail(), perfil.getStrEmail());
             Storage.fncStorageCopiarArchivo(new File(chat), chat_clone);
-
-            JOptionPane.showMessageDialog(null, "Este usuario te habia enviado un mensaje\n"+
+            
+            if( this.mostrar_msg )
+                JOptionPane.showMessageDialog(null, "Este usuario te habia enviado un mensaje\n"+
                     "Puedes chatear pueden conservar en en las lista de amigos.");
         }else{
 
             System.out.println("STAGE 2 - BBBB");
-
-            JOptionPane.showMessageDialog(null, "Mensaje enviado.");
+            
+            if( this.mostrar_msg )
+                JOptionPane.showMessageDialog(null, "Mensaje enviado.");
         }
         
     }
@@ -165,8 +176,9 @@ public class Mensaje {
             // Clonar la conversion de perfil a session_activa  (Entonces es el más actualizado)
             String chat_clone = Storage.fncStorageCrearRutaChats(session_activa.getStrEmail(), perfil.getStrEmail());
             Storage.fncStorageCopiarArchivo(new File(chat_original), chat_clone);
-
-            JOptionPane.showMessageDialog(null, "Tienes una conversación pendiente con "
+            
+            if( this.mostrar_msg )
+                JOptionPane.showMessageDialog(null, "Tienes una conversación pendiente con "
                     + "\n\t\t\t\t" + perfil.getStrEmail()
                     + "\nPuedes chatear pueden conservar en usuario en las lista de amigos.");
         }else{ 
@@ -186,8 +198,9 @@ public class Mensaje {
 
               Storage.fncStorageActualizarUnaLinea(perfil.stgFriends, yoker);
               Storage.fncStorageActualizarUnaLinea(session_activa.stgFriends, perfil_seleccionado);
-
-              JOptionPane.showMessageDialog(null, "Haz recuperado la conversación con "
+              
+              if( this.mostrar_msg )
+                JOptionPane.showMessageDialog(null, "Haz recuperado la conversación con "
                       + "\n\t\t\t\t" + perfil.getStrEmail()
                       + "\nPuedes chatear pueden conservar en usuario en las lista de amigos.");
 
@@ -218,7 +231,8 @@ public class Mensaje {
                 Storage.fncStorageAcoplarUnaLinea(perfil.stgFriends, yoker);
 
                 // Mensaje de salida
-                JOptionPane.showMessageDialog(null, "Mensaje enviado.\nEl usuario no aparece en tu lista de amigos\n"+
+                if( this.mostrar_msg )
+                    JOptionPane.showMessageDialog(null, "Mensaje enviado.\nEl usuario no aparece en tu lista de amigos\n"+
                         "Espera su respuesta para conversar.");
 
             }
