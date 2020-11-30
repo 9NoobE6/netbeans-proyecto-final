@@ -59,8 +59,11 @@ public class Amistad {
         System.out.println("Ver db_chats = " + db_chats);
         System.out.println("Ver db_friends = " + db_friends);
         
-        if(db_chats == true && db_friends == false && amistad.equals("Enviado")){
+        if(db_chats == false && db_friends == false && amistad.equals("Recibido")){         
+            this.fncSolicituDeAmistadRecibido();
             
+        }else
+        if(db_chats == true && db_friends == false && amistad.equals("Enviado")){         
             this.fncSolicituDeAmistadEnviado();
             
         }else
@@ -83,7 +86,7 @@ public class Amistad {
         Storage.fncStorageAcoplarUnaLinea(this.session_activa.stgFriends, perfil_seleccionado+Storage.identificador_amigo3);
         
         // Acoplar en chat que session_activa ha iniciado una conversacion con perfil
-        Storage.fncStorageAcoplarUnaLinea(this.session_activa.stgChats, perfil_seleccionado);
+        Storage.fncStorageActualizarUnaLinea(this.session_activa.stgChats, perfil_seleccionado);
 
         // Reemplazar
         Storage.fncStorageReemplazarUnaLinea(this.perfil.stgFriends, yoker, yoker+Storage.identificador_amigo2);
@@ -122,6 +125,41 @@ public class Amistad {
         
         }else{
             JOptionPane.showMessageDialog(null, "Espera que el usuario acepte tú solicitud de amistad.");
+        }
+        
+    }
+
+    private void fncSolicituDeAmistadRecibido() {
+        
+        int respuesta = JOptionPane.showConfirmDialog(null, "Este usuario te ha enviado una solicitud de amistad."
+                + "\nDeseas aceptar la solicitud de amistad?", "Confirmar ..." , JOptionPane.YES_NO_OPTION);
+        
+        if( respuesta == JOptionPane.YES_OPTION ){
+        
+            // Reemplazar el mensaje recibo de session_activa a mensaje de somos amigos
+            Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgFriends, 
+                    perfil_seleccionado+Storage.identificador_amigo2, this.perfil.getStrEmail()+Storage.identificador_amigo1);
+            
+            // Reemplzar el mensaje enviado de perfil a mensaje de somos amigos
+            Storage.fncStorageReemplazarUnaLinea(this.perfil.stgFriends,
+                    yoker+Storage.identificador_amigo3, this.session_activa.getStrEmail()+Storage.identificador_amigo1);
+            
+            // Crear rutas para clonar el chat de solicitud de amistad...
+            String original = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail());
+            String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), this.perfil.getStrEmail());
+            Storage.fncStorageCopiarArchivo(new File(original), clone); // Clonando archivo
+            
+            // * Activar chats en ambos cuentas...
+            Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgChats, perfil_seleccionado, this.perfil.getStrEmail());
+            Storage.fncStorageReemplazarUnaLinea(this.perfil.stgChats, yoker, this.session_activa.getStrEmail());
+            
+            // Mensaje de operacion 
+            JOptionPane.showMessageDialog(null, "Haz aceptado el solicitud de amistad."
+                    + "\nEn hora buena ahora pueden conversar.");
+            
+            // * Frontend
+            if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Son amigos");
+            
         }
         
     }
