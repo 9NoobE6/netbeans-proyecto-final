@@ -749,64 +749,128 @@ public class Amigos extends javax.swing.JFrame {
         String path = this.session_activa.stgFriends;
         File chats = new File( path );
         
-        // Si mi archivo de mi storage .chats y el perfil selecciona no es vacio...
-        if(chats.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
-        && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
+        // Verificar que chat no este activado
+        if(this.chat_activado == false){
             
-            if(Storage.fncStorageEncontrarUnaCuenta(path, this.lista_de_amigos.getSelectedValue() )){
+            String perfil = this.lista_de_amigos.getSelectedValue();
+            perfil = perfil.substring(0, perfil.indexOf("@") );
+            perfil = perfil + Storage.extension_rs;
                 
-                String perfil = this.lista_de_amigos.getSelectedValue();
-                                
-                // Verificar si el perfil seleccionado tiene un (*) eso significa
-                // que el perfil no lo tengo agrego en mi lista de amigos, 
-                // sino que solo recibi un mensaje de él...
-                if(this.lista_de_amigos.getSelectedValue().contains("*"+Storage.identificador_amigo3)){
-                    perfil = perfil.substring(0, perfil.indexOf("@") );
-                    perfil = perfil + Storage.extension_rs;
+            if(Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, perfil)){
+                
+                
+                if(this.lista_de_amigos.getSelectedValue().equals(perfil+"*")){
+                    
                     // Selecciona el chat desde perfil remitente
                     this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
                     this.es_amigo = false;
+                    
+                    this.fncHabilitarChat(perfil);
+                    
                 }else
-                if(this.lista_de_amigos.getSelectedValue().contains("*") 
-                || this.lista_de_amigos.getSelectedValue().contains("*"+Storage.identificador_amigo2)){
-                    perfil = perfil.substring(0, perfil.indexOf("@") );
-                    perfil = perfil + Storage.extension_rs;
-                    // Selecciona el chat desde perfil remitente
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
-                    this.es_amigo = false;
-                }else{
-                    perfil = perfil.substring(0, perfil.lastIndexOf("@"));
-                    perfil = perfil + Storage.extension_rs;
+                // Amigo+1 Enviado
+                if(this.lista_de_amigos.getSelectedValue().contains("*"+Storage.identificador_amigo3)){
+                    
+                    JOptionPane.showMessageDialog(null, "Haz enviado una solicitud de amistad a este usuario."
+                            + "\nEspera que acepte la solicitud de amistad.");
+                                        
+                }else
+                // Amigo+1 Recibido
+                if(this.lista_de_amigos.getSelectedValue().contains("*"+Storage.identificador_amigo2)){
+                   
+                    String yoker = this.session_activa.getStrEmail()+"*";
+                    
+                    int respuesta = JOptionPane.showConfirmDialog(null, 
+                                    "Este usuario quiere ser tu amigo\nAceptas ser amigo?",
+                                    "Confirmar amistad...", JOptionPane.YES_NO_OPTION);
+                    
+                    if(respuesta == JOptionPane.YES_OPTION){
+                        
+                        /* Iniciar amistad */
+                        
+                        // Selecciona el chat desde perfil remitente
+                        this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
+                        this.es_amigo = true;
+                        
+                        // Reemplazar el mensaje perfil de session_activa a saluda a tu amigo
+                        Storage.fncStorageReemplazarUnaLinea(new Session(perfil).stgFriends, 
+                                yoker + Storage.identificador_amigo3 ,
+                                this.session_activa.getStrEmail() + Storage.identificador_amigo1);
+                        
+                        // Reemplazar el mensaje enviado de session_activa a saluda a tu amigo
+                        Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgFriends, 
+                                perfil +"*"+Storage.identificador_amigo2, 
+                                new Session(perfil).getStrEmail() + Storage.identificador_amigo1);
+                        
+                        // * Activar chats
+                        Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgChats, perfil+"*", perfil);
+                        Storage.fncStorageReemplazarUnaLinea(new Session(perfil).stgChats, yoker, this.session_activa.getStrEmail());
+                        
+                        // * Clonar el mensaje de solicitud de amistad
+                        String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), new Session(perfil).getStrEmail());
+                        Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), clone);
+                        
+                        //this.fncHabilitarChat(perfil);
+                        //try{ this.fncSincronizarAmigos(); }catch(Exception e ){}
+                        
+                        
+                    }else{
+                    
+                        /* Eliminas de tu lista de amigos */
+                        
+                        // Eliminar mensaje recibido de session_activa a perfil
+                        Storage.fncStorageEliminarUnaLinea(new File(this.session_activa.stgFriends),
+                                perfil +"*"+Storage.identificador_amigo2);
+                        
+                        // Eliminar mensaje enviado de perfil a session_activa
+                        Storage.fncStorageReemplazarUnaLinea(new Session(perfil).stgFriends, 
+                                yoker  +Storage.identificador_amigo3, yoker);
+
+                    }
+              
+                }else
+                // Somos AmigosxSimpre
+                if(this.lista_de_amigos.getSelectedValue().contains(perfil+Storage.identificador_amigo1)){
+                    
                     // Selecciona el chat desde mi cuenta principal
                     this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
                     this.es_amigo = true;
+                    
+                    this.fncHabilitarChat(perfil);
+                    
                 }
                 
-                // Se activa el chat, esto cancela los eventos de los botones 
-                // del panel lista de amigos...
-                this.chat_activado = true;
-                this.fncCambiarEstadoPanelAmigos(false);
-                this.fncCambiarEstadoPanelChat(true);
                 
-                // * Se activa el campo para ver el usuario co el queien estan conversando..
-                String titulo = new Session(perfil).getStrNombres() + " " + new Session(perfil).getStrApellidos();
-                this.campo_email_chat.setText(titulo);
-                
-                // * Este color indica, si el chat esta activa.
-                this.campo_email_chat.setBackground(new Color(204,255,204));
-                this.campo_email_chat.setEnabled(true); // Activiamos
-                this.campo_email_chat.setEditable(false); // Pero el titulo no se puede editar
-                
-                // Se activa el area de mensaje...
-                this.txt_mensaje.setFocusable(true);
-                
-                System.out.println("Ruta del chat: " + this.chat_path_activo  );
-                //System.out.println("Iniciando conversacion...");
             }else{
                 JOptionPane.showMessageDialog(null, "Lo siento, el chat no existe.");
             }
         }
         
+    }
+    
+    private void fncHabilitarChat(String email_perfil){
+        
+        // Se activa el chat, esto cancela los eventos de los botones 
+        // del panel lista de amigos...
+        this.chat_activado = true;
+        this.fncCambiarEstadoPanelAmigos(false);
+        this.fncCambiarEstadoPanelChat(true);
+
+        // * Se activa el campo para ver el usuario co el queien estan conversando..
+        String titulo = new Session(email_perfil).getStrNombres() + " " + new Session(email_perfil).getStrApellidos();
+        this.campo_email_chat.setText(titulo);
+
+        // * Este color indica, si el chat esta activa.
+        this.campo_email_chat.setBackground(new Color(204,255,204));
+        this.campo_email_chat.setEnabled(true); // Activiamos
+        this.campo_email_chat.setEditable(false); // Pero el titulo no se puede editar
+
+        // Se activa el area de mensaje...
+        this.txt_mensaje.setFocusable(true);
+
+        System.out.println("Ruta del chat: " + this.chat_path_activo  );
+        //System.out.println("Iniciando conversacion...");
+                
     }
 
     private void fncEliminarPerfilTo() {

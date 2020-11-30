@@ -398,10 +398,7 @@ public class Profile extends javax.swing.JFrame {
 
     private void btnAgregarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAmigoMouseReleased
 
-        // * Verificar estado de amistad
-        Amistad solicitud = new Amistad(this.session_activa, this.perfil);
-        solicitud.setActivar_msg(true);
-        solicitud.fncSolicituDeAmistadEnviarTo();
+        
         
         
     }//GEN-LAST:event_btnAgregarAmigoMouseReleased

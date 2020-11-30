@@ -85,11 +85,6 @@ public class PanelTarjeta extends javax.swing.JPanel {
             this.btnEnviarMensajeTo.setText("Mensaje+1");    
         }
         
-        Amistad a = new Amistad(People.session_activa, this.perfil);
-        a.setActivar_msg(false);
-        a.ventana_People = true;
-        a.fncSolicituDeAmistadEnviarTo();
-        
     }
 
     public Session getSession() {
@@ -284,10 +279,9 @@ public class PanelTarjeta extends javax.swing.JPanel {
     // ** Pendiente...
     private void fncAgregarAmigoPlus() {
         
-        Amistad solicitud = new Amistad(People.session_activa, this.perfil);
-        solicitud.setActivar_msg(true);
+        Amistad solicitud = new Amistad(People.session_activa);
         solicitud.ventana_People = true;
-        solicitud.fncSolicituDeAmistadEnviarTo();
+        solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
         
     }
 }
