@@ -51,6 +51,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultCaret;
 import ventana_amigos.Amigos;
+import ventana_people.PanelTarjeta;
 import ventana_people.People;
 import ventana_singup.SingUp;
 
@@ -204,15 +205,18 @@ public class Profile extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jLabel4))
                     .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58)
-                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(campo_sexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jLabel3))
-                    .addComponent(btnEnviarMensajeTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAgregarAmigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(39, 39, 39))
+                        .addGap(99, 99, 99)
+                        .addComponent(jLabel3)
+                        .addGap(89, 89, 89))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_portadaLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnAgregarAmigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEnviarMensajeTo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                            .addComponent(campo_sexo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(39, 39, 39))))
         );
         panel_portadaLayout.setVerticalGroup(
             panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,34 +376,13 @@ public class Profile extends javax.swing.JFrame {
 
     private void btnEnviarMensajeToMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeToMouseReleased
 
-        // * Testing
-        System.out.println("Enviar mensaje a ....");
-       
-        try {
-            // * Intentar capturar el mensaje...
-            String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
-            
-            if( mensaje.isEmpty() && mensaje != null ){
-                
-                if(mensaje.isEmpty())
-                JOptionPane.showMessageDialog(null, "El mensaje no puede estar vacio. No fue enviado.");
-                
-            }else{
-
-                // * Enviar mensaje to ...
-                Mensaje conversacion = new Mensaje(this.session_activa, mensaje.trim());
-                conversacion.fncMensajeEnviarMensajeTo(this.perfil);  
-
-            }
-            
-        } catch (Exception e) { }
+        this.fncEnviarMensaje();
        
     }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
 
     private void btnAgregarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAmigoMouseReleased
 
-        
-        
+        this.fncAgregarAmigoPlus();
         
     }//GEN-LAST:event_btnAgregarAmigoMouseReleased
     
@@ -478,6 +461,21 @@ public class Profile extends javax.swing.JFrame {
         // Insertar el titulo de la ventana
         this.setTitle(this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         
+        // * Verificar si hay una conversación con perfil
+        if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){
+            this.btnEnviarMensajeTo.setText("Mensaje+1");    
+        }
+        
+        // * Verificar amistad con perfil
+        String estado = Storage.fncStorageVerificarAmistad(People.session_activa.stgFriends, this.perfil.getStrEmail());
+        if(estado.equals("amigos")){
+            Profile.btnAgregarAmigo.setText("Son "+ estado + "...");
+        }if( estado.equals("none") || estado.equals("pendiente") ){
+            Profile.btnAgregarAmigo.setText("Amigo+1");
+        }else{
+            Profile.btnAgregarAmigo.setText("Solicitud "+estado);
+        }
+        
     }
     
     private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
@@ -517,6 +515,47 @@ public class Profile extends javax.swing.JFrame {
     
     public void fncSaludarPerfil(){
         JOptionPane.showMessageDialog(null, "Saluda a " + this.perfil.getStrNombres() + " " + this.perfil.getStrApellidos() );
+    }
+    
+    // ** Pendiente...
+    private void fncAgregarAmigoPlus() {
+        
+        Amistad solicitud = new Amistad(this.session_activa);
+        solicitud.ventana_Profile = true;
+        solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
+           
+    }
+
+    private void fncEnviarMensaje(){
+            
+        // * Restriccion de mensaje
+        // Si el perfil seleccionado es amigo de session_activa puede enviar mensaje...
+        if(Storage.fncStorageEncontrarUnaLinea(this.session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1)){
+            // * Testing
+            System.out.println("Enviar mensaje a ....");
+
+            try {
+                // * Intentar capturar el mensaje...
+                String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
+
+                if( mensaje.isEmpty() && mensaje != null ){
+
+                    if(mensaje.isEmpty())
+                    JOptionPane.showMessageDialog(null, "El mensaje no puede estar vacio. No fue enviado.");
+
+                }else{
+
+                    // * Enviar mensaje to ...
+                    Mensaje conversacion = new Mensaje(this.session_activa, mensaje.trim());
+                    conversacion.fncMensajeEnviarMensajeTo(this.perfil);  
+
+                }
+
+            } catch (Exception e) { }
+        }else{
+            JOptionPane.showMessageDialog(null, "Este perfil no es tu amigo, enviale una solicitud de amistad.");
+        }
+        
     }
 
 }

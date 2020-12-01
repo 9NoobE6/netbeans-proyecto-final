@@ -96,6 +96,7 @@ public class Amistad {
         
         // * Fronted
         if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Solicitud enviado");
+        if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Solicitud enviado");
         
     }
 
@@ -122,6 +123,7 @@ public class Amistad {
             
             // * Fronted 
             if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Amigo+1");
+            if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Amigo+1");
         
         }else{
             JOptionPane.showMessageDialog(null, "Espera que el usuario acepte tú solicitud de amistad.");
@@ -159,6 +161,8 @@ public class Amistad {
             
             // * Frontend
             if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Son amigos");
+            if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Son amigos");
+
             
         }
         
