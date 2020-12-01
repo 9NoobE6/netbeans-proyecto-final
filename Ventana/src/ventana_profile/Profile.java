@@ -462,12 +462,12 @@ public class Profile extends javax.swing.JFrame {
         this.setTitle(this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         
         // * Verificar si hay una conversación con perfil
-        if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){
+        if(Storage.fncStorageBuscarUnaLinea(this.session_activa.stgChats, this.perfil.getStrEmail())){
             this.btnEnviarMensajeTo.setText("Mensaje+1");    
         }
         
         // * Verificar amistad con perfil
-        String estado = Storage.fncStorageVerificarAmistad(People.session_activa.stgFriends, this.perfil.getStrEmail());
+        String estado = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
         if(estado.equals("amigos")){
             Profile.btnAgregarAmigo.setText("Son "+ estado + "...");
         }if( estado.equals("none") || estado.equals("pendiente") ){
