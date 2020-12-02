@@ -55,6 +55,7 @@ import javax.swing.text.DefaultCaret;
 import jpanelimagen.JPanelImagen;
 import ventana_amigos.Amigos;
 import ventana_people.People;
+import watcher.profileWatcherNotify;
 
 /**
  *
@@ -122,7 +123,6 @@ public class SingUp extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lista_de_notificaciones = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
-        bntBorrarNotify = new javax.swing.JButton();
         bntLimpiarNotify = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -365,22 +365,25 @@ public class SingUp extends javax.swing.JFrame {
         panel_notify.setForeground(new java.awt.Color(255, 255, 255));
 
         lista_de_notificaciones.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "cargando..." };
+            String[] strings = { "No tienes notificaciones..." };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lista_de_notificaciones.setEnabled(false);
+        lista_de_notificaciones.setFocusable(false);
         jScrollPane1.setViewportView(lista_de_notificaciones);
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Notificaciones");
 
-        bntBorrarNotify.setBackground(new java.awt.Color(102, 0, 0));
-        bntBorrarNotify.setForeground(new java.awt.Color(255, 255, 255));
-        bntBorrarNotify.setText("Borrar");
-
         bntLimpiarNotify.setBackground(new java.awt.Color(102, 0, 0));
         bntLimpiarNotify.setForeground(new java.awt.Color(255, 255, 255));
         bntLimpiarNotify.setText("Limpiar");
+        bntLimpiarNotify.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntLimpiarNotifyMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_notifyLayout = new javax.swing.GroupLayout(panel_notify);
         panel_notify.setLayout(panel_notifyLayout);
@@ -388,14 +391,13 @@ public class SingUp extends javax.swing.JFrame {
             panel_notifyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addGroup(panel_notifyLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bntBorrarNotify)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntLimpiarNotify)
-                .addContainerGap())
-            .addGroup(panel_notifyLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel6)
+                .addGroup(panel_notifyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_notifyLayout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabel6))
+                    .addGroup(panel_notifyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bntLimpiarNotify)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_notifyLayout.setVerticalGroup(
@@ -405,11 +407,9 @@ public class SingUp extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_notifyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntBorrarNotify)
-                    .addComponent(bntLimpiarNotify))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bntLimpiarNotify)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panel_2_BackgroundLayout = new javax.swing.GroupLayout(panel_2_Background);
@@ -621,6 +621,12 @@ public class SingUp extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton1MouseReleased
+
+    private void bntLimpiarNotifyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntLimpiarNotifyMouseReleased
+        
+        this.fncLimpiarNotificaciones();
+        
+    }//GEN-LAST:event_bntLimpiarNotifyMouseReleased
     
     /**
      * @param args the command line arguments
@@ -659,7 +665,6 @@ public class SingUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntAmigos;
-    private javax.swing.JButton bntBorrarNotify;
     private javax.swing.JButton bntLimpiarNotify;
     private javax.swing.JButton btnCerrarSession;
     private javax.swing.JButton btnEliminarCuenta;
@@ -698,12 +703,21 @@ public class SingUp extends javax.swing.JFrame {
     
     private void InicializarVentana(){
         
+        // * Crear un obsevador para notificaciones
+        profileWatcherNotify notify = new profileWatcherNotify(this.session_activa.stgNotify, lista_de_notificaciones);
+        
+        
         try{
              
-            ActionListener tarea = (ActionEvent e) -> {
+            ActionListener tarea;
+            tarea = (ActionEvent e) -> {
+                
                 // Observadores o Watchers (Depende de Session)
-                this.fncSincronizandoMensajes();
-                //this.fncSincronizarAmigos();
+                SingUp.this.fncSincronizandoMensajes();
+                
+                // Observadores o Watchers para notificaciones (Depende de Session)
+                notify.Inicializar();
+                
             };
 
            observador.addActionListener(tarea);
@@ -771,7 +785,6 @@ public class SingUp extends javax.swing.JFrame {
         System.out.println("PATH Tome: " + this.session_activa.stgTome);
         System.out.println("PATH Mural: " + this.session_activa.stgNotify);
         System.out.println("panel_notify: " + this.panel_notify.getBounds() );
-
         
     }
     
@@ -996,5 +1009,27 @@ public class SingUp extends javax.swing.JFrame {
                 this.fncInstertarDatosDeSession();
             }
     }
+
+    private void fncLimpiarNotificaciones() {
+        
+        // ***** TESTING
+        System.out.println(":: Notify :: getSize = " + this.lista_de_notificaciones.getModel().getSize());
+        
+        // Método para eliminar todas la notificaciones de session activa
+        if( !this.lista_de_notificaciones.getModel().getElementAt(0).contains("No tienes") ){
+            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar todas las notificaciones? ",
+                    "Confirmar...", JOptionPane.YES_NO_OPTION);
+            
+            if( respuesta == JOptionPane.YES_OPTION){
+                JOptionPane.showMessageDialog(null, "Se eliminaron todas las notificaciones, exitosamente.");
+                new File(this.session_activa.stgNotify).delete();
+                try{ new File(this.session_activa.stgNotify).createNewFile(); }catch(IOException e){}
+                
+                
+            }
+            
+        }
+        
+    }
     
-}
+} // #! Fin de la clase

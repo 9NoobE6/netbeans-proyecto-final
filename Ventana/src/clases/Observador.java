@@ -66,7 +66,7 @@ public class Observador {
     }
     
     // Métodos getters y setters
-     public ObservadorInterface getObservar() {
+    public ObservadorInterface getObservar() {
         return observardor;
     }
 
