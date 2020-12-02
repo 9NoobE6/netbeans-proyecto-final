@@ -604,7 +604,7 @@ public class SingUp extends javax.swing.JFrame {
         
         // * Testing
         System.out.println("PATH Tome: " + this.session_activa.stgTome);
-        System.out.println("PATH Mural: " + this.session_activa.stgMural);
+        System.out.println("PATH Mural: " + this.session_activa.stgNotify);
 
         
     }

@@ -717,7 +717,7 @@ public class Principal extends javax.swing.JFrame {
             //new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_data ).createNewFile();
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_friends ).createNewFile();
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
-            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_mural ).createNewFile();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_notify ).createNewFile();
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_tome ).createNewFile();
     
             // * Crear un chat temporal

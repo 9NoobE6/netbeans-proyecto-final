@@ -30,7 +30,7 @@ public class Rutas {
     public static final String extesion_friends = ".friends";
     public static final String extesion_chats = ".chats";
     public static final String extesion_tome = ".tome";
-    public static final String extesion_mural = ".mural";
+    public static final String extesion_notify = ".notify";
     public static final String extesion_svg = ".svg";
     public static final String extesion_data = ".data";
     

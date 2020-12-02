@@ -14,7 +14,7 @@ import ventana_pricipal.Principal;
 
 public class Session {
     private String strNombres, strApellidos, strNacimiento, strSexo, strContrasenha, strEmail, strImgPerfil;
-    public String stgChats, stgFriends, stgData, stgSvg, stgTome, stgMural;
+    public String stgChats, stgFriends, stgData, stgSvg, stgTome, stgNotify;
     
     // Metodo constructor
     public Session(String correo){
@@ -48,7 +48,7 @@ public class Session {
         this.stgFriends = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_friends;
         this.stgChats = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_chats;
         this.stgTome = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_tome;
-        this.stgMural = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_mural;
+        this.stgNotify = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_notify;
         
         // * Crear la ruta para el imagen de perfil por defecto  
         this.stgSvg = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_svg;
