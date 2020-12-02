@@ -14,7 +14,7 @@ import ventana_pricipal.Principal;
 
 public class Session {
     private String strNombres, strApellidos, strNacimiento, strSexo, strContrasenha, strEmail, strImgPerfil;
-    public String stgChats, stgFriends, stgData, stgSvg;
+    public String stgChats, stgFriends, stgData, stgSvg, stgTome, stgMural;
     
     // Metodo constructor
     public Session(String correo){
@@ -42,10 +42,15 @@ public class Session {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        // * Crear archivos de almacenamiento para el perfil
         // storage_profiles/abcd@extesion/profile/example@extesion.data
         this.stgData = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_data;
         this.stgFriends = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_friends;
         this.stgChats = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_chats;
+        this.stgTome = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_tome;
+        this.stgMural = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_mural;
+        
+        // * Crear la ruta para el imagen de perfil por defecto  
         this.stgSvg = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_svg;
         
     }

@@ -602,6 +602,11 @@ public class SingUp extends javax.swing.JFrame {
         // Establecer color para el boton Modificar
         this.btnModificarCuenta.setBackground(new Color(102,102,102));
         
+        // * Testing
+        System.out.println("PATH Tome: " + this.session_activa.stgTome);
+        System.out.println("PATH Mural: " + this.session_activa.stgMural);
+
+        
     }
     
     private void fncSincronizandoMensajes(){

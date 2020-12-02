@@ -705,13 +705,24 @@ public class Principal extends javax.swing.JFrame {
     public Timer tiempo = new Timer(1000, escucha);
 
     private void fncCrearCuentaNueva() {
-        new File( Rutas.storage_profiles + this.campo_registro_email.getText() ).mkdir();
-        new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile ).mkdir();
-        new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats).mkdir();
+        
         try {
+            
+            // * Crear contenedores para de almacenamiento de información de la cuenta
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() ).mkdir();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile ).mkdir();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats).mkdir();
+            
+            // * Crear archivos de almacenamiento de información de la cuenta
+            //new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_data ).createNewFile();
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_friends ).createNewFile();
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_mural ).createNewFile();
+            new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_profile + this.campo_registro_email.getText() + Rutas.extesion_tome ).createNewFile();
+    
+            // * Crear un chat temporal
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats + Rutas.extesion_chatmp + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
+
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
