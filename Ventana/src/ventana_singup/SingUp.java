@@ -55,7 +55,7 @@ import javax.swing.text.DefaultCaret;
 import jpanelimagen.JPanelImagen;
 import ventana_amigos.Amigos;
 import ventana_people.People;
-import watcher.profileWatcherNotify;
+import watcher.singupWatcherNotify;
 
 /**
  *
@@ -704,7 +704,7 @@ public class SingUp extends javax.swing.JFrame {
     private void InicializarVentana(){
         
         // * Crear un obsevador para notificaciones
-        profileWatcherNotify notify = new profileWatcherNotify(this.session_activa.stgNotify, lista_de_notificaciones);
+        singupWatcherNotify notify = new singupWatcherNotify(this.session_activa.stgNotify, lista_de_notificaciones);
         
         
         try{
