@@ -8,6 +8,7 @@ package ventana_singup;
 // Importar mis clases
 import clases.*;
 import java.awt.Color;
+import java.awt.Dimension;
 import ventana_pricipal.Principal;
 import jpanelimagen.ImagenFondo;
 
@@ -45,11 +46,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultCaret;
+import jpanelimagen.JPanelImagen;
 import ventana_amigos.Amigos;
 import ventana_people.People;
 
@@ -113,6 +116,14 @@ public class SingUp extends javax.swing.JFrame {
         btnPeople = new javax.swing.JButton();
         btnCerrarSession = new javax.swing.JButton();
         btnEliminarCuenta = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        panel_contenedor_mural = new javax.swing.JPanel();
+        panel_notify = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lista_de_notificaciones = new javax.swing.JList<>();
+        jLabel6 = new javax.swing.JLabel();
+        bntBorrarNotify = new javax.swing.JButton();
+        bntLimpiarNotify = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -299,6 +310,13 @@ public class SingUp extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Notificaciones");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton1MouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -308,6 +326,8 @@ public class SingUp extends javax.swing.JFrame {
                 .addComponent(bntAmigos)
                 .addGap(18, 18, 18)
                 .addComponent(btnPeople)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEliminarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -322,23 +342,93 @@ public class SingUp extends javax.swing.JFrame {
                     .addComponent(bntAmigos)
                     .addComponent(btnPeople)
                     .addComponent(btnCerrarSession)
-                    .addComponent(btnEliminarCuenta))
+                    .addComponent(btnEliminarCuenta)
+                    .addComponent(jButton1))
                 .addContainerGap())
+        );
+
+        panel_contenedor_mural.setBackground(new java.awt.Color(204, 255, 255));
+        panel_contenedor_mural.setOpaque(false);
+
+        javax.swing.GroupLayout panel_contenedor_muralLayout = new javax.swing.GroupLayout(panel_contenedor_mural);
+        panel_contenedor_mural.setLayout(panel_contenedor_muralLayout);
+        panel_contenedor_muralLayout.setHorizontalGroup(
+            panel_contenedor_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 532, Short.MAX_VALUE)
+        );
+        panel_contenedor_muralLayout.setVerticalGroup(
+            panel_contenedor_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        panel_notify.setBackground(new java.awt.Color(51, 51, 51));
+        panel_notify.setForeground(new java.awt.Color(255, 255, 255));
+
+        lista_de_notificaciones.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "cargando..." };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(lista_de_notificaciones);
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Notificaciones");
+
+        bntBorrarNotify.setBackground(new java.awt.Color(102, 0, 0));
+        bntBorrarNotify.setForeground(new java.awt.Color(255, 255, 255));
+        bntBorrarNotify.setText("Borrar");
+
+        bntLimpiarNotify.setBackground(new java.awt.Color(102, 0, 0));
+        bntLimpiarNotify.setForeground(new java.awt.Color(255, 255, 255));
+        bntLimpiarNotify.setText("Limpiar");
+
+        javax.swing.GroupLayout panel_notifyLayout = new javax.swing.GroupLayout(panel_notify);
+        panel_notify.setLayout(panel_notifyLayout);
+        panel_notifyLayout.setHorizontalGroup(
+            panel_notifyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(panel_notifyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bntBorrarNotify)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bntLimpiarNotify)
+                .addContainerGap())
+            .addGroup(panel_notifyLayout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel_notifyLayout.setVerticalGroup(
+            panel_notifyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_notifyLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_notifyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bntBorrarNotify)
+                    .addComponent(bntLimpiarNotify))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panel_2_BackgroundLayout = new javax.swing.GroupLayout(panel_2_Background);
         panel_2_Background.setLayout(panel_2_BackgroundLayout);
         panel_2_BackgroundLayout.setHorizontalGroup(
             panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_2_BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
+                .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_2_BackgroundLayout.createSequentialGroup()
                         .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(panel_portada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
+                        .addComponent(panel_notify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panel_contenedor_mural, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panel_2_BackgroundLayout.setVerticalGroup(
@@ -350,7 +440,11 @@ public class SingUp extends javax.swing.JFrame {
                     .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_contenedor_mural, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_notify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -508,6 +602,25 @@ public class SingUp extends javax.swing.JFrame {
         ventana.setVisible(true);
         
     }//GEN-LAST:event_bntAmigosMouseReleased
+
+    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+        // TODO add your handling code here:
+        
+        if( this.panel_notify_activado ){
+            // Si el area de notifiaciones esta activado se desactiva
+            this.panel_notify.setEnabled(false);
+            this.panel_notify.setVisible(false);
+            this.panel_notify_activado = false;
+            
+        }else{
+            // Si el area de notifiaciones esta desactivado se activa
+            this.panel_notify.setEnabled(true);
+            this.panel_notify.setVisible(true);
+            this.panel_notify_activado = true;
+            
+        }
+        
+    }//GEN-LAST:event_jButton1MouseReleased
     
     /**
      * @param args the command line arguments
@@ -546,6 +659,8 @@ public class SingUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntAmigos;
+    private javax.swing.JButton bntBorrarNotify;
+    private javax.swing.JButton bntLimpiarNotify;
     private javax.swing.JButton btnCerrarSession;
     private javax.swing.JButton btnEliminarCuenta;
     private javax.swing.JButton btnModificarCuenta;
@@ -555,14 +670,20 @@ public class SingUp extends javax.swing.JFrame {
     private javax.swing.JTextField campo_email;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> lista_de_notificaciones;
     private jpanelimagen.JPanelImagen panel_2_Background;
+    private javax.swing.JPanel panel_contenedor_mural;
     private javax.swing.JPanel panel_foto_de_perfil;
+    private javax.swing.JPanel panel_notify;
     private jpanelimagen.JPanelImagen panel_portada;
     // End of variables declaration//GEN-END:variables
     Session session_activa;
@@ -572,6 +693,8 @@ public class SingUp extends javax.swing.JFrame {
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
     private boolean modificar_cuenta=false;
+    private JPanelImagen panel_mural;
+    private boolean panel_notify_activado=true;
     
     private void InicializarVentana(){
         
@@ -602,9 +725,52 @@ public class SingUp extends javax.swing.JFrame {
         // Establecer color para el boton Modificar
         this.btnModificarCuenta.setBackground(new Color(102,102,102));
         
+        // Establecer propiedes para el mural
+        this.panel_mural = new JPanelImagen();
+        this.panel_mural.setPreferredSize(new Dimension(0,0));
+        //this.panel_mural.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.0f ));
+        this.panel_mural.setLayout(null);
+        
+        // * Crear un scroollpanel
+        JScrollPane scroll = new JScrollPane(panel_mural, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setBounds(0,0, this.panel_contenedor_mural.getWidth(), this.panel_contenedor_mural.getHeight());
+        scroll.setAutoscrolls(true);
+        this.panel_contenedor_mural.add(scroll);
+        
+        // * Eliminar bordes
+        this.panel_mural.setBorder(null);
+        this.panel_contenedor_mural.setBorder(null);
+        scroll.getViewport().setBorder(null);
+        scroll.setBorder(null);
+        
+        // * Crear fondo invisible
+        this.panel_mural.setOpaque(false);
+        this.panel_contenedor_mural.setOpaque(false);
+        scroll.getViewport().setOpaque(false);
+        scroll.setOpaque(false);
+
+        // * Desactivamos el panel del mural
+        this.panel_contenedor_mural.setEnabled(true);
+        this.panel_contenedor_mural.setVisible(true);
+        
+        // * Testing para scroll
+        JPanel nc = new JPanel();
+        nc.setBounds(0, 1200, 200, 200);
+        
+        JLabel lb1 = new JLabel();
+        lb1.setText("Hola mundo desde singup");
+        lb1.setBounds(0,0,100,100);
+        nc.add(lb1);
+        
+        this.panel_mural.add(nc);
+        this.panel_mural.setPreferredSize(new Dimension(0,1600));
+        this.panel_mural.revalidate();
+        this.panel_mural.repaint();
+        
         // * Testing
         System.out.println("PATH Tome: " + this.session_activa.stgTome);
         System.out.println("PATH Mural: " + this.session_activa.stgNotify);
+        System.out.println("panel_notify: " + this.panel_notify.getBounds() );
 
         
     }
