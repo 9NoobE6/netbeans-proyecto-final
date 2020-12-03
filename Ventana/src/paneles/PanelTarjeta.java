@@ -221,9 +221,9 @@ public class PanelTarjeta extends javax.swing.JPanel {
         // Se inicializa la vetana People
         Profile ventana = new Profile( People.session_activa, this.perfil );
         ventana.ventana_People = true; // Inidicar a la ventana que vuelva a People
-        People.session_activa = null; // En la ventana SingUp se elimina la session activa
+        People.session_activa = null; // En la ventana People se elimina la session activa
         ventana.setVisible(true);
-        ventana.fncSaludarPerfil();
+        ventana.fncBienvenidoToPerfil();
         
     }//GEN-LAST:event_btnVerPerfilMouseReleased
 

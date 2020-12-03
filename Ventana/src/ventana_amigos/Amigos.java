@@ -448,7 +448,7 @@ public class Amigos extends javax.swing.JFrame {
         this.session_activa = null; // En la ventana SingUp se elimina la sesssion_activa
         ventana.ventana_Amigos = true; // Inidicar a la ventana que vuelva a SingUp
         ventana.setVisible(true); // Se visualiza
-        ventana.fncSaludarPerfil();
+        ventana.fncBienvenidoToPerfil();
         
         System.out.println("*** Amigos::: Abriendo el perfil de " + perfil);
         

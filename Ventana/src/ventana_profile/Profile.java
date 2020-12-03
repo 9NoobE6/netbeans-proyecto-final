@@ -78,14 +78,6 @@ public class Profile extends javax.swing.JFrame {
         this.perfil = perfil;
         this.InicializarVentana();
     }
-    
-    public Session getSession_activa() {
-        return perfil;
-    }
-
-    public void setSession_activa(Session session_activa) {
-        this.perfil = session_activa;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -112,15 +104,13 @@ public class Profile extends javax.swing.JFrame {
         btnAgregarAmigo = new javax.swing.JButton();
         btnEnviarMensajeTo = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btnVerAmigos = new javax.swing.JButton();
-        bntMural = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
-        bntFirmar = new javax.swing.JButton();
-        panel_firmar_mural = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         panel_contedor_firmas = new javax.swing.JPanel();
+        panel_lista_de_amigos = new jpanelimagen.JPanelImagen();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lista_de_amigos = new javax.swing.JList<>();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -204,7 +194,7 @@ public class Profile extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jLabel5))
                     .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -263,15 +253,6 @@ public class Profile extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnVerAmigos.setText("Ver lista de amigos");
-
-        bntMural.setText("Ver mural");
-        bntMural.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                bntMuralMouseReleased(evt);
-            }
-        });
-
         btnVolver.setBackground(new java.awt.Color(0, 102, 153));
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
         btnVolver.setText("Volver");
@@ -281,10 +262,12 @@ public class Profile extends javax.swing.JFrame {
             }
         });
 
-        bntFirmar.setText("Firmar");
-        bntFirmar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Firmar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                bntFirmarMouseReleased(evt);
+                jButton1MouseReleased(evt);
             }
         });
 
@@ -294,12 +277,8 @@ public class Profile extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bntMural)
-                .addGap(18, 18, 18)
-                .addComponent(bntFirmar)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVerAmigos)
-                .addGap(18, 18, 18)
                 .addComponent(btnVolver)
                 .addContainerGap())
         );
@@ -308,40 +287,9 @@ public class Profile extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntMural)
-                    .addComponent(btnVerAmigos)
                     .addComponent(btnVolver)
-                    .addComponent(bntFirmar))
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panel_firmar_mural.setBackground(new java.awt.Color(51, 51, 51));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jButton1.setBackground(new java.awt.Color(0, 51, 51));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Firmar");
-
-        javax.swing.GroupLayout panel_firmar_muralLayout = new javax.swing.GroupLayout(panel_firmar_mural);
-        panel_firmar_mural.setLayout(panel_firmar_muralLayout);
-        panel_firmar_muralLayout.setHorizontalGroup(
-            panel_firmar_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_firmar_muralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-        );
-        panel_firmar_muralLayout.setVerticalGroup(
-            panel_firmar_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_firmar_muralLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
         );
 
         javax.swing.GroupLayout panel_contedor_firmasLayout = new javax.swing.GroupLayout(panel_contedor_firmas);
@@ -352,7 +300,37 @@ public class Profile extends javax.swing.JFrame {
         );
         panel_contedor_firmasLayout.setVerticalGroup(
             panel_contedor_firmasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 287, Short.MAX_VALUE)
+        );
+
+        panel_lista_de_amigos.setBackground(new java.awt.Color(204, 255, 255));
+
+        lista_de_amigos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "cargando..." };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(lista_de_amigos);
+
+        jLabel6.setText("Lista de amigos");
+
+        javax.swing.GroupLayout panel_lista_de_amigosLayout = new javax.swing.GroupLayout(panel_lista_de_amigos);
+        panel_lista_de_amigos.setLayout(panel_lista_de_amigosLayout);
+        panel_lista_de_amigosLayout.setHorizontalGroup(
+            panel_lista_de_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(panel_lista_de_amigosLayout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel_lista_de_amigosLayout.setVerticalGroup(
+            panel_lista_de_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_lista_de_amigosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1))
         );
 
         javax.swing.GroupLayout panel_2_BackgroundLayout = new javax.swing.GroupLayout(panel_2_Background);
@@ -363,8 +341,8 @@ public class Profile extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_2_BackgroundLayout.createSequentialGroup()
-                        .addComponent(panel_firmar_mural, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panel_lista_de_amigos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(panel_contedor_firmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
@@ -384,8 +362,8 @@ public class Profile extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_firmar_mural, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_contedor_firmas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panel_contedor_firmas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_lista_de_amigos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -409,90 +387,28 @@ public class Profile extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionesDeCuentaMouseClicked
 
     private void btnVolverMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseReleased
-        
-        // Se borra la ventana Profile liberando memoria
-        this.setVisible(false); // Desaparece la ventana
-        this.dispose(); // Se libera la memoria
-        
-        // Si la ventana Profile es abierto desde la ventana People
-        // se devulve a People
-        if( this.ventana_People == true ){
-            
-            // Evitamos que la ventana People se cierre
-            People.CerrarVentana = false; 
-
-            // Se inicializa la ventana de People
-            People ventana = new People(this.session_activa);
-            this.session_activa = null; // En la ventana Profile se elimina session_activa seleccionado
-            this.perfil = null; // En la ventana Profile se elimina de perfil seleccionado
-            ventana.setVisible(true); // Se visualiza
-            
-        }
-        
-        // Si la ventana Profile es abierto desde la ventana SingUp
-        // se devulve a SingUp
-        else if( this.ventana_Amigos == true ){
-            
-            // Se inicializa la ventana de Amigos
-            Amigos ventana = new Amigos(this.session_activa);
-            this.session_activa = null; // En la ventana Profile se elimina session_activa seleccionado
-            this.perfil = null; // En la ventana Profile se elimina de perfil seleccionado
-            ventana.setVisible(true); // Se visualiza
-            
-        }
-        
-        System.out.println("*** Profile:::De vuelto a ventana People");
-        
-        
+       
+        this.fncVolver(); // Método
+       
     }//GEN-LAST:event_btnVolverMouseReleased
 
     private void btnEnviarMensajeToMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeToMouseReleased
 
-        this.fncEnviarMensaje();
+        this.fncEnviarMensaje(); // Método
        
     }//GEN-LAST:event_btnEnviarMensajeToMouseReleased
 
     private void btnAgregarAmigoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAmigoMouseReleased
 
-        this.fncAgregarAmigoPlus();
+        this.fncAgregarAmigoPlus(); // Método
         
     }//GEN-LAST:event_btnAgregarAmigoMouseReleased
 
-    private void bntMuralMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntMuralMouseReleased
+    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
         
-    if(this.mural_activado){
-        // Si mural esta activado lo desactivamos
-        this.mural_activado = false;
-        this.panel_contedor_firmas.setEnabled(false);
-        this.panel_contedor_firmas.setVisible(false);
+        this.fncFirmarMuralDePerfil(); // Método
         
-    }else{
-        // Si mural esta desactivado lo activamos
-        this.mural_activado = true;
-        this.panel_contedor_firmas.setEnabled(true);
-        this.panel_contedor_firmas.setVisible(true);
-    }
-        
-        
-    }//GEN-LAST:event_bntMuralMouseReleased
-
-    private void bntFirmarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntFirmarMouseReleased
-        
-    if(this.firmar_activado){
-        // Si firmar esta activado lo desactivamos
-        this.firmar_activado = false;
-        this.panel_firmar_mural.setEnabled(false);
-        this.panel_firmar_mural.setVisible(false);
-        
-    }else{
-        // Si firmar esta desactivado lo activamos
-        this.firmar_activado = true;
-        this.panel_firmar_mural.setEnabled(true);
-        this.panel_firmar_mural.setVisible(true);
-    }
-        
-        
-    }//GEN-LAST:event_bntFirmarMouseReleased
+    }//GEN-LAST:event_jButton1MouseReleased
     
     /**
      * @param args the command line arguments
@@ -531,11 +447,8 @@ public class Profile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntFirmar;
-    private javax.swing.JButton bntMural;
     public static javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
-    private javax.swing.JButton btnVerAmigos;
     private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JTextField campo_email;
@@ -548,13 +461,14 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JList<String> lista_de_amigos;
     private jpanelimagen.JPanelImagen panel_2_Background;
     private javax.swing.JPanel panel_contedor_firmas;
-    private javax.swing.JPanel panel_firmar_mural;
     private javax.swing.JPanel panel_foto_de_perfil;
+    private jpanelimagen.JPanelImagen panel_lista_de_amigos;
     private jpanelimagen.JPanelImagen panel_portada;
     // End of variables declaration//GEN-END:variables
     Session perfil;
@@ -564,6 +478,7 @@ public class Profile extends javax.swing.JFrame {
     private JPanel panel_firmas;
     private boolean mural_activado = false;
     private boolean firmar_activado = false;
+    private singupWatcherTome tome;
 
     
     private void InicializarVentana(){
@@ -572,6 +487,7 @@ public class Profile extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
         this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
+        this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
         
         // Este es para JFrame SingUp (Si depende de Session)
         this.fncInstertarDatosDePerfilSeleccionado();
@@ -619,12 +535,14 @@ public class Profile extends javax.swing.JFrame {
         
         // * Crear un observador para firmas
         System.out.println("stgTome = " + this.perfil.stgTome );
-        singupWatcherTome tome = new singupWatcherTome(
+        tome = new singupWatcherTome(
                 this.perfil.getStrEmail(), 
                 this.perfil.stgTome,
                 this.panel_firmas );
 
         tome.Inicializar();
+        
+        JOptionPane.showMessageDialog(null, "Bienvenido al mural de " + this.perfil.getStrEmail());
         
     }
     
@@ -663,13 +581,20 @@ public class Profile extends javax.swing.JFrame {
  
     }
     
-    public void fncSaludarPerfil(){
-        JOptionPane.showMessageDialog(null, "Saluda a " + this.perfil.getStrNombres() + " " + this.perfil.getStrApellidos() );
+    public void fncBienvenidoToPerfil(){
+        
+        // * Verificar si perfil tiene una firma de session_activa
+        if( !Storage.fncStorageEncontrarUnaLinea(this.perfil.stgTome, this.session_activa.getStrEmail()) ){
+            JOptionPane.showMessageDialog(null, "Deja una firma para el mural de " + this.perfil.getStrEmail());
+        }else{
+            JOptionPane.showMessageDialog(null, "Haz firmado el mural de " + this.perfil.getStrEmail());
+        }
+        
     }
     
-    // ** Pendiente...
     private void fncAgregarAmigoPlus() {
         
+        // * Método para agregar un amigo
         Amistad solicitud = new Amistad(this.session_activa);
         solicitud.ventana_Profile = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
@@ -705,6 +630,81 @@ public class Profile extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Este perfil no es tu amigo, enviale una solicitud de amistad.");
         }
+        
+    }
+
+    private void fncFirmarMuralDePerfil() {
+        
+        // * Verificar si perfil tiene una firma de session_activa
+        if( !Storage.fncStorageEncontrarUnaLinea(this.perfil.stgTome, this.session_activa.getStrEmail()) ){
+            
+            // * Capturar la firma de session_activa
+            String firma = "";
+            firma += JOptionPane.showInputDialog(null, "Escribir firmar para el mural de " + this.perfil.getStrEmail());
+            
+            if( firma.length() > this.session_activa.getStrEmail().length()  && firma.length() < 60 ){
+                
+                // * Formatear la firma
+                firma = Storage.fncStorageFormatearMensaje(firma);
+
+                // * Registar el remitente de la firma
+                Storage.fncStorageAcoplarUnaLinea(this.perfil.stgTome, this.session_activa.getStrEmail() );
+
+                // * Regitrar la firma del remitente
+                Storage.fncStorageAcoplarUnaLinea(this.perfil.stgTome, firma);
+                
+                // Mostrar el mensaje de operación
+                JOptionPane.showMessageDialog(null, "Haz firmado el mural de " + this.perfil.getStrEmail() );
+
+                this.tome.Inicializar();
+
+            }else{
+                // Mostrar el mensaje de operación
+                JOptionPane.showMessageDialog(null, "La firma, debe tener minimo " 
+                        +  this.session_activa.getStrEmail().length() + " un maximo de 60 caracteres.");
+            }
+        
+        }else{
+            // Mostrar el mensaje de operación
+            JOptionPane.showMessageDialog(null, "Lo siento, solo puede firmar un mural por perfil de usuario.");
+        }
+        
+    }
+
+    private void fncVolver() {
+        
+        // Se borra la ventana Profile liberando memoria
+        this.setVisible(false); // Desaparece la ventana
+        this.dispose(); // Se libera la memoria
+        
+        // Si la ventana Profile es abierto desde la ventana People
+        // se devulve a People
+        if( this.ventana_People == true ){
+            
+            // Evitamos que la ventana People se cierre
+            People.CerrarVentana = false; 
+
+            // Se inicializa la ventana de People
+            People ventana = new People(this.session_activa);
+            this.session_activa = null; // En la ventana Profile se elimina session_activa seleccionado
+            this.perfil = null; // En la ventana Profile se elimina de perfil seleccionado
+            ventana.setVisible(true); // Se visualiza
+            
+        }
+        
+        // Si la ventana Profile es abierto desde la ventana SingUp
+        // se devulve a SingUp
+        else if( this.ventana_Amigos == true ){
+            
+            // Se inicializa la ventana de Amigos
+            Amigos ventana = new Amigos(this.session_activa);
+            this.session_activa = null; // En la ventana Profile se elimina session_activa seleccionado
+            this.perfil = null; // En la ventana Profile se elimina de perfil seleccionado
+            ventana.setVisible(true); // Se visualiza
+            
+        }
+        
+        System.out.println("*** Profile:::De vuelto a ventana People");
         
     }
 
