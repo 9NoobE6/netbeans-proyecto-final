@@ -56,6 +56,7 @@ import ventana_amigos.Amigos;
 import paneles.PanelTarjeta;
 import ventana_people.People;
 import ventana_singup.SingUp;
+import watcher.singupWatcherNotify;
 import watcher.singupWatcherTome;
 
 /**
@@ -306,10 +307,11 @@ public class Profile extends javax.swing.JFrame {
         panel_lista_de_amigos.setBackground(new java.awt.Color(204, 255, 255));
 
         lista_de_amigos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "cargando..." };
+            String[] strings = { "Cargando..." };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lista_de_amigos.setEnabled(false);
         jScrollPane1.setViewportView(lista_de_amigos);
 
         jLabel6.setText("Lista de amigos");
@@ -320,7 +322,7 @@ public class Profile extends javax.swing.JFrame {
             panel_lista_de_amigosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addGroup(panel_lista_de_amigosLayout.createSequentialGroup()
-                .addGap(74, 74, 74)
+                .addGap(80, 80, 80)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -541,6 +543,13 @@ public class Profile extends javax.swing.JFrame {
                 this.panel_firmas );
 
         tome.Inicializar();
+        
+        // * Crear un observador para la lista de amigos
+        singupWatcherNotify amigos = new singupWatcherNotify(
+            this.perfil.stgFriends, this.lista_de_amigos);
+        
+        amigos.setLista_vacio("Sin amigos...");
+        amigos.Inicializar();
         
         JOptionPane.showMessageDialog(null, "Bienvenido al mural de " + this.perfil.getStrEmail());
         

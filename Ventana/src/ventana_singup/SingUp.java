@@ -293,7 +293,7 @@ public class SingUp extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSession.setBackground(new java.awt.Color(204, 51, 0));
+        btnCerrarSession.setBackground(new java.awt.Color(153, 51, 0));
         btnCerrarSession.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrarSession.setText("Cerrar Session");
         btnCerrarSession.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -302,7 +302,7 @@ public class SingUp extends javax.swing.JFrame {
             }
         });
 
-        btnEliminarCuenta.setBackground(new java.awt.Color(204, 0, 51));
+        btnEliminarCuenta.setBackground(new java.awt.Color(102, 0, 0));
         btnEliminarCuenta.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarCuenta.setText("Eliminar cuenta");
         btnEliminarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -311,7 +311,9 @@ public class SingUp extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Notificaciones");
+        jButton1.setBackground(new java.awt.Color(102, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Vaciar mural");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jButton1MouseReleased(evt);
@@ -327,9 +329,9 @@ public class SingUp extends javax.swing.JFrame {
                 .addComponent(bntAmigos)
                 .addGap(18, 18, 18)
                 .addComponent(btnPeople)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
                 .addComponent(btnEliminarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCerrarSession, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -366,7 +368,7 @@ public class SingUp extends javax.swing.JFrame {
         panel_notify.setForeground(new java.awt.Color(255, 255, 255));
 
         lista_de_notificaciones.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "No tienes notificaciones..." };
+            String[] strings = { "Cargando..." };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -604,30 +606,16 @@ public class SingUp extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bntAmigosMouseReleased
 
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-        // TODO add your handling code here:
-        
-        if( this.panel_notify_activado ){
-            // Si el area de notifiaciones esta activado se desactiva
-            this.panel_notify.setEnabled(false);
-            this.panel_notify.setVisible(false);
-            this.panel_notify_activado = false;
-            
-        }else{
-            // Si el area de notifiaciones esta desactivado se activa
-            this.panel_notify.setEnabled(true);
-            this.panel_notify.setVisible(true);
-            this.panel_notify_activado = true;
-            
-        }
-        
-    }//GEN-LAST:event_jButton1MouseReleased
-
     private void bntLimpiarNotifyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntLimpiarNotifyMouseReleased
         
         this.fncLimpiarNotificaciones();
         
     }//GEN-LAST:event_bntLimpiarNotifyMouseReleased
+
+    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+        // TODO add your handling code here:
+        this.fncVaciarMural();
+    }//GEN-LAST:event_jButton1MouseReleased
     
     /**
      * @param args the command line arguments
@@ -755,6 +743,7 @@ public class SingUp extends javax.swing.JFrame {
         
         // * Crear un obsevador para notificaciones
         singupWatcherNotify notify = new singupWatcherNotify(this.session_activa.stgNotify, lista_de_notificaciones);
+        notify.setLista_vacio("Sin notificaciones...");
         
         // * Crear un observador para firmas
         System.out.println("stgTome = " + this.session_activa.stgTome );
@@ -1012,7 +1001,7 @@ public class SingUp extends javax.swing.JFrame {
         System.out.println(":: Notify :: getSize = " + this.lista_de_notificaciones.getModel().getSize());
         
         // Método para eliminar todas la notificaciones de session activa
-        if( !this.lista_de_notificaciones.getModel().getElementAt(0).contains("No tienes") ){
+        if( !this.lista_de_notificaciones.getModel().getElementAt(0).contains("Sin ") ){
             int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar todas las notificaciones? ",
                     "Confirmar...", JOptionPane.YES_NO_OPTION);
             
@@ -1024,6 +1013,32 @@ public class SingUp extends javax.swing.JFrame {
                 
             }
             
+        }
+        
+    }
+    
+    private void fncVaciarMural() {
+        
+        // * Obtener el tamaño del archivo de almacenamiento de .tome
+        long longitud = 0;
+
+        try {
+            longitud = Files.size(new File(this.session_activa.stgTome).toPath());
+        } catch (Exception e) {}
+        
+        // * Verificar el tamaño del archivo de almacenamiento de .tome
+        if( longitud > 0 ){
+            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar todas las firmas del mural? ",
+                    "Confirmar...", JOptionPane.YES_NO_OPTION);
+
+            if( respuesta == JOptionPane.YES_OPTION ){
+                
+                // * Se eliminan todas las firma de session_activa
+                new File(this.session_activa.stgTome).delete();
+                try{ new File(this.session_activa.stgTome).createNewFile(); }catch(IOException e){}
+                JOptionPane.showMessageDialog(null, "Se eliminaron todas las notificaciones, exitosamente.");
+                
+            }
         }
         
     }

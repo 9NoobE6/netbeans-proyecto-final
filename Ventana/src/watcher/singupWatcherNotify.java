@@ -27,6 +27,7 @@ public class singupWatcherNotify extends Observador{
     private JList lista_de_notificaciones;
     DefaultListModel notificaciones = new DefaultListModel();
     private String path_stgNotify;
+    private String lista_vacio;
         
     public singupWatcherNotify(File path) {
         super(path);
@@ -70,20 +71,25 @@ public class singupWatcherNotify extends Observador{
                 System.out.println(":: Notify :: size = " + this.notificaciones.size());
                 System.out.println(":: Notify :: isEmpty = " + this.notificaciones.isEmpty());
 
-                // * Verificar no existe notificaciones para mostrar un mensaje
-                if(this.notificaciones.isEmpty()){
-                    notificaciones.addElement("No tienes notificaciones...");
-                }
+                
             
                 // * Mostrar todas las notificaciones...
                 this.lista_de_notificaciones.setModel(notificaciones);
             
             } catch (Exception e) { System.out.println("Error en profileWatcherNotify"); }
 
-        }   
+        }
+        
+        // * Verificar no existe notificaciones para mostrar un mensaje
+        if(this.notificaciones.isEmpty()){
+            this.notificaciones.addElement( this.lista_vacio );
+            this.lista_de_notificaciones.setModel(notificaciones);
+        }
          
     }
 
-    
+    public void setLista_vacio(String lista_vacio) {
+        this.lista_vacio = lista_vacio;
+    }
     
 }
