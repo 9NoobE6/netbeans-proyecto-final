@@ -8,6 +8,7 @@ package ventana_profile;
 // Importar mis clases
 import clases.*;
 import java.awt.Color;
+import java.awt.Dimension;
 import ventana_pricipal.Principal;
 import jpanelimagen.ImagenFondo;
 
@@ -45,6 +46,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
@@ -109,9 +111,15 @@ public class Profile extends javax.swing.JFrame {
         btnAgregarAmigo = new javax.swing.JButton();
         btnEnviarMensajeTo = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnVerAmigos = new javax.swing.JButton();
+        bntMural = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        bntFirmar = new javax.swing.JButton();
+        panel_firmar_mural = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        panel_contedor_firmas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -254,9 +262,14 @@ public class Profile extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton5.setText("Ver lista de amigos");
+        btnVerAmigos.setText("Ver lista de amigos");
 
-        jButton6.setText("Ver espacio");
+        bntMural.setText("Ver mural");
+        bntMural.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntMuralMouseReleased(evt);
+            }
+        });
 
         btnVolver.setBackground(new java.awt.Color(0, 102, 153));
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
@@ -267,16 +280,25 @@ public class Profile extends javax.swing.JFrame {
             }
         });
 
+        bntFirmar.setText("Firmar");
+        bntFirmar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bntFirmarMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton6)
+                .addComponent(bntMural)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(bntFirmar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVerAmigos)
+                .addGap(18, 18, 18)
                 .addComponent(btnVolver)
                 .addContainerGap())
         );
@@ -285,10 +307,51 @@ public class Profile extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton5)
-                    .addComponent(btnVolver))
+                    .addComponent(bntMural)
+                    .addComponent(btnVerAmigos)
+                    .addComponent(btnVolver)
+                    .addComponent(bntFirmar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panel_firmar_mural.setBackground(new java.awt.Color(51, 51, 51));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jButton1.setBackground(new java.awt.Color(0, 51, 51));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Firmar");
+
+        javax.swing.GroupLayout panel_firmar_muralLayout = new javax.swing.GroupLayout(panel_firmar_mural);
+        panel_firmar_mural.setLayout(panel_firmar_muralLayout);
+        panel_firmar_muralLayout.setHorizontalGroup(
+            panel_firmar_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+            .addGroup(panel_firmar_muralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel_firmar_muralLayout.setVerticalGroup(
+            panel_firmar_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_firmar_muralLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout panel_contedor_firmasLayout = new javax.swing.GroupLayout(panel_contedor_firmas);
+        panel_contedor_firmas.setLayout(panel_contedor_firmasLayout);
+        panel_contedor_firmasLayout.setHorizontalGroup(
+            panel_contedor_firmasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panel_contedor_firmasLayout.setVerticalGroup(
+            panel_contedor_firmasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panel_2_BackgroundLayout = new javax.swing.GroupLayout(panel_2_Background);
@@ -298,6 +361,10 @@ public class Profile extends javax.swing.JFrame {
             .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
+                        .addComponent(panel_firmar_mural, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panel_contedor_firmas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
                         .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -314,7 +381,11 @@ public class Profile extends javax.swing.JFrame {
                     .addComponent(panel_portada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(305, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_firmar_mural, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_contedor_firmas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -385,6 +456,42 @@ public class Profile extends javax.swing.JFrame {
         this.fncAgregarAmigoPlus();
         
     }//GEN-LAST:event_btnAgregarAmigoMouseReleased
+
+    private void bntMuralMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntMuralMouseReleased
+        
+    if(this.mural_activado){
+        // Si mural esta activado lo desactivamos
+        this.mural_activado = false;
+        this.panel_contedor_firmas.setEnabled(false);
+        this.panel_contedor_firmas.setVisible(false);
+        
+    }else{
+        // Si mural esta desactivado lo activamos
+        this.mural_activado = true;
+        this.panel_contedor_firmas.setEnabled(true);
+        this.panel_contedor_firmas.setVisible(true);
+    }
+        
+        
+    }//GEN-LAST:event_bntMuralMouseReleased
+
+    private void bntFirmarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntFirmarMouseReleased
+        
+    if(this.firmar_activado){
+        // Si firmar esta activado lo desactivamos
+        this.firmar_activado = false;
+        this.panel_firmar_mural.setEnabled(false);
+        this.panel_firmar_mural.setVisible(false);
+        
+    }else{
+        // Si firmar esta desactivado lo activamos
+        this.firmar_activado = true;
+        this.panel_firmar_mural.setEnabled(true);
+        this.panel_firmar_mural.setVisible(true);
+    }
+        
+        
+    }//GEN-LAST:event_bntFirmarMouseReleased
     
     /**
      * @param args the command line arguments
@@ -423,23 +530,29 @@ public class Profile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntFirmar;
+    private javax.swing.JButton bntMural;
     public static javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
+    private javax.swing.JButton btnVerAmigos;
     private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
     private javax.swing.JTextField campo_email;
     private javax.swing.JTextField campo_nacimiento;
     private javax.swing.JTextField campo_nombres;
     private javax.swing.JComboBox<String> campo_sexo;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private jpanelimagen.JPanelImagen panel_2_Background;
+    private javax.swing.JPanel panel_contedor_firmas;
+    private javax.swing.JPanel panel_firmar_mural;
     private javax.swing.JPanel panel_foto_de_perfil;
     private jpanelimagen.JPanelImagen panel_portada;
     // End of variables declaration//GEN-END:variables
@@ -447,6 +560,10 @@ public class Profile extends javax.swing.JFrame {
     Session session_activa;
     public boolean ventana_Amigos=false;
     public boolean ventana_People=false;
+    private JPanel panel_firmas;
+    private boolean mural_activado = false;
+    private boolean firmar_activado = false;
+
     
     private void InicializarVentana(){
         
@@ -475,6 +592,29 @@ public class Profile extends javax.swing.JFrame {
         }else{
             Profile.btnAgregarAmigo.setText("Solicitud "+estado);
         }
+        
+        // * Crear panel para las firmas
+        this.panel_firmas = new JPanel();
+        this.setPreferredSize(new Dimension(0,0));
+        this.setLayout(null);
+        
+        // * Crear un scroll para las firmas a mostrar
+        JScrollPane jsp = new JScrollPane( this.panel_firmas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jsp.setBounds(0, 0, this.panel_contedor_firmas.getWidth(), this.panel_contedor_firmas.getHeight());
+        jsp.setAutoscrolls(true);
+        this.panel_contedor_firmas.add(jsp);
+
+        // * Establecer invisibe para todos los paneles
+        this.panel_contedor_firmas.setOpaque(false);
+        this.panel_firmas.setOpaque(false);
+        jsp.setOpaque(false);
+        jsp.getViewport().setOpaque(false);
+        
+         // * Quitar bordes a todos los paneles
+        this.panel_contedor_firmas.setBorder(null);
+        this.panel_firmas.setBorder(null);
+        jsp.setBorder(null);
+        jsp.getViewport().setBorder(null);
         
     }
     
