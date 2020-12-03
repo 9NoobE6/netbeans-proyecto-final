@@ -23,17 +23,17 @@ import ventana_people.People;
  *
  * @author max98
  */
-public class singupWatcherNotify extends Observador{
+public class WatcherNotificaciones extends Observador{
     private JList lista_de_notificaciones;
     DefaultListModel notificaciones = new DefaultListModel();
     private String path_stgNotify;
     private String lista_vacio;
         
-    public singupWatcherNotify(File path) {
+    public WatcherNotificaciones(File path) {
         super(path);
     }
 
-    public singupWatcherNotify(String path, JList lista_de_notify) {
+    public WatcherNotificaciones(String path, JList lista_de_notify) {
         super(new File(path));
         this.path_stgNotify = new File(path).getAbsolutePath();
         this.lista_de_notificaciones = lista_de_notify;
@@ -91,5 +91,13 @@ public class singupWatcherNotify extends Observador{
     public void setLista_vacio(String lista_vacio) {
         this.lista_vacio = lista_vacio;
     }
-    
+
+    public String getPath_stgNotify() {
+        return path_stgNotify;
+    }
+
+    public void setPath_stgNotify(String path_stgNotify) {
+        this.path_stgNotify = path_stgNotify;
+    }
+        
 }
