@@ -56,7 +56,7 @@ import jpanelimagen.JPanelImagen;
 import ventana_amigos.Amigos;
 import ventana_people.People;
 import watcher.singupWatcherTome;
-import watcher.singupWatcherNotify;
+import watcher.WatcherNotificaciones;
 
 /**
  *
@@ -742,7 +742,7 @@ public class SingUp extends javax.swing.JFrame {
         System.out.println("panel_notify: " + this.panel_notify.getBounds() );
         
         // * Crear un obsevador para notificaciones
-        singupWatcherNotify notify = new singupWatcherNotify(this.session_activa.stgNotify, lista_de_notificaciones);
+        WatcherNotificaciones notify = new WatcherNotificaciones(this.session_activa.stgNotify, lista_de_notificaciones);
         notify.setLista_vacio("Sin notificaciones...");
         
         // * Crear un observador para firmas

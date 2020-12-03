@@ -14,7 +14,7 @@ import ventana_pricipal.Principal;
 
 public class Session {
     private String strNombres, strApellidos, strNacimiento, strSexo, strContrasenha, strEmail, strImgPerfil;
-    public String stgChats, stgFriends, stgData, stgSvg, stgTome, stgNotify;
+    public String stgChats, stgFriends, stgData, stgSvg, stgTome, stgNotify, stgChatTmp;
     
     // Metodo constructor
     public Session(String correo){
@@ -49,6 +49,9 @@ public class Session {
         this.stgChats = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_chats;
         this.stgTome = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_tome;
         this.stgNotify = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_notify;
+        
+        // * Creando el path del chat temporal
+        this.stgChatTmp = Rutas.storage_profiles + this.strEmail + Rutas.storage_chats + Rutas.extesion_chatmp + this.strEmail + Rutas.extesion_chats;
         
         // * Crear la ruta para el imagen de perfil por defecto  
         this.stgSvg = Rutas.storage_profiles + this.strEmail + Rutas.storage_profile + this.strEmail + Rutas.extesion_svg;

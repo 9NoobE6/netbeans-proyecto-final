@@ -42,6 +42,7 @@ import jpanelimagen.JPanelImagen;
 import ventana_pricipal.Principal;
 import ventana_profile.Profile;
 import ventana_singup.SingUp;
+import watcher.WatcherNotificaciones;
 
 /**
  *
@@ -527,7 +528,6 @@ public class Amigos extends javax.swing.JFrame {
     public Session session_activa;
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
-    private long size_friendship;
     private long size_chats;
     DefaultListModel mensajes = new DefaultListModel();
     DefaultListModel amigos = new DefaultListModel();
@@ -551,6 +551,10 @@ public class Amigos extends javax.swing.JFrame {
         this.campo_email_chat.setBackground(new Color(204,204,204));
         this.campo_email_chat.setEditable(false);
         
+        WatcherNotificaciones amigos = new WatcherNotificaciones(
+                this.session_activa.stgFriends, this.lista_de_amigos ); 
+        
+        amigos.setLista_vacio("Sin amigos...");
         
         try{
              
@@ -567,7 +571,7 @@ public class Amigos extends javax.swing.JFrame {
                         }
                         
                         // Sincronizar lista de amigos de session_activa
-                        Amigos.this.fncSincronizarAmigos();
+                        amigos.Inicializar();
                     
                     }catch (IOException ex) {
                         Logger.getLogger(Amigos.class.getName()).log(Level.SEVERE, null, ex);
@@ -618,50 +622,6 @@ public class Amigos extends javax.swing.JFrame {
              bytes = Files.size(path.toAbsolutePath());
         }catch(Exception e){}
         return bytes;
-    }
-    
-    private void fncSincronizarAmigos() throws FileNotFoundException, IOException{
-        String path = this.session_activa.stgFriends;
-        long _size_ = this.fncObtenerTamahnoStorages(path);
-        
-        // ********* TESTING
-        System.out.print("** Observador -fncSincronizarAmigos- :: " );
-        System.out.println(" Total de amigos = " + this.amigos.getSize() );
-
-        if( _size_ > this.size_friendship || _size_ < this.size_friendship ){
-            this.amigos.removeAllElements();
-            this.lista_de_amigos.removeAll();
-
-            File archivo = new File( path );
-            BufferedReader friends = new BufferedReader( new FileReader(archivo) );
-            String st; 
-
-            while ((st = friends.readLine()) != null){
-                if( !st.contains(this.session_activa.getStrEmail()) ){
-                    this.amigos.addElement(st);
-                }
-            }
-            
-            this.lista_de_amigos.setModel(this.amigos);
-            this.size_friendship = _size_;
-            friends.close();
-        }
-        
-        
-        // Si no tienes amigos a
-        if( this.amigos.getSize() == 0    ){
-            
-            this.amigos.removeAllElements();
-            this.lista_de_amigos.removeAll();
-            
-            this.bntAbrirChat.setEnabled(false);
-            this.bntVerPerfil.setEnabled(false);
-            this.bntEliminar.setEnabled(false);
-            this.amigos.addElement("No tienes amigos...");
-            
-            this.lista_de_amigos.setModel(this.amigos);
-        }
-        
     }
 
     private void fncSincronizarMensajes() throws FileNotFoundException, IOException {

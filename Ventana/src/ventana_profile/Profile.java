@@ -56,7 +56,7 @@ import ventana_amigos.Amigos;
 import paneles.PanelTarjeta;
 import ventana_people.People;
 import ventana_singup.SingUp;
-import watcher.singupWatcherNotify;
+import watcher.WatcherNotificaciones;
 import watcher.singupWatcherTome;
 
 /**
@@ -545,7 +545,7 @@ public class Profile extends javax.swing.JFrame {
         tome.Inicializar();
         
         // * Crear un observador para la lista de amigos
-        singupWatcherNotify amigos = new singupWatcherNotify(
+        WatcherNotificaciones amigos = new WatcherNotificaciones(
             this.perfil.stgFriends, this.lista_de_amigos);
         
         amigos.setLista_vacio("Sin amigos...");
