@@ -55,6 +55,7 @@ import javax.swing.text.DefaultCaret;
 import jpanelimagen.JPanelImagen;
 import ventana_amigos.Amigos;
 import ventana_people.People;
+import watcher.singupWatcherTome;
 import watcher.singupWatcherNotify;
 
 /**
@@ -703,27 +704,7 @@ public class SingUp extends javax.swing.JFrame {
     
     private void InicializarVentana(){
         
-        // * Crear un obsevador para notificaciones
-        singupWatcherNotify notify = new singupWatcherNotify(this.session_activa.stgNotify, lista_de_notificaciones);
         
-        
-        try{
-             
-            ActionListener tarea;
-            tarea = (ActionEvent e) -> {
-                
-                // Observadores o Watchers (Depende de Session)
-                SingUp.this.fncSincronizandoMensajes();
-                
-                // Observadores o Watchers para notificaciones (Depende de Session)
-                notify.Inicializar();
-                
-            };
-
-           observador.addActionListener(tarea);
-           observador.start();
-           
-        }catch(Exception a){}
         
         // Este es para JFrame SingUp (No depende de Session)
         this.setLocationRelativeTo(null);
@@ -763,28 +744,43 @@ public class SingUp extends javax.swing.JFrame {
         scroll.getViewport().setOpaque(false);
         scroll.setOpaque(false);
 
-        // * Desactivamos el panel del mural
+        // * Activamos el panel del mural
         this.panel_contenedor_mural.setEnabled(true);
         this.panel_contenedor_mural.setVisible(true);
-        
-        // * Testing para scroll
-        JPanel nc = new JPanel();
-        nc.setBounds(0, 1200, 200, 200);
-        
-        JLabel lb1 = new JLabel();
-        lb1.setText("Hola mundo desde singup");
-        lb1.setBounds(0,0,100,100);
-        nc.add(lb1);
-        
-        this.panel_mural.add(nc);
-        this.panel_mural.setPreferredSize(new Dimension(0,1600));
-        this.panel_mural.revalidate();
-        this.panel_mural.repaint();
-        
+                
         // * Testing
         System.out.println("PATH Tome: " + this.session_activa.stgTome);
         System.out.println("PATH Mural: " + this.session_activa.stgNotify);
         System.out.println("panel_notify: " + this.panel_notify.getBounds() );
+        
+        // * Crear un obsevador para notificaciones
+        singupWatcherNotify notify = new singupWatcherNotify(this.session_activa.stgNotify, lista_de_notificaciones);
+        
+        // * Crear un observador para firmas
+        System.out.println("stgTome = " + this.session_activa.stgTome );
+        singupWatcherTome tome = new singupWatcherTome(
+                this.session_activa.getStrEmail(), 
+                this.session_activa.stgTome,
+                this.panel_mural );
+        
+        try{
+             
+            ActionListener tarea;
+            tarea = (ActionEvent e) -> {
+                
+                // Observadores o Watchers (Depende de Session)
+                SingUp.this.fncSincronizandoMensajes();
+                
+                // Observadores o Watchers para notificaciones (Depende de Session)
+                notify.Inicializar();
+                tome.Inicializar();
+                
+            };
+
+           observador.addActionListener(tarea);
+           observador.start();
+           
+        }catch(Exception a){}
         
     }
     
