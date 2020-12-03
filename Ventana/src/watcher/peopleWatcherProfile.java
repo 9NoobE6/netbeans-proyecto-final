@@ -14,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import javax.swing.JPanel;
-import ventana_people.PanelTarjeta;
+import paneles.PanelTarjeta;
 import ventana_people.People;
 
 /**

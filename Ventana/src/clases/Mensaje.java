@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import ventana_people.PanelTarjeta;
+import paneles.PanelTarjeta;
 
 public class Mensaje {
     private Session perfil= null;

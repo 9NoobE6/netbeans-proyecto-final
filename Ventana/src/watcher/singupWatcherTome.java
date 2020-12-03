@@ -16,9 +16,9 @@ import java.io.FileReader;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import ventana_people.PanelTarjeta;
+import paneles.PanelTarjeta;
 import ventana_people.People;
-import ventana_singup.PanelFirma;
+import paneles.PanelFirma;
 
 /**
  *

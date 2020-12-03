@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ventana_people;
+package paneles;
 
 import clases.Amistad;
 import clases.Mensaje;
@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import ventana_people.People;
 import ventana_profile.Profile;
 
 /**

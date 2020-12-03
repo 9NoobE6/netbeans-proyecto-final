@@ -53,9 +53,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultCaret;
 import ventana_amigos.Amigos;
-import ventana_people.PanelTarjeta;
+import paneles.PanelTarjeta;
 import ventana_people.People;
 import ventana_singup.SingUp;
+import watcher.singupWatcherTome;
 
 /**
  *
@@ -203,7 +204,7 @@ public class Profile extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jLabel5))
                     .addComponent(campo_nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_portadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_portadaLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -328,11 +329,11 @@ public class Profile extends javax.swing.JFrame {
         panel_firmar_mural.setLayout(panel_firmar_muralLayout);
         panel_firmar_muralLayout.setHorizontalGroup(
             panel_firmar_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
             .addGroup(panel_firmar_muralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
         );
         panel_firmar_muralLayout.setVerticalGroup(
             panel_firmar_muralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +348,7 @@ public class Profile extends javax.swing.JFrame {
         panel_contedor_firmas.setLayout(panel_contedor_firmasLayout);
         panel_contedor_firmasLayout.setHorizontalGroup(
             panel_contedor_firmasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
         panel_contedor_firmasLayout.setVerticalGroup(
             panel_contedor_firmasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,10 +362,10 @@ public class Profile extends javax.swing.JFrame {
             .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_2_BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_2_BackgroundLayout.createSequentialGroup()
                         .addComponent(panel_firmar_mural, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panel_contedor_firmas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panel_contedor_firmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panel_2_BackgroundLayout.createSequentialGroup()
                         .addComponent(panel_foto_de_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -595,8 +596,8 @@ public class Profile extends javax.swing.JFrame {
         
         // * Crear panel para las firmas
         this.panel_firmas = new JPanel();
-        this.setPreferredSize(new Dimension(0,0));
-        this.setLayout(null);
+        this.panel_firmas.setPreferredSize(new Dimension(0,0));
+        this.panel_firmas.setLayout(null);
         
         // * Crear un scroll para las firmas a mostrar
         JScrollPane jsp = new JScrollPane( this.panel_firmas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -611,10 +612,19 @@ public class Profile extends javax.swing.JFrame {
         jsp.getViewport().setOpaque(false);
         
          // * Quitar bordes a todos los paneles
-        this.panel_contedor_firmas.setBorder(null);
+        //this.panel_contedor_firmas.setBorder(null);
         this.panel_firmas.setBorder(null);
         jsp.setBorder(null);
         jsp.getViewport().setBorder(null);
+        
+        // * Crear un observador para firmas
+        System.out.println("stgTome = " + this.perfil.stgTome );
+        singupWatcherTome tome = new singupWatcherTome(
+                this.perfil.getStrEmail(), 
+                this.perfil.stgTome,
+                this.panel_firmas );
+
+        tome.Inicializar();
         
     }
     

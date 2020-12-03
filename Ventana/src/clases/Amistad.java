@@ -2,7 +2,7 @@ package clases;
 
 import java.io.File;
 import javax.swing.JOptionPane;
-import ventana_people.PanelTarjeta;
+import paneles.PanelTarjeta;
 import ventana_people.People;
 import ventana_profile.Profile;
 
