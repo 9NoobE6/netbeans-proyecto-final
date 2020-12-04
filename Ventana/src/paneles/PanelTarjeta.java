@@ -221,13 +221,16 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         // Se borra la ventana People liberando memoria
         People.CerrarVentana = true;
+        this.padre.setVisible(false);
         
         // Se inicializa la vetana People
-        Profile ventana = new Profile( People.session_activa, this.perfil );
-        ventana.ventana_People = true; // Inidicar a la ventana que vuelva a People
-        People.session_activa = null; // En la ventana People se elimina la session activa
-        ventana.setVisible(true);
-        ventana.fncBienvenidoToPerfil();
+        if( !this.padre.isVisible() ){
+            Profile ventana = new Profile( People.session_activa, this.perfil );
+            ventana.ventana_People = true; // Inidicar a la ventana que vuelva a People
+            People.session_activa = null; // En la ventana People se elimina la session activa
+            ventana.setVisible(true);
+            ventana.fncBienvenidoToPerfil();
+        }
         
     }//GEN-LAST:event_btnVerPerfilMouseReleased
 
@@ -244,7 +247,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
     private Session perfil;
     private Session session;
     private boolean solicitud_enviada = false;
-    private JFrame padre;
+    public JFrame padre;
     
     private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
         

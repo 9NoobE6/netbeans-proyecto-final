@@ -275,6 +275,7 @@ public class People extends javax.swing.JFrame {
         
         // * Crear el observador de perfiles
         peopleWatcherProfile observador_de_perfiles = new peopleWatcherProfile(Rutas.path_profiles, this.panel_perfiles);
+        observador_de_perfiles.JFramePadre(this);
         
         // Intentar ejecutar los observadores
         try {
