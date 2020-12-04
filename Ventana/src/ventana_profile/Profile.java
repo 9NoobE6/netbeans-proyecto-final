@@ -551,7 +551,7 @@ public class Profile extends javax.swing.JFrame {
         
         amigos.setLista_vacio("Sin amigos...");
         amigos.Inicializar();
-        
+
     }
     
     private void fncInstertarDatosDePerfilSeleccionado() {
