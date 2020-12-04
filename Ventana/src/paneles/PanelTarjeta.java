@@ -79,12 +79,16 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         // * Verificar amistad con perfil
         String estado = Storage.fncStorageVerificarAmistad(People.session_activa.stgFriends, this.perfil.getStrEmail());
+        
+        // ****** TESTING
+        System.out.println("Estado >>> " + estado );
+        
         if(estado.equals("amigos")){
-            PanelTarjeta.btnAgregarAmigo.setText("Son "+ estado + "...");
-        }if( estado.equals("none") || estado.equals("pendiente") ){
-            PanelTarjeta.btnAgregarAmigo.setText("Amigo+1");
+            this.btnAgregarAmigo.setText("Son "+ estado + "...");
+        }else if( estado.equals("none") || estado.equals("pendiente") ){
+            this.btnAgregarAmigo.setText("Amigo+1");
         }else{
-            PanelTarjeta.btnAgregarAmigo.setText("Solicitud "+estado);
+            this.btnAgregarAmigo.setText("Solicitud "+estado);
         }
         
         
@@ -229,7 +233,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JButton btnAgregarAmigo;
+    private javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
     private javax.swing.JButton btnVerPerfil;
     private javax.swing.JTextField campo_email;
@@ -263,7 +267,13 @@ public class PanelTarjeta extends javax.swing.JPanel {
         Amistad solicitud = new Amistad(People.session_activa);
         solicitud.ventana_People = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
-           
+        
+        if( solicitud.getOperacion().equals("cancelado") ){
+            this.btnAgregarAmigo.setText("Amigo+1");
+        }else{
+            this.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());
+        }   
+        
     }
 
     private void fncEnviarMensaje(){

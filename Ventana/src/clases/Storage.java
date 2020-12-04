@@ -153,9 +153,7 @@ public class Storage {
                 while ((linea = db_archivo.readLine()) != null) {
                     
                     // Si encuentra la cuenta se rompe el bucle
-                    if (linea.equals(encontrar_cuenta+"*") && !linea.isEmpty() && linea.contains(extension_rs)) {
-                        return "pendiente";
-                    }else if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo1 ) && !linea.isEmpty() && linea.contains(extension_rs)){
+                    if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo1 ) && !linea.isEmpty() && linea.contains(extension_rs)){
                         return "amigos";
                     }else 
                     if (linea.contains(encontrar_cuenta) && linea.contains( Storage.identificador_amigo2 ) && !linea.isEmpty() && linea.contains(extension_rs)){

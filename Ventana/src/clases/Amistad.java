@@ -12,6 +12,7 @@ public class Amistad {
 
     public boolean ventana_People = false;
     public boolean ventana_Profile = false;
+    private String operacion = "none";
     
     private String perfil_seleccionado;
     private String yoker;
@@ -28,6 +29,7 @@ public class Amistad {
             System.out.println("Enviado solicitud a ... " + this.perfil.getStrEmail());
             
             //* Enviado mensaje...
+            this.operacion = "none";
             this.fncAmistadEnviadoSolicitudTo();
             
         }
@@ -95,8 +97,9 @@ public class Amistad {
         JOptionPane.showMessageDialog(null, "Solicitud de amistad enviado.");
         
         // * Fronted
-        if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Solicitud enviado");
+        //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Solicitud enviado");
         if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Solicitud enviado");
+        this.operacion = "enviado";
         
     }
 
@@ -122,9 +125,10 @@ public class Amistad {
             JOptionPane.showMessageDialog(null, "Haz cancelado la solicitud de amistad." );
             
             // * Fronted 
-            if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Amigo+1");
+            //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Amigo+1");
             if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Amigo+1");
-        
+            this.operacion = "cancelado";
+            
         }else{
             JOptionPane.showMessageDialog(null, "Espera que el usuario acepte tú solicitud de amistad.");
         }
@@ -160,12 +164,23 @@ public class Amistad {
                     + "\nEn hora buena ahora pueden conversar.");
             
             // * Frontend
-            if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Son amigos");
+            //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Son amigos");
             if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Son amigos");
-
+            this.operacion = "aceptado";
             
         }
         
     }
+
+    public String getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(String operacion_exitosa) {
+        this.operacion = operacion_exitosa;
+    }
+
+    
+    
     
 }
