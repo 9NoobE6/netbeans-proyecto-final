@@ -481,6 +481,7 @@ public class Profile extends javax.swing.JFrame {
     private boolean mural_activado = false;
     private boolean firmar_activado = false;
     private singupWatcherTome tome;
+    private WatcherNotificaciones amigos;
 
     
     private void InicializarVentana(){
@@ -545,7 +546,7 @@ public class Profile extends javax.swing.JFrame {
         tome.Inicializar();
         
         // * Crear un observador para la lista de amigos
-        WatcherNotificaciones amigos = new WatcherNotificaciones(
+        amigos = new WatcherNotificaciones(
             this.perfil.stgFriends, this.lista_de_amigos);
         
         amigos.setLista_vacio("Sin amigos...");
@@ -603,11 +604,20 @@ public class Profile extends javax.swing.JFrame {
     
     private void fncAgregarAmigoPlus() {
         
-        // * Método para agregar un amigo
         Amistad solicitud = new Amistad(this.session_activa);
         solicitud.ventana_Profile = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
-           
+        
+        // * Verificar la operación realizada
+        if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){
+            Profile.btnAgregarAmigo.setText("Amigo+1");
+        }else{
+            Profile.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());
+        }
+        
+        // * Cargar la lista de amigos de perfil
+        this.amigos.Inicializar();
+        
     }
 
     private void fncEnviarMensaje(){
