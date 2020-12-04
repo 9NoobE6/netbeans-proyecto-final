@@ -9,10 +9,12 @@ import clases.Observador;
 import clases.Rutas;
 import clases.Session;
 import clases.Storage;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import paneles.PanelTarjeta;
 import ventana_people.People;
@@ -23,6 +25,7 @@ import ventana_people.People;
  */
 public class peopleWatcherProfile extends Observador{
     private JPanel panel_perfiles;
+    private JFrame JFramePadre;
     private int coordenadaY = 20;
     
     public peopleWatcherProfile(File path) {
@@ -49,6 +52,7 @@ public class peopleWatcherProfile extends Observador{
 
                     if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Storage.extension_rs)) {
                         PanelTarjeta a = new PanelTarjeta(new Session(linea));
+                        a.padre = JFramePadre;
                         a.setBounds(60, coordenadaY, 600, 135);
                         panel_perfiles.add(a);
                         panel_perfiles.validate();
@@ -72,13 +76,13 @@ public class peopleWatcherProfile extends Observador{
         
     }
     
-    // Metodos getters y setters
-    public JPanel getPanel_perfiles() {
-        return panel_perfiles;
-    }
-
+    // Metodos setters
     public void setPanel_perfiles(JPanel panel_perfiles) {
         this.panel_perfiles = panel_perfiles;
     }
 
+    public void JFramePadre(JFrame JFpadre) {
+        this.JFramePadre = JFpadre;
+    }
+    
 }

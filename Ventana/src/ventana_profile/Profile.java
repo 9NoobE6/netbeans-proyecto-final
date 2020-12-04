@@ -551,9 +551,7 @@ public class Profile extends javax.swing.JFrame {
         
         amigos.setLista_vacio("Sin amigos...");
         amigos.Inicializar();
-        
-        JOptionPane.showMessageDialog(null, "Bienvenido al mural de " + this.perfil.getStrEmail());
-        
+                
     }
     
     private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
@@ -592,6 +590,8 @@ public class Profile extends javax.swing.JFrame {
     }
     
     public void fncBienvenidoToPerfil(){
+        
+        JOptionPane.showMessageDialog(null, "Bienvenido al mural de " + this.perfil.getStrEmail());
         
         // * Verificar si perfil tiene una firma de session_activa
         if( !Storage.fncStorageEncontrarUnaLinea(this.perfil.stgTome, this.session_activa.getStrEmail()) ){

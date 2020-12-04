@@ -35,6 +35,7 @@ import ventana_pricipal.Principal;
 import ventana_singup.SingUp;
 import clases.Observador;
 import clases.ObservadorInterface;
+import javax.swing.JRootPane;
 import watcher.peopleWatcherProfile;
 
 /**
@@ -275,6 +276,7 @@ public class People extends javax.swing.JFrame {
         
         // * Crear el observador de perfiles
         peopleWatcherProfile observador_de_perfiles = new peopleWatcherProfile(Rutas.path_profiles, this.panel_perfiles);
+        observador_de_perfiles.JFramePadre(this);
         
         // Intentar ejecutar los observadores
         try {
