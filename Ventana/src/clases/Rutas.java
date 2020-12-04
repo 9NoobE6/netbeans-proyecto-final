@@ -39,18 +39,18 @@ public class Rutas {
     public static final String path_user_default = "img/user_default.png";
     
     // * Rutas para el fondo de pantalla de cada ventana
-    public static final String path_background_jframe_amigos = "img/b4.jpg";
-    public static final String path_background_jframe_people = "img/b4.jpg";
-    public static final String path_background_jframe_profile = "img/b3.jpg";
-    public static final String path_background_jframe_singup = "img/b3.jpg";
+    public static final String path_background_jframe_amigos = "img/b8.png";
+    public static final String path_background_jframe_singup = "img/b8.png";
+    public static final String path_background_jframe_people = "img/b6.jpg";
+    public static final String path_background_jframe_profile = "img/b12.jpg";
     
     // Rutas para la ventana Principal
-    public static final String path_background_jframe_principal = "img/b2.jpg";
-    public static final String path_background_panel_registro = "img/b2.jpg";
+    public static final String path_background_jframe_principal = "img/b6.jpg";
     public static final String path_background_panel_singup = "img/b2.jpg";
-    public static final String path_logo = "img/logo1_1.png";
+    public static final String path_background_panel_registro = "img/b5.jpg";
+    public static final String path_logo = "img/user_default.png";
     
     public static final String path_background_panel = "img/b1.jpg";
-    public static final String path_background_panel_paneltarjeta = "img/b2.jpg";
+    public static final String path_background_panel_paneltarjeta = "img/b5.jpg";
     
 }

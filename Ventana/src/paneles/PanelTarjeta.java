@@ -116,6 +116,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         btnVerPerfil = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setOpaque(false);
 
         btnAgregarAmigo.setBackground(new java.awt.Color(255, 102, 102));
         btnAgregarAmigo.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,6 +136,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
             }
         });
 
+        panel_foto.setBackground(new java.awt.Color(255, 255, 255));
         panel_foto.setPreferredSize(new java.awt.Dimension(165, 135));
 
         javax.swing.GroupLayout panel_fotoLayout = new javax.swing.GroupLayout(panel_foto);
