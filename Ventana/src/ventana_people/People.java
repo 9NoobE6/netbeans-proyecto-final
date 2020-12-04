@@ -251,10 +251,10 @@ public class People extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         // * Establece el imagen de fodo para el JFrame usando el pane Background
-        this.panel_3_Background.setImagenFondo(new ImagenFondo(new java.io.File(getClass().getResource("/img/b4.jpg").getPath()), 1.0f));
+        this.panel_3_Background.setImagenFondo(new ImagenFondo(new java.io.File( Rutas.path_background_jframe_people ), 1.0f));
         
         // * Establecer el imagen de fodo para contenedor_perfiles
-        this.panel_contenedor_perfiles.setImagenFondo(new ImagenFondo(new java.io.File(getClass().getResource("/img/b1.jpg").getPath()), 0.0f));
+        this.panel_contenedor_perfiles.setImagenFondo(new ImagenFondo(new java.io.File( Rutas.path_background_panel ), 0.0f));
         
         // * Establecer los datos del usuario en campo de texto y titulo de la ventana
         this.setTitle(People.session_activa.getStrNombres() + " - " + People.session_activa.getStrEmail());
@@ -262,7 +262,7 @@ public class People extends javax.swing.JFrame {
         // * Crear un panel para mostrar las tarjetas de presentacion de los perfiles registrados
         panel_perfiles = new JPanelImagen();
         panel_perfiles.setPreferredSize(new Dimension(0, 0));
-        panel_perfiles.setImagenFondo(new ImagenFondo(new java.io.File(getClass().getResource("/img/b4.jpg").getPath()), 1.0f));
+        panel_perfiles.setImagenFondo(new ImagenFondo(new java.io.File( Rutas.path_background_jframe_people  ), 1.0f));
         panel_perfiles.setLayout(null);
             
         // * Crear un scroll para dezplazarme hacia abajo y ver más perfiles

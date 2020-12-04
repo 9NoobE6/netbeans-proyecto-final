@@ -45,12 +45,12 @@ public class Principal extends javax.swing.JFrame {
         this.fncEstablecerItems();
         this.cmbox_registro_anho.setSelectedIndex( this.cmbox_registro_anho.getItemCount() - 19);
         this.setLocationRelativeTo(null);
-        this.fncInsertarPicture(this.panel_1_Background, "/img/b2.jpg", false);
+        this.fncInsertarPicture(this.panel_1_Background, Rutas.path_background_jframe_principal , false);
         
-        panel_singup.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
-        panel_registro.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
+        panel_singup.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel_singup ), 1.0f ));
+        panel_registro.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel_registro ), 1.0f ));
         // /img/logo1_3.png, /img/logo2.png
-        panel_logo.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/logo1_1.png").getPath() ), 0.2f ));
+        panel_logo.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_logo ), 0.2f ));
         panel_logo.setToolTipText("RS Gobim");
         
         // * Verificar que las cuentas existan
@@ -90,7 +90,7 @@ public class Principal extends javax.swing.JFrame {
         
         if(vaciar) contenedor.removeAll();
         
-        ImageIcon icono = new ImageIcon( getClass().getResource(url) );
+        ImageIcon icono = new ImageIcon( url );
         JLabel etiquetaImagen = new JLabel();
         etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
         etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );

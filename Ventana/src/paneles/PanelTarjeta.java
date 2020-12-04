@@ -59,18 +59,12 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         // Establecer un tamaño al panel para la tarjeta y agregar un imagen de fondo
         this.setSize(600, 135);
-        this.fncInsertarPicture(this, getClass().getResource("/img/b2.jpg").getPath(), false);
+        Storage.fncStorageInsertarPictureProfile(this, Rutas.path_background_panel_paneltarjeta, false);
         
         // Establecer un tamaño al panel para la foto y agregar el imagen del correspondiente...
         this.panel_foto.setSize(165, 135);
-        String img_profile = "";
-        if( session.getStrImgPerfil().equals("user_default.png") ){
-            img_profile = Rutas.path_user_default;
-            this.fncInsertarPicture(this.panel_foto, img_profile , false); 
-        }else{
-            img_profile = Storage.fncStorageCrearRutaProfile(session.getStrEmail(), Rutas.extesion_svg);
-            this.fncInsertarPicture(this.panel_foto, img_profile , false);
-        }
+        String img_profile = Storage.fncStorageObtenerImgProfile(this.perfil);
+        Storage.fncStorageInsertarPictureProfile(this.panel_foto, img_profile, true);
         
         // * Verificar si hay una conversación con perfil
         if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){
@@ -245,23 +239,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
     private Session session;
     private boolean solicitud_enviada = false;
     private JFrame padre;
-    
-    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
-        
-        if(vaciar) contenedor.removeAll();
-        
-        System.out.println(url);
-        ImageIcon icono = new ImageIcon( url );
-        JLabel etiquetaImagen = new JLabel();
-        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
-        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
-        contenedor.add(etiquetaImagen);
-        
-        if(vaciar) contenedor.validate();
-        if(vaciar) contenedor.repaint();
-    }
-    
-    // ** Pendiente...
+       
     private void fncAgregarAmigoPlus() {
         
         Amistad solicitud = new Amistad(People.session_activa);

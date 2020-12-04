@@ -488,9 +488,9 @@ public class Profile extends javax.swing.JFrame {
         
         // Este es para JFrame SingUp (No depende de Session)
         this.setLocationRelativeTo(null);
-        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
-        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
-        this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
+        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_jframe_profile ), 1.0f ));
+        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel ), .2f ));
+        this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel ), .2f ));
         
         // Este es para JFrame SingUp (Si depende de Session)
         this.fncInstertarDatosDePerfilSeleccionado();
@@ -552,35 +552,13 @@ public class Profile extends javax.swing.JFrame {
         amigos.setLista_vacio("Sin amigos...");
         amigos.Inicializar();
         
-        JOptionPane.showMessageDialog(null, "Bienvenido al mural de " + this.perfil.getStrEmail());
-        
     }
     
-    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
-        
-        if(vaciar) contenedor.removeAll();
-        
-        ImageIcon icono = new ImageIcon( url );
-        JLabel etiquetaImagen = new JLabel();
-        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
-        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
-        contenedor.add(etiquetaImagen);
-        
-        if(vaciar) contenedor.validate();
-        if(vaciar) contenedor.repaint();
-    }
-
     private void fncInstertarDatosDePerfilSeleccionado() {
-        String img_profile = "";
         
         // Seleccionar el foto de perfil adecuado para el usuario
-        if( this.perfil.getStrImgPerfil().equals("user_default.png") ){
-            img_profile = Rutas.path_user_default;
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
-        }else{
-            img_profile = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_svg);
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
-        }
+        String img_profile = Storage.fncStorageObtenerImgProfile(this.perfil);
+        Storage.fncStorageInsertarPictureProfile(this.panel_foto_de_perfil, img_profile, true);
         
         // Insetar los datos personales del usuario
         this.campo_nombres.setText( perfil.getStrNombres() );
@@ -592,6 +570,8 @@ public class Profile extends javax.swing.JFrame {
     }
     
     public void fncBienvenidoToPerfil(){
+        
+        JOptionPane.showMessageDialog(null, "Bienvenido al mural de " + this.perfil.getStrEmail());
         
         // * Verificar si perfil tiene una firma de session_activa
         if( !Storage.fncStorageEncontrarUnaLinea(this.perfil.stgTome, this.session_activa.getStrEmail()) ){
