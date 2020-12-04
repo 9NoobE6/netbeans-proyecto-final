@@ -492,7 +492,7 @@ public class SingUp extends javax.swing.JFrame {
                 
                 // * Insertar la img profile
                 String img_profile = Storage.fncStorageObtenerImgProfile(this.session_activa);
-                Storage.fncStorageInsertarPictureProfile(this.panel_foto_de_perfil, img_profile , true);
+                Storage.fncStorageInsertarPicture(this.panel_foto_de_perfil, img_profile , true);
                 
                 // Mostar mensaje de operacion
                 JOptionPane.showMessageDialog(null, "Foto de perfil actualizado exitosamente.");
@@ -831,7 +831,7 @@ public class SingUp extends javax.swing.JFrame {
 
     private void fncInstertarDatosDeSession() {
         
-        Storage.fncStorageInsertarPictureProfile(this.panel_foto_de_perfil, Storage.fncStorageObtenerImgProfile(session_activa), false);
+        Storage.fncStorageInsertarPicture(this.panel_foto_de_perfil, Storage.fncStorageObtenerImgProfile(session_activa), false);
         
         // Insetar los datos personales del usuario
         this.campo_nombres.setText( session_activa.getStrNombres() );

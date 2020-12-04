@@ -464,7 +464,7 @@ public class Storage {
         return img_profile;
     }
     
-    public static void fncStorageInsertarPictureProfile(JPanel contenedor, String url, boolean vaciar){
+    public static void fncStorageInsertarPicture(JPanel contenedor, String url, boolean vaciar){
         
         // ****** TESTING
         System.out.println("Insertando img profile : " + new File(url).getAbsolutePath() + " en el panel : " + contenedor.toString()  );

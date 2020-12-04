@@ -558,7 +558,7 @@ public class Profile extends javax.swing.JFrame {
         
         // Seleccionar el foto de perfil adecuado para el usuario
         String img_profile = Storage.fncStorageObtenerImgProfile(this.perfil);
-        Storage.fncStorageInsertarPictureProfile(this.panel_foto_de_perfil, img_profile, true);
+        Storage.fncStorageInsertarPicture(this.panel_foto_de_perfil, img_profile, true);
         
         // Insetar los datos personales del usuario
         this.campo_nombres.setText( perfil.getStrNombres() );

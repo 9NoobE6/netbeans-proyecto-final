@@ -59,12 +59,12 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         // Establecer un tamaño al panel para la tarjeta y agregar un imagen de fondo
         this.setSize(600, 135);
-        Storage.fncStorageInsertarPictureProfile(this, Rutas.path_background_panel_paneltarjeta, false);
+        Storage.fncStorageInsertarPicture(this, Rutas.path_background_panel_paneltarjeta, false);
         
         // Establecer un tamaño al panel para la foto y agregar el imagen del correspondiente...
         this.panel_foto.setSize(165, 135);
         String img_profile = Storage.fncStorageObtenerImgProfile(this.perfil);
-        Storage.fncStorageInsertarPictureProfile(this.panel_foto, img_profile, true);
+        Storage.fncStorageInsertarPicture(this.panel_foto, img_profile, true);
         
         // * Verificar si hay una conversación con perfil
         if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){

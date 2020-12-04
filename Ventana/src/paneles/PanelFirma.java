@@ -38,7 +38,7 @@ public class PanelFirma extends javax.swing.JPanel {
         // Establecer un tamaño al panel para la foto y agregar el imagen del correspondiente...
         this.panel_img_perfil.setSize(110, 130);
         String img_profile = Storage.fncStorageObtenerImgProfile(perfil);
-        Storage.fncStorageInsertarPictureProfile(this.panel_img_perfil, img_profile, true);        
+        Storage.fncStorageInsertarPicture(this.panel_img_perfil, img_profile, true);        
         
         // * Establecer el titulo para el panel
         this.txtf_titulo.setText( 
