@@ -268,7 +268,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         solicitud.ventana_People = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
         
-        if( solicitud.getOperacion().equals("cancelado") ){
+        if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){
             this.btnAgregarAmigo.setText("Amigo+1");
         }else{
             this.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());

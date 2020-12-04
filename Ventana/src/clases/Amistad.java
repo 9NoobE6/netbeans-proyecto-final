@@ -42,7 +42,7 @@ public class Amistad {
         this.yoker = session_activa.getStrEmail();
         
         
-        if( !Storage.fncStorageBuscarUnaLinea(session_activa.stgFriends, this.perfil.getStrEmail()+"*"+Storage.identificador_amigo1) ){
+        if( !Storage.fncStorageBuscarUnaLinea(session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1) ){
             // Si no somos amigos nos ponemos un *
             perfil_seleccionado += "*"; // Si perfil selecciona no es amigo mio se pone un *
             yoker += "*";
@@ -71,6 +71,10 @@ public class Amistad {
         }else
         if( db_chats == false && db_friends == false && amistad.equals("none") ){
             this.fncCrearUnaSolicitudDeAmistad();            
+        }else 
+        if(db_chats == true && db_friends == true && amistad.equals("amigos")){         
+            this.fncSolicituDeAmistadEliminar();
+            
         }
         
         
@@ -172,6 +176,41 @@ public class Amistad {
         
     }
 
+    private void fncSolicituDeAmistadEliminar() {
+        
+        int respuesta = JOptionPane.showConfirmDialog(null, "Este perfil y tú son amigos."
+                + "\nDeseas eliminar de tú lista de amigos?", "Confirmar ..." , JOptionPane.YES_NO_OPTION);
+        
+        if( respuesta == JOptionPane.YES_OPTION ){
+        
+            // Eliminar rastros de session_activa en perfil
+            Storage.fncStorageEliminarUnaLinea(new File(this.perfil.stgChats), this.session_activa.getStrEmail());
+            Storage.fncStorageEliminarUnaLinea(new File(this.perfil.stgFriends), this.session_activa.getStrEmail()+Storage.identificador_amigo1);
+            
+            // Elimiar rastros de perfil en session_activa
+            Storage.fncStorageEliminarUnaLinea(new File(this.session_activa.stgChats), this.perfil.getStrEmail());
+            Storage.fncStorageEliminarUnaLinea(new File(this.session_activa.stgFriends), this.perfil.getStrEmail()+Storage.identificador_amigo1);
+                        
+            // Crear rutas para clon y el chat original...
+            String original = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail());
+            String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), this.perfil.getStrEmail());
+            
+            // Eliminar todos los chats
+            new File(original).delete();
+            new File(clone).delete();
+            
+            // Mensaje de operacion 
+            JOptionPane.showMessageDialog(null, "Haz aceptado eliminar este perfil de tú lista de amigos.");
+            
+            // * Frontend
+            //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Son amigos");
+            if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Son amigos");
+            this.operacion = "eliminado";
+            
+        }
+        
+    }
+    
     public String getOperacion() {
         return operacion;
     }
@@ -179,8 +218,5 @@ public class Amistad {
     public void setOperacion(String operacion_exitosa) {
         this.operacion = operacion_exitosa;
     }
-
-    
-    
     
 }
