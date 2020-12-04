@@ -482,6 +482,8 @@ public class Profile extends javax.swing.JFrame {
     private boolean firmar_activado = false;
     private singupWatcherTome tome;
     private WatcherNotificaciones amigos;
+    private ActionListener oyente;
+    private Timer observador = new Timer(1000, oyente);
 
     
     private void InicializarVentana(){
@@ -544,20 +546,39 @@ public class Profile extends javax.swing.JFrame {
         
         // * Crear un observador para firmas
         System.out.println("stgTome = " + this.perfil.stgTome );
+        
+        // * Crear un observador para mostrar todas las firmas
         tome = new singupWatcherTome(
                 this.perfil.getStrEmail(), 
                 this.perfil.stgTome,
                 this.panel_firmas );
 
-        tome.Inicializar();
-        
         // * Crear un observador para la lista de amigos
         amigos = new WatcherNotificaciones(
             this.perfil.stgFriends, this.lista_de_amigos);
         
+        // Establecer texto cuando este vacio la lista de amigos
         amigos.setLista_vacio("Sin amigos...");
-        amigos.Inicializar();
+        
+        try{
+             
+            ActionListener tarea;
+            tarea = (ActionEvent e) -> {
+                
+                // Observadores o Watchers (Depende de Session)
+                System.out.println("::: Observador Profile :::");
+                
+                // Observadores o Watchers para notificaciones (Depende de Session)
+                amigos.Inicializar();
+                tome.Inicializar();
+                
+            };
 
+           observador.addActionListener(tarea);
+           observador.start();
+           
+        }catch(Exception a){}
+       
     }
     
     private void fncInstertarDatosDePerfilSeleccionado() {
@@ -601,7 +622,7 @@ public class Profile extends javax.swing.JFrame {
         }
         
         // * Cargar la lista de amigos de perfil
-        this.amigos.Inicializar();
+        //this.amigos.Inicializar();
         
     }
 
@@ -659,8 +680,9 @@ public class Profile extends javax.swing.JFrame {
                 
                 // Mostrar el mensaje de operación
                 JOptionPane.showMessageDialog(null, "Haz firmado el mural de " + this.perfil.getStrEmail() );
-
-                this.tome.Inicializar();
+                
+                // * Cargar todas las firmas
+                //this.tome.Inicializar();
 
             }else{
                 // Mostrar el mensaje de operación
@@ -678,6 +700,7 @@ public class Profile extends javax.swing.JFrame {
     private void fncVolver() {
         
         // Se borra la ventana Profile liberando memoria
+        this.observador.stop(); // Se detiene el observador
         this.setVisible(false); // Desaparece la ventana
         this.dispose(); // Se libera la memoria
         
