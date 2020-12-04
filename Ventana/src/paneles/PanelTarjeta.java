@@ -244,7 +244,6 @@ public class PanelTarjeta extends javax.swing.JPanel {
     private void fncAgregarAmigoPlus() {
         
         Amistad solicitud = new Amistad(People.session_activa);
-        solicitud.ventana_People = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
         
         if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){

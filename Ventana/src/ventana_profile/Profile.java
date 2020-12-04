@@ -449,7 +449,7 @@ public class Profile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JButton btnAgregarAmigo;
+    private javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
     private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
@@ -508,14 +508,14 @@ public class Profile extends javax.swing.JFrame {
         switch (estado) {
             case "amigos":
                 this.btnEnviarMensajeTo.setText("Mensaje+1");
-                Profile.btnAgregarAmigo.setText("Son "+ estado + "...");
+                this.btnAgregarAmigo.setText("Son "+ estado + "...");
                 break;
             case "none":
             case "pendiente":
-                Profile.btnAgregarAmigo.setText("Amigo+1");
+                this.btnAgregarAmigo.setText("Amigo+1");
                 break;
             default:
-                Profile.btnAgregarAmigo.setText("Solicitud "+estado);
+                this.btnAgregarAmigo.setText("Solicitud "+estado);
                 break;
         }
         
@@ -591,14 +591,13 @@ public class Profile extends javax.swing.JFrame {
     private void fncAgregarAmigoPlus() {
         
         Amistad solicitud = new Amistad(this.session_activa);
-        solicitud.ventana_Profile = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
         
         // * Verificar la operación realizada
         if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){
-            Profile.btnAgregarAmigo.setText("Amigo+1");
+            this.btnAgregarAmigo.setText("Amigo+1");
         }else{
-            Profile.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());
+            this.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());
         }
         
         // * Cargar la lista de amigos de perfil

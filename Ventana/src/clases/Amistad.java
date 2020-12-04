@@ -9,9 +9,6 @@ import ventana_profile.Profile;
 public class Amistad {
     private Session session_activa = null;
     private Session perfil = null;
-
-    public boolean ventana_People = false;
-    public boolean ventana_Profile = false;
     private String operacion = "none";
     
     private String perfil_seleccionado;
@@ -101,8 +98,6 @@ public class Amistad {
         JOptionPane.showMessageDialog(null, "Solicitud de amistad enviado.");
         
         // * Fronted
-        //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Solicitud enviado");
-        if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Solicitud enviado");
         this.operacion = "enviado";
         
     }
@@ -129,8 +124,6 @@ public class Amistad {
             JOptionPane.showMessageDialog(null, "Haz cancelado la solicitud de amistad." );
             
             // * Fronted 
-            //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Amigo+1");
-            if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Amigo+1");
             this.operacion = "cancelado";
             
         }else{
@@ -168,8 +161,6 @@ public class Amistad {
                     + "\nEn hora buena ahora pueden conversar.");
             
             // * Frontend
-            //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Son amigos");
-            if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Son amigos");
             this.operacion = "aceptado";
             
         }
@@ -203,8 +194,6 @@ public class Amistad {
             JOptionPane.showMessageDialog(null, "Haz aceptado eliminar este perfil de tú lista de amigos.");
             
             // * Frontend
-            //if( this.ventana_People ) PanelTarjeta.btnAgregarAmigo.setText("Son amigos");
-            if( this.ventana_Profile ) Profile.btnAgregarAmigo.setText("Son amigos");
             this.operacion = "eliminado";
             
         }
