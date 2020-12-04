@@ -504,13 +504,19 @@ public class Profile extends javax.swing.JFrame {
         }
         
         // * Verificar amistad con perfil
-        String estado = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
-        if(estado.equals("amigos")){
-            Profile.btnAgregarAmigo.setText("Son "+ estado + "...");
-        }if( estado.equals("none") || estado.equals("pendiente") ){
-            Profile.btnAgregarAmigo.setText("Amigo+1");
-        }else{
-            Profile.btnAgregarAmigo.setText("Solicitud "+estado);
+        String estado = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());     
+        switch (estado) {
+            case "amigos":
+                this.btnEnviarMensajeTo.setText("Mensaje+1");
+                Profile.btnAgregarAmigo.setText("Son "+ estado + "...");
+                break;
+            case "none":
+            case "pendiente":
+                Profile.btnAgregarAmigo.setText("Amigo+1");
+                break;
+            default:
+                Profile.btnAgregarAmigo.setText("Solicitud "+estado);
+                break;
         }
         
         // * Crear panel para las firmas
