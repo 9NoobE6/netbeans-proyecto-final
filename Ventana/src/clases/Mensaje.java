@@ -52,37 +52,46 @@ public class Mensaje {
     private void fncMensajeEnviadoMensajeTo() {
         
         // Verificar si es perfil es amigo
-        this.perfil_seleccionado = perfil.getStrEmail();
+        this.perfil_seleccionado = this.perfil.getStrEmail();
         this.yoker = session_activa.getStrEmail();
         
-        if( Storage.fncStorageEncontrarUnaCuenta(session_activa.stgFriends, perfil_seleccionado) == false ){
+        
+        if( !Storage.fncStorageBuscarUnaLinea(session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1) ){
             // Si no somos amigos nos ponemos un *
             perfil_seleccionado += "*"; // Si perfil selecciona no es amigo mio se pone un *
             yoker += "*";
         }
         
         // Buscar el chat
-        boolean db_chats = Storage.fncStorageEncontrarUnaLinea(session_activa.stgChats, perfil_seleccionado);
-        boolean db_friends = Storage.fncStorageEncontrarUnaLinea(session_activa.stgFriends, perfil_seleccionado);
-
-//        System.out.println(" amigo = "+ perfil_seleccionado);
-//        System.out.println(" amigo = "+ yoker);
-//        System.out.println(" db_chats = " + db_chats);
-//        System.out.println(" db_friends = " + db_friends);
-
-        if(db_friends == true && db_chats == true){
-            this.fncConversacionActiva();
-            
-        }else if( db_friends == true && db_chats == false ){
-           this.fncConversacionPendientePerfil();
-           
-        }else if( db_friends == false && db_chats == true  ){
-           this.fncConversacionPendienteSessionActiva();
+        boolean db_chats = Storage.fncStorageBuscarUnaLinea(session_activa.stgChats, perfil_seleccionado);
+        boolean db_friends = Storage.fncStorageBuscarUnaLinea(session_activa.stgFriends, perfil_seleccionado+Storage.identificador_amigo1);
         
-        }else if( db_friends == false && db_chats == false ){
+        // * Verificar estado de amistad para perfil
+        String amistad = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
+        
+        System.out.println("Perfil = " + this.perfil_seleccionado);
+        System.out.println("Yoker = " + this.yoker);
+        System.out.println("Ver amistad = " + amistad);
+        System.out.println("Ver db_chats = " + db_chats);
+        System.out.println("Ver db_friends = " + db_friends);
+        
+        //  * Verificar si somos amigos
+        if( db_friends == true && db_chats == true && amistad.equals("amigos") )
+            this.fncConversacionActiva();
+        else if( db_friends == false && db_chats == false && amistad.equals("none") )  
             this.fncCrearConversacion();
         
-        }
+//        }else if( db_friends == true && db_chats == false ){
+//           this.fncConversacionPendientePerfil();
+//           
+//        }else if( db_friends == false && db_chats == true  ){
+//           this.fncConversacionPendienteSessionActiva();
+//        
+//        }else if( db_friends == false && db_chats == false ){
+//            this.fncCrearConversacion();
+//        '
+//        }
+
     }
 
     private void fncConversacionActiva() {
@@ -99,7 +108,7 @@ public class Mensaje {
         // * Copiar el chat de mi cuenta o session a perfil
         String chat_clone = Storage.fncStorageCrearRutaChats(session_activa.getStrEmail(), perfil.getStrEmail());
         Storage.fncStorageCopiarArchivo(new File(chat), chat_clone);
-
+        
         if( this.mostrar_msg )
             JOptionPane.showMessageDialog(null, "Mensaje+1");
         

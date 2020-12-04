@@ -777,6 +777,11 @@ public class Amigos extends javax.swing.JFrame {
                         String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), new Session(perfil).getStrEmail());
                         Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), clone);
                         
+                        // ****** TESTING
+                        System.out.println("Paht Chat Original: " + this.chat_path_activo);
+                        System.out.println("Paht Chat Clone: " + clone);
+
+                        
                         JOptionPane.showMessageDialog(null, "Ahora son amigos.");
                         observador_amigos.Inicializar();
                         
