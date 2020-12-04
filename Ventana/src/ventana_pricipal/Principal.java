@@ -440,10 +440,14 @@ public class Principal extends javax.swing.JFrame {
         
         if( (2020-anho) < 18 ){
             JOptionPane.showMessageDialog(null, "Eres menor de edad!");
+        }else if( !this.fncVerificarString( this.campo_registro_nombres.getText().trim() ) ){
+            JOptionPane.showMessageDialog(null, "El campo nombre(s) tiene digitos...");
         }else if( this.campo_registro_nombres.getText().trim().length() > (20-1) ){
             JOptionPane.showMessageDialog(null, "Introduzca nombre(s) de 20 caracteres, por favor...");
         }else if( this.campo_registro_nombres.getText().trim().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Introduzca su(s) nombre(s), por favor...");
+        }else if( !this.fncVerificarString( this.campo_registro_apellidos.getText().trim() ) ){
+            JOptionPane.showMessageDialog(null, "El campo apellido(s) tiene digitos...");
         }else if( this.campo_registro_apellidos.getText().trim().length() > (20-1) ){
             JOptionPane.showMessageDialog(null, "Introduzca apellido(s) de 20 caracteres, por favor...");
         }else if( this.campo_registro_apellidos.getText().trim().isEmpty() ){
@@ -846,6 +850,19 @@ public class Principal extends javax.swing.JFrame {
             } 
         }
         
+    }
+    
+    private boolean fncVerificarString(String text){
+        
+        for (int item = 0; item < text.length(); item++){
+            System.out.println("Verificando char : _"+text.charAt(item)+"_" );
+            if( Character.isDigit( text.charAt(item) ) ){
+                System.out.println("Aqui");
+                return false;
+            }
+        }
+        
+        return true;
     }
     
 }
