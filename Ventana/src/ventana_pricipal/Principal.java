@@ -52,6 +52,9 @@ public class Principal extends javax.swing.JFrame {
         // /img/logo1_3.png, /img/logo2.png
         panel_logo.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/logo1_1.png").getPath() ), 0.2f ));
         panel_logo.setToolTipText("RS Gobim");
+        
+        // * Verificar que las cuentas existan
+        this.fncBorrarCuentasInexistentes();
 
     }
     
@@ -780,4 +783,49 @@ public class Principal extends javax.swing.JFrame {
         return (email.indexOf(Storage.extension_rs) + Storage.extension_rs.length()) == email.length();
            
     }
+    
+    private void fncBorrarCuentasInexistentes(){
+        
+        // * Verificar si el archivo .data existe
+        if( new File(Rutas.path_profiles).exists() ){           
+            try {
+                                    
+                File archivo_tmp = new File(Rutas.path_profiles + "_tmp000.txt");
+                if (archivo_tmp.createNewFile()) {
+
+                    try (FileWriter sobrescribirArchivo = new FileWriter(Rutas.path_profiles + "_tmp000.txt")) {
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(Rutas.path_profiles));
+                        String linea;
+
+                        while ((linea = leerArchivo.readLine()) != null) {
+                            
+                            // ****** TESTING
+                            System.out.println("Verificando existencia de cuenta: " + linea);
+                            
+                            if( linea.contains(Storage.extension_rs) ){
+                                
+                                String contenedor = Rutas.storage_profiles + linea;
+                                if( new File(contenedor).isDirectory() && new File(contenedor).exists() ){
+                                    sobrescribirArchivo.write(linea + "\n");
+                                    System.out.println("sobreescribiendo a : " + linea);
+                                }
+                                
+                            }
+                            
+                        }
+                        leerArchivo.close();
+                    }
+                    
+                    new File(Rutas.path_profiles).delete();
+                    
+                    // Cambio de storage
+                    archivo_tmp.renameTo(new File(Rutas.path_profiles));
+                }
+
+            } catch (IOException e) {
+            } 
+        }
+        
+    }
+    
 }
