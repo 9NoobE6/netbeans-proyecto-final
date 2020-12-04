@@ -534,6 +534,7 @@ public class Amigos extends javax.swing.JFrame {
     private String chat_path_activo;
     private boolean chat_activado=false;
     private boolean es_amigo = false;
+    private WatcherNotificaciones observador_amigos;
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
@@ -551,10 +552,10 @@ public class Amigos extends javax.swing.JFrame {
         this.campo_email_chat.setBackground(new Color(204,204,204));
         this.campo_email_chat.setEditable(false);
         
-        WatcherNotificaciones amigos = new WatcherNotificaciones(
+        observador_amigos = new WatcherNotificaciones(
                 this.session_activa.stgFriends, this.lista_de_amigos ); 
         
-        amigos.setLista_vacio("Sin amigos...");
+        observador_amigos.setLista_vacio("Sin amigos...");
         
         try{
              
@@ -571,7 +572,7 @@ public class Amigos extends javax.swing.JFrame {
                         }
                         
                         // Sincronizar lista de amigos de session_activa
-                        amigos.Inicializar();
+                        observador_amigos.Inicializar();
                     
                     }catch (IOException ex) {
                         Logger.getLogger(Amigos.class.getName()).log(Level.SEVERE, null, ex);
@@ -752,23 +753,32 @@ public class Amigos extends javax.swing.JFrame {
                         this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
                         this.es_amigo = true;
                         
-                        // Reemplazar el mensaje perfil de session_activa a saluda a tu amigo
-                        Storage.fncStorageReemplazarUnaLinea(new Session(perfil).stgFriends, 
-                                yoker + Storage.identificador_amigo3 ,
+                        // * Acoplar el mensaje de somos amigos en pefil y session_activa
+                        Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgFriends, 
                                 this.session_activa.getStrEmail() + Storage.identificador_amigo1);
                         
-                        // Reemplazar el mensaje enviado de session_activa a saluda a tu amigo
-                        Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgFriends, 
-                                perfil +"*"+Storage.identificador_amigo2, 
+                        Storage.fncStorageAcoplarUnaLinea(this.session_activa.stgFriends, 
                                 new Session(perfil).getStrEmail() + Storage.identificador_amigo1);
                         
-                        // * Activar chats
+                        observador_amigos.Inicializar();
+                        
+                        // * Eliminar el mensaje enviado de perfil y recibido de session_activa
+                        Storage.fncStorageEliminarUnaLinea(new File(new Session(perfil).stgFriends),
+                                yoker + Storage.identificador_amigo3);
+                        
+                        Storage.fncStorageEliminarUnaLinea(new File(this.session_activa.stgFriends), 
+                                perfil +"*"+Storage.identificador_amigo2);
+                        
+                        // * Activar en .chats
                         Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgChats, perfil+"*", perfil);
                         Storage.fncStorageReemplazarUnaLinea(new Session(perfil).stgChats, yoker, this.session_activa.getStrEmail());
                         
                         // * Clonar el mensaje de solicitud de amistad
                         String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), new Session(perfil).getStrEmail());
                         Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), clone);
+                        
+                        JOptionPane.showMessageDialog(null, "Ahora son amigos.");
+                        observador_amigos.Inicializar();
                         
                         //this.fncHabilitarChat(perfil);
                         //try{ this.fncSincronizarAmigos(); }catch(Exception e ){}
