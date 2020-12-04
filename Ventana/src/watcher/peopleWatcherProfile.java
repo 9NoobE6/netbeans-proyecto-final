@@ -9,11 +9,13 @@ import clases.Observador;
 import clases.Rutas;
 import clases.Session;
 import clases.Storage;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import paneles.PanelTarjeta;
 import ventana_people.People;
@@ -48,7 +50,10 @@ public class peopleWatcherProfile extends Observador{
                 String linea;
 
                 while ((linea = db_profiles.readLine()) != null) {
-
+                    
+                    // ***** TESTING
+                    System.out.println("People :: linea = " + linea);
+                    
                     if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Storage.extension_rs)) {
                         PanelTarjeta a = new PanelTarjeta(new Session(linea));
                         a.padre = JFramePadre;
@@ -58,6 +63,18 @@ public class peopleWatcherProfile extends Observador{
                         panel_perfiles.repaint();
                         coordenadaY += 20 + a.getHeight();
                     }
+                    
+                }
+                
+                if( panel_perfiles.getComponentCount() == 0 ){
+                    
+                    // * Insertar una etiqueta por defecto
+                    JLabel a = new JLabel("No hay perfiles que mostrar aún...");
+                    a.setForeground(Color.WHITE);
+                    a.setBounds(290, 10, 220, 20);
+                    panel_perfiles.add(a);
+                    panel_perfiles.validate();
+                    panel_perfiles.repaint();
                     
                 }
 

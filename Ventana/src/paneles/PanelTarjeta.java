@@ -66,18 +66,14 @@ public class PanelTarjeta extends javax.swing.JPanel {
         String img_profile = Storage.fncStorageObtenerImgProfile(this.perfil);
         Storage.fncStorageInsertarPicture(this.panel_foto, img_profile, true);
         
-        // * Verificar si hay una conversación con perfil
-        if(Storage.fncStorageBuscarUnaLinea(People.session_activa.stgChats, this.perfil.getStrEmail())){
-            this.btnEnviarMensajeTo.setText("Mensaje+1");    
-        }
-        
         // * Verificar amistad con perfil
         String estado = Storage.fncStorageVerificarAmistad(People.session_activa.stgFriends, this.perfil.getStrEmail());
         
         // ****** TESTING
         System.out.println("Estado >>> " + estado );
-        
-        if(estado.equals("amigos")){
+               
+        if( estado.equals("amigos") ){
+            this.btnEnviarMensajeTo.setText("Mensaje+1");
             this.btnAgregarAmigo.setText("Son "+ estado + "...");
         }else if( estado.equals("none") || estado.equals("pendiente") ){
             this.btnAgregarAmigo.setText("Amigo+1");
