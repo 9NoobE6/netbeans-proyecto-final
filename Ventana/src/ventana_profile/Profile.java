@@ -449,7 +449,7 @@ public class Profile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JButton btnAgregarAmigo;
+    private javax.swing.JButton btnAgregarAmigo;
     private javax.swing.JButton btnEnviarMensajeTo;
     private javax.swing.JButton btnVolver;
     private javax.swing.JTextField campo_apellidos;
@@ -482,15 +482,17 @@ public class Profile extends javax.swing.JFrame {
     private boolean firmar_activado = false;
     private singupWatcherTome tome;
     private WatcherNotificaciones amigos;
+    private ActionListener oyente;
+    private Timer observador = new Timer(1000, oyente);
 
     
     private void InicializarVentana(){
         
         // Este es para JFrame SingUp (No depende de Session)
         this.setLocationRelativeTo(null);
-        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
-        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
-        this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
+        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_jframe_profile ), 1.0f ));
+        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel ), .2f ));
+        this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel ), .2f ));
         
         // Este es para JFrame SingUp (Si depende de Session)
         this.fncInstertarDatosDePerfilSeleccionado();
@@ -504,13 +506,19 @@ public class Profile extends javax.swing.JFrame {
         }
         
         // * Verificar amistad con perfil
-        String estado = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
-        if(estado.equals("amigos")){
-            Profile.btnAgregarAmigo.setText("Son "+ estado + "...");
-        }if( estado.equals("none") || estado.equals("pendiente") ){
-            Profile.btnAgregarAmigo.setText("Amigo+1");
-        }else{
-            Profile.btnAgregarAmigo.setText("Solicitud "+estado);
+        String estado = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());     
+        switch (estado) {
+            case "amigos":
+                this.btnEnviarMensajeTo.setText("Mensaje+1");
+                this.btnAgregarAmigo.setText("Son "+ estado + "...");
+                break;
+            case "none":
+            case "pendiente":
+                this.btnAgregarAmigo.setText("Amigo+1");
+                break;
+            default:
+                this.btnAgregarAmigo.setText("Solicitud "+estado);
+                break;
         }
         
         // * Crear panel para las firmas
@@ -538,47 +546,46 @@ public class Profile extends javax.swing.JFrame {
         
         // * Crear un observador para firmas
         System.out.println("stgTome = " + this.perfil.stgTome );
+        
+        // * Crear un observador para mostrar todas las firmas
         tome = new singupWatcherTome(
                 this.perfil.getStrEmail(), 
                 this.perfil.stgTome,
                 this.panel_firmas );
 
-        tome.Inicializar();
-        
         // * Crear un observador para la lista de amigos
         amigos = new WatcherNotificaciones(
             this.perfil.stgFriends, this.lista_de_amigos);
         
+        // Establecer texto cuando este vacio la lista de amigos
         amigos.setLista_vacio("Sin amigos...");
-        amigos.Inicializar();
+ 
+        try{
+             
+            ActionListener tarea;
+            tarea = (ActionEvent e) -> {
                 
+                // Observadores o Watchers (Depende de Session)
+                System.out.println("::: Observador Profile :::");
+                
+                // Observadores o Watchers para notificaciones (Depende de Session)
+                amigos.Inicializar();
+                tome.Inicializar();
+                
+            };
+
+           observador.addActionListener(tarea);
+           observador.start();
+           
+        }catch(Exception a){}
+       
     }
     
-    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
-        
-        if(vaciar) contenedor.removeAll();
-        
-        ImageIcon icono = new ImageIcon( url );
-        JLabel etiquetaImagen = new JLabel();
-        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
-        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
-        contenedor.add(etiquetaImagen);
-        
-        if(vaciar) contenedor.validate();
-        if(vaciar) contenedor.repaint();
-    }
-
     private void fncInstertarDatosDePerfilSeleccionado() {
-        String img_profile = "";
         
         // Seleccionar el foto de perfil adecuado para el usuario
-        if( this.perfil.getStrImgPerfil().equals("user_default.png") ){
-            img_profile = Rutas.path_user_default;
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
-        }else{
-            img_profile = Storage.fncStorageCrearRutaProfile(this.perfil.getStrEmail(), Rutas.extesion_svg);
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
-        }
+        String img_profile = Storage.fncStorageObtenerImgProfile(this.perfil);
+        Storage.fncStorageInsertarPicture(this.panel_foto_de_perfil, img_profile, true);
         
         // Insetar los datos personales del usuario
         this.campo_nombres.setText( perfil.getStrNombres() );
@@ -605,18 +612,17 @@ public class Profile extends javax.swing.JFrame {
     private void fncAgregarAmigoPlus() {
         
         Amistad solicitud = new Amistad(this.session_activa);
-        solicitud.ventana_Profile = true;
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
         
         // * Verificar la operación realizada
         if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){
-            Profile.btnAgregarAmigo.setText("Amigo+1");
+            this.btnAgregarAmigo.setText("Amigo+1");
         }else{
-            Profile.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());
+            this.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());
         }
         
         // * Cargar la lista de amigos de perfil
-        this.amigos.Inicializar();
+        //this.amigos.Inicializar();
         
     }
 
@@ -674,8 +680,9 @@ public class Profile extends javax.swing.JFrame {
                 
                 // Mostrar el mensaje de operación
                 JOptionPane.showMessageDialog(null, "Haz firmado el mural de " + this.perfil.getStrEmail() );
-
-                this.tome.Inicializar();
+                
+                // * Cargar todas las firmas
+                //this.tome.Inicializar();
 
             }else{
                 // Mostrar el mensaje de operación
@@ -693,6 +700,7 @@ public class Profile extends javax.swing.JFrame {
     private void fncVolver() {
         
         // Se borra la ventana Profile liberando memoria
+        this.observador.stop(); // Se detiene el observador
         this.setVisible(false); // Desaparece la ventana
         this.dispose(); // Se libera la memoria
         

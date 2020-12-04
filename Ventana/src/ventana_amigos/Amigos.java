@@ -538,9 +538,9 @@ public class Amigos extends javax.swing.JFrame {
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
-        this.panel_3_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b4.jpg").getPath() ), 1.0f ));
-        this.panel_contenedor_chat.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.1f ));
-        this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), 0.1f ));
+        this.panel_3_Background.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_jframe_amigos ), 1.0f ));
+        this.panel_contenedor_chat.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel ), 0.1f ));
+        this.panel_lista_de_amigos.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel ), 0.1f ));
         this.setTitle( this.session_activa.getStrNombres() + " - " + this.session_activa.getStrEmail()  );
         this.fncCambiarEstadoPanelChat(false);
         this.campo_email_chat.setFocusable(false);

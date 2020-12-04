@@ -485,10 +485,16 @@ public class SingUp extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                
+                // * Actualizar la img profile
+                session_activa.setStrImgPerfil(session_activa.getStrEmail() + Rutas.extesion_svg);
                 this.session_activa.fncActualizarDatos();
-                String img_profile = Storage.fncStorageCrearRutaProfile( this.session_activa.getStrEmail() , Rutas.extesion_svg);
-                this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile  , true);
+                
+                // * Insertar la img profile
+                String img_profile = Storage.fncStorageObtenerImgProfile(this.session_activa);
+                Storage.fncStorageInsertarPicture(this.panel_foto_de_perfil, img_profile , true);
+                
+                // Mostar mensaje de operacion
                 JOptionPane.showMessageDialog(null, "Foto de perfil actualizado exitosamente.");
             }
         }
@@ -696,8 +702,8 @@ public class SingUp extends javax.swing.JFrame {
         
         // Este es para JFrame SingUp (No depende de Session)
         this.setLocationRelativeTo(null);
-        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b3.jpg").getPath() ), 1.0f ));
-        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b1.jpg").getPath() ), .2f ));
+        this.panel_2_Background.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_jframe_singup ), 1.0f ));
+        this.panel_portada.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel ), .2f ));
         
         // Este es para JFrame SingUp (No depende de Session)
         this.fncCambiarEstados(false);
@@ -811,21 +817,7 @@ public class SingUp extends javax.swing.JFrame {
         }catch(Exception e){}
         return bytes;
     }
-    
-    private void fncInsertarPicture(JPanel contenedor, String url, boolean vaciar){
         
-        if(vaciar) contenedor.removeAll();
-        
-        ImageIcon icono = new ImageIcon( url );
-        JLabel etiquetaImagen = new JLabel();
-        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
-        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
-        contenedor.add(etiquetaImagen);
-        
-        if(vaciar) contenedor.validate();
-        if(vaciar) contenedor.repaint();
-    }
-    
     private void fncCambiarEstados(boolean opcion){
         
         // Desactivamo o Activamos los campos de depende de opcion
@@ -838,16 +830,8 @@ public class SingUp extends javax.swing.JFrame {
     }
 
     private void fncInstertarDatosDeSession() {
-        String img_profile = "";
         
-        // Seleccionar el foto de perfil adecuado para el usuario
-        if( this.session_activa.getStrImgPerfil().equals("user_default.png") ){
-            img_profile = Rutas.path_user_default;
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false); 
-        }else{
-            img_profile = Storage.fncStorageCrearRutaProfile(this.session_activa.getStrEmail(), Rutas.extesion_svg);
-            this.fncInsertarPicture(this.panel_foto_de_perfil, img_profile , false);
-        }
+        Storage.fncStorageInsertarPicture(this.panel_foto_de_perfil, Storage.fncStorageObtenerImgProfile(session_activa), false);
         
         // Insetar los datos personales del usuario
         this.campo_nombres.setText( session_activa.getStrNombres() );

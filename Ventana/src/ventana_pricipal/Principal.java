@@ -45,13 +45,16 @@ public class Principal extends javax.swing.JFrame {
         this.fncEstablecerItems();
         this.cmbox_registro_anho.setSelectedIndex( this.cmbox_registro_anho.getItemCount() - 19);
         this.setLocationRelativeTo(null);
-        this.fncInsertarPicture(this.panel_1_Background, "/img/b2.jpg", false);
+        this.fncInsertarPicture(this.panel_1_Background, Rutas.path_background_jframe_principal , false);
         
-        panel_singup.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
-        panel_registro.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/b2.jpg").getPath() ), 1.0f ));
+        panel_singup.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel_singup ), .2f ));
+        panel_registro.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_background_panel_registro ), 1.0f ));
         // /img/logo1_3.png, /img/logo2.png
-        panel_logo.setImagenFondo(new ImagenFondo( new java.io.File( getClass().getResource("/img/logo1_1.png").getPath() ), 0.2f ));
+        panel_logo.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_logo ), 0.8f ));
         panel_logo.setToolTipText("RS Gobim");
+        
+        // * Verificar que las cuentas existan
+        this.fncBorrarCuentasInexistentes();
 
     }
     
@@ -87,7 +90,7 @@ public class Principal extends javax.swing.JFrame {
         
         if(vaciar) contenedor.removeAll();
         
-        ImageIcon icono = new ImageIcon( getClass().getResource(url) );
+        ImageIcon icono = new ImageIcon( url );
         JLabel etiquetaImagen = new JLabel();
         etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
         etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
@@ -133,6 +136,7 @@ public class Principal extends javax.swing.JFrame {
         campo_singup_contrasenha = new javax.swing.JPasswordField();
         jLabel10 = new javax.swing.JLabel();
         panel_logo = new jpanelimagen.JPanelImagen();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -303,6 +307,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
+        panel_singup.setOpaque(false);
+
         jLabel7.setText("Contraseña: ");
 
         campo_singup_email.setText("jTextField1");
@@ -324,6 +330,8 @@ public class Principal extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Inicio de session");
 
+        panel_logo.setOpaque(false);
+
         javax.swing.GroupLayout panel_logoLayout = new javax.swing.GroupLayout(panel_logo);
         panel_logo.setLayout(panel_logoLayout);
         panel_logoLayout.setHorizontalGroup(
@@ -334,6 +342,9 @@ public class Principal extends javax.swing.JFrame {
             panel_logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 110, Short.MAX_VALUE)
         );
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setText("RS GOBIM");
 
         javax.swing.GroupLayout panel_singupLayout = new javax.swing.GroupLayout(panel_singup);
         panel_singup.setLayout(panel_singupLayout);
@@ -347,20 +358,27 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(campo_singup_contrasenha)
                         .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(campo_singup_email, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_singupLayout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(panel_logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(campo_singup_email, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_singupLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panel_singupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_singupLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel11))
+                    .addComponent(panel_logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(132, 132, 132))
         );
         panel_singupLayout.setVerticalGroup(
             panel_singupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_singupLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel10)
-                .addGap(66, 66, 66)
+                .addGap(19, 19, 19)
                 .addComponent(panel_logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_singup_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -686,6 +704,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbox_registro_mes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -780,4 +799,49 @@ public class Principal extends javax.swing.JFrame {
         return (email.indexOf(Storage.extension_rs) + Storage.extension_rs.length()) == email.length();
            
     }
+    
+    private void fncBorrarCuentasInexistentes(){
+        
+        // * Verificar si el archivo .data existe
+        if( new File(Rutas.path_profiles).exists() ){           
+            try {
+                                    
+                File archivo_tmp = new File(Rutas.path_profiles + "_tmp000.txt");
+                if (archivo_tmp.createNewFile()) {
+
+                    try (FileWriter sobrescribirArchivo = new FileWriter(Rutas.path_profiles + "_tmp000.txt")) {
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(Rutas.path_profiles));
+                        String linea;
+
+                        while ((linea = leerArchivo.readLine()) != null) {
+                            
+                            // ****** TESTING
+                            System.out.println("Verificando existencia de cuenta: " + linea);
+                            
+                            if( linea.contains(Storage.extension_rs) ){
+                                
+                                String contenedor = Rutas.storage_profiles + linea;
+                                if( new File(contenedor).isDirectory() && new File(contenedor).exists() ){
+                                    sobrescribirArchivo.write(linea + "\n");
+                                    System.out.println("sobreescribiendo a : " + linea);
+                                }
+                                
+                            }
+                            
+                        }
+                        leerArchivo.close();
+                    }
+                    
+                    new File(Rutas.path_profiles).delete();
+                    
+                    // Cambio de storage
+                    archivo_tmp.renameTo(new File(Rutas.path_profiles));
+                }
+
+            } catch (IOException e) {
+            } 
+        }
+        
+    }
+    
 }

@@ -5,6 +5,7 @@
  */
 package clases;
 
+import java.awt.Image;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -17,7 +18,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -379,6 +383,22 @@ public class Storage {
         return true;
     }
     
+    
+        
+    // ******* Método con retorno a String *******
+    public static String fncStorageObtenerRutaData(String email) {
+        // System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );
+        return Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data;
+    }
+
+    public static String fncStorageCrearRutaProfile(String email, String extension) {
+        return Rutas.storage_profiles + email + "/profile/" + email + extension;
+    }
+
+    public static String fncStorageCrearRutaChats(String emailA, String emailB) {
+        return Rutas.storage_profiles + emailA + "/chats/" + emailB + Rutas.extesion_chats;
+    }
+    
     public static String fncStorageFormatearMensaje(String msg){
         String mensaje_nuevo="";
         int posicion = longitud;
@@ -428,19 +448,38 @@ public class Storage {
         
         return "["+cadenaFecha+" "+horaActual+"]";
     }
+    
+    public static String fncStorageObtenerImgProfile(Session session_activa) {
         
-    // ******* Método con retorno a String *******
-    public static String fncStorageObtenerRutaData(String email) {
-        // System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );
-        return Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data;
+        String img_profile;
+        if( session_activa.getStrImgPerfil().equals("user_default.png") ){
+            img_profile = Rutas.path_user_default;  
+        }else{
+            img_profile = Storage.fncStorageCrearRutaProfile(session_activa.getStrEmail(), Rutas.extesion_svg);
+        }
+        
+        // ****** TESTING
+        System.out.println("Img profile verificado : " + img_profile);
+        
+        return img_profile;
     }
-
-    public static String fncStorageCrearRutaProfile(String email, String extension) {
-        return Rutas.storage_profiles + email + "/profile/" + email + extension;
-    }
-
-    public static String fncStorageCrearRutaChats(String emailA, String emailB) {
-        return Rutas.storage_profiles + emailA + "/chats/" + emailB + Rutas.extesion_chats;
+    
+    public static void fncStorageInsertarPicture(JPanel contenedor, String url, boolean vaciar){
+        
+        // ****** TESTING
+        System.out.println("Insertando img profile : " + new File(url).getAbsolutePath() + " en el panel : " + contenedor.toString()  );
+        
+        if(vaciar) contenedor.removeAll();
+        
+        ImageIcon icono = new ImageIcon( new File(url).getAbsolutePath() );
+        JLabel etiquetaImagen = new JLabel();
+        etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());
+        etiquetaImagen.setIcon( new ImageIcon(icono.getImage().getScaledInstance(etiquetaImagen.getWidth(), etiquetaImagen.getHeight(), Image.SCALE_SMOOTH)) );
+        contenedor.add(etiquetaImagen);
+        
+        if(vaciar) contenedor.validate();
+        if(vaciar) contenedor.repaint();
+        
     }
             
 }

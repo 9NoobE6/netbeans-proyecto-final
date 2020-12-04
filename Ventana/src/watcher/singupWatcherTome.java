@@ -9,11 +9,13 @@ import clases.Observador;
 import clases.Rutas;
 import clases.Session;
 import clases.Storage;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import paneles.PanelTarjeta;
@@ -39,6 +41,15 @@ public class singupWatcherTome extends Observador{
         this.path_stgTome = new File(path).getAbsolutePath();
         this.panel_mural = panel_mural;
         this.email_session_activa = email;
+        
+        // * Insertar una etiqueta por defecto
+        JLabel a = new JLabel("No hay firmas aún en este mural...");
+        a.setForeground(Color.WHITE);
+        a.setBounds(160, 10, 220, 20);
+        panel_mural.add(a);
+        panel_mural.validate();
+        panel_mural.repaint();
+        
     }
     
     public void Inicializar(){
@@ -74,7 +85,7 @@ public class singupWatcherTome extends Observador{
                     }
                     
                 }
-                
+                                
                 // * Establecer nuevo valores
                 panel_mural.setPreferredSize(new Dimension(0, coordenadaY));
                 panel_mural.revalidate();

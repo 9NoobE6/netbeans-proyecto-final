@@ -37,14 +37,8 @@ public class PanelFirma extends javax.swing.JPanel {
 
         // Establecer un tamaño al panel para la foto y agregar el imagen del correspondiente...
         this.panel_img_perfil.setSize(110, 130);
-        String img_profile = "";
-        if( perfil.getStrImgPerfil().equals("user_default.png") ){
-            img_profile = Rutas.path_user_default;
-            this.fncInsertarPicture(this.panel_img_perfil, img_profile , false); 
-        }else{
-            img_profile = Storage.fncStorageCrearRutaProfile(perfil.getStrEmail(), Rutas.extesion_svg);
-            this.fncInsertarPicture(this.panel_img_perfil, img_profile , false);
-        }        
+        String img_profile = Storage.fncStorageObtenerImgProfile(perfil);
+        Storage.fncStorageInsertarPicture(this.panel_img_perfil, img_profile, true);        
         
         // * Establecer el titulo para el panel
         this.txtf_titulo.setText( 
