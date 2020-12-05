@@ -5,6 +5,7 @@
  */
 package ventana_amigos;
 
+import clases.Amistad;
 import clases.Mensaje;
 import ventana_people.*;
 import clases.Rutas;
@@ -859,38 +860,15 @@ public class Amigos extends javax.swing.JFrame {
         if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
           && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){
             
-            // *** Recrear el codigo.
+            // * Obtener el email del perfil
             String perfil = this.lista_de_amigos.getSelectedValue();
-            String yoker = this.session_activa.getStrEmail();
+            perfil = perfil.substring(0, perfil.indexOf("@"));
+            perfil += Storage.extension_rs;
             
-            // Si el email del perfil contiene un * se elminina (No es amigo de session_activa) 
-            if( perfil.contains("*") ){
-                perfil = perfil.substring(0, perfil.indexOf("@"));
-                perfil += Storage.extension_rs;
-                yoker += "*";
-            }
-            // Por el contario significa que si es amigo de session_activa y solo obtiene el email 
-            else{
-                perfil = perfil.substring(0, perfil.indexOf("@"));
-                perfil += Storage.extension_rs;
-            }
+            // * Seleccionar una accion para eliminar el perfil
+            Amistad solicitud = new Amistad(this.session_activa);
+            solicitud.fncAmistadEnviarSolicitudTo( new Session( perfil ) ); 
             
-            System.out.println("Eliminado a " + perfil);
-            int respuesta = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar a " + perfil 
-                    +"\nDe lista de amigos, se borrara el chat completo." );
-                   
-            if( respuesta == 0){
-                 
-                // * Eliminar el perfil de mi lista de amigos, Todo lo demas se conserva...
-                // Notase que se agrega un * esto es para indicar al programa que el no es mi amigo
-                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*"+Storage.identificador_amigo1 );
-                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*"+Storage.identificador_amigo2 );
-                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*"+Storage.identificador_amigo3 );
-                Storage.fncStorageEliminarUnaLinea(new File( this.session_activa.stgFriends ), perfil+"*" );
-                
-                
-            }
-
         }
         
     }
