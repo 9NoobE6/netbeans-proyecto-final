@@ -744,7 +744,7 @@ public class Amigos extends javax.swing.JFrame {
                     
                     int respuesta = JOptionPane.showConfirmDialog(null, 
                                     "Este usuario quiere ser tu amigo\nAceptas ser amigo?",
-                                    "Confirmar amistad...", JOptionPane.YES_NO_OPTION);
+                                    "Confirmar amistad...", JOptionPane.YES_NO_CANCEL_OPTION);
                     
                     if(respuesta == JOptionPane.YES_OPTION){
                         
@@ -781,16 +781,20 @@ public class Amigos extends javax.swing.JFrame {
                         // ****** TESTING
                         System.out.println("Paht Chat Original: " + this.chat_path_activo);
                         System.out.println("Paht Chat Clone: " + clone);
-
                         
-                        JOptionPane.showMessageDialog(null, "Ahora son amigos.");
+                        // * Registrar notificaciones
+                        Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz aceptado una solicitud de amistad de " + new Session(perfil).getStrEmail() );
+                        Storage.fncStorageRegistrarNotificacion(new Session(perfil), this.session_activa.getStrEmail() + " acepto tú solicitud de amistad" );
+                        
+                        
+                        JOptionPane.showMessageDialog(null, "Ahora son amigos. Puedes abrir el chat.");
                         observador_amigos.Inicializar();
                         
                         //this.fncHabilitarChat(perfil);
                         //try{ this.fncSincronizarAmigos(); }catch(Exception e ){}
                         
                         
-                    }else{
+                    }else if( respuesta == JOptionPane.NO_OPTION ){
                     
                         /* Eliminas de tu lista de amigos */
                         
@@ -801,6 +805,10 @@ public class Amigos extends javax.swing.JFrame {
                         // Eliminar mensaje enviado de perfil a session_activa
                         Storage.fncStorageReemplazarUnaLinea(new Session(perfil).stgFriends, 
                                 yoker  +Storage.identificador_amigo3, yoker);
+                        
+                        // * Registrar notificaciones
+                        Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz rechazado la solicitu de amistad de " + new Session(perfil).getStrEmail() );
+                        Storage.fncStorageRegistrarNotificacion(new Session(perfil), this.session_activa.getStrEmail() + " ha rechazado tú solicitud de amistad" );
 
                     }
               

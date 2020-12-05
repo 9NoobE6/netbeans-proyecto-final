@@ -685,6 +685,10 @@ public class Profile extends javax.swing.JFrame {
                 // * Regitrar la firma del remitente
                 Storage.fncStorageAcoplarUnaLinea(this.perfil.stgTome, firma);
                 
+                // * Registar una notificacion
+                Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz firmado el mural de " +  this.perfil.getStrEmail() );
+                Storage.fncStorageRegistrarNotificacion(this.perfil, this.session_activa.getStrEmail() + " dejo una firma en tú mural" );
+                
                 // Mostrar el mensaje de operación
                 JOptionPane.showMessageDialog(null, "Haz firmado el mural de " + this.perfil.getStrEmail() );
                 

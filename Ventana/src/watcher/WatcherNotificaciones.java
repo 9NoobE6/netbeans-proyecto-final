@@ -58,8 +58,10 @@ public class WatcherNotificaciones extends Observador{
                     // *** Testing
                     System.out.println(":: Notify :: linea = " + linea);
                     
-                    // * Registrar todas las notificaciones...
-                    this.notificaciones.addElement(linea);
+                    if( !linea.trim().isEmpty() ){
+                        // * Registrar todas las notificaciones...
+                        this.notificaciones.addElement(linea.trim());
+                    }
                     
                 }
                 

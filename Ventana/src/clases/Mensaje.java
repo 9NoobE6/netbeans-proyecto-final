@@ -109,6 +109,9 @@ public class Mensaje {
         String chat_clone = Storage.fncStorageCrearRutaChats(session_activa.getStrEmail(), perfil.getStrEmail());
         Storage.fncStorageCopiarArchivo(new File(chat), chat_clone);
         
+        // * Registar una notificacion
+        Storage.fncStorageRegistrarNotificacion(this.perfil, "Tienes un mensaje de " + this.session_activa.getStrEmail() );
+        
         if( this.mostrar_msg )
             JOptionPane.showMessageDialog(null, "Mensaje+1");
         

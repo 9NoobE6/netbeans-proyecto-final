@@ -39,6 +39,41 @@ public class Storage {
     
     
     // ******* Método con retorno a boolean *******
+    public static boolean fncStorageBorrarUnaLinea(File enArchivo, String eliminar_linea) {
+        // Si el File no existe y el String es vacio retorna false
+        if (enArchivo.exists() || !eliminar_linea.isEmpty()) {
+            try {
+
+                File archivo_tmp = new File(enArchivo.getPath() + "_tmp000.txt");
+                if (archivo_tmp.createNewFile()) {
+
+                    try (FileWriter sobrescribirArchivo = new FileWriter(enArchivo.getPath() + "_tmp000.txt")) {
+                        BufferedReader leerArchivo = new BufferedReader(new FileReader(enArchivo.getPath()));
+                        String linea;
+
+                        while ((linea = leerArchivo.readLine()) != null) {
+                            // Sobreescribiendo archivo
+                            if ( !linea.trim().contains(eliminar_linea) && !linea.trim().isEmpty() && linea != "\n" ) {
+                                sobrescribirArchivo.write(linea.trim() + "\n");
+                            }
+                        }
+                        leerArchivo.close();
+                    }
+
+                    // Cambio de storage
+                    enArchivo.delete();
+                    archivo_tmp.renameTo(new File(enArchivo.getPath()));
+                }
+
+            } catch (IOException e) {
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+    
     public static boolean fncStorageEliminarUnaLinea(File enArchivo, String eliminar_linea) {
         // Si el File no existe y el String es vacio retorna false
         if (enArchivo.exists() || !eliminar_linea.isEmpty()) {
@@ -53,8 +88,8 @@ public class Storage {
 
                         while ((linea = leerArchivo.readLine()) != null) {
                             // Sobreescribiendo archivo
-                            if (!linea.equals(eliminar_linea)) {
-                                sobrescribirArchivo.write(linea + "\n");
+                            if ( !linea.trim().equals(eliminar_linea) && !linea.trim().isEmpty() && linea != "\n" ) {
+                                sobrescribirArchivo.write(linea.trim() + "\n");
                             }
                         }
                         leerArchivo.close();
@@ -430,6 +465,21 @@ public class Storage {
     public static String fncStorageCrearMensaje(Session session_activa, String mensaje){
         String remitente = "("+ session_activa.getStrEmail()+")";      
         return remitente + " " + fncObtenerFechayHora() +": \n" + Storage.fncStorageFormatearMensaje(mensaje.trim()) + Storage.espacios;
+    }
+    
+    public static boolean fncStorageRegistrarNotificacion(Session destinatario, String notificacion){
+        
+        // * Verificar que la cuenta perfil y que el archivo .notify de session_activa exista
+        if( new File(destinatario.stgNotify).exists() && Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, destinatario.getStrEmail()) ){
+           
+            String notify = notificacion + ". | " + fncObtenerFechayHora() + "\n";
+            
+            Storage.fncStorageBorrarUnaLinea(new File(destinatario.stgNotify), notificacion);
+            Storage.fncStorageAcoplarUnaLinea(destinatario.stgNotify, notify );
+        
+        }else return false;
+        
+        return true;
     }
     
     public static String fncObtenerFechayHora(){

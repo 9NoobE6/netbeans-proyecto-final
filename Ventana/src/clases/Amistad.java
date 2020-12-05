@@ -101,9 +101,13 @@ public class Amistad {
         // Reemplazar
         Storage.fncStorageReemplazarUnaLinea(this.perfil.stgFriends, yoker, yoker+Storage.identificador_amigo2);
         
+        // * Registrar notificaciones
+        Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz enviado una solicitud de amistad para " + this.perfil.getStrEmail() );
+        Storage.fncStorageRegistrarNotificacion(this.perfil, "Tienes una solicitud de amistad de " + this.session_activa.getStrEmail() );
+        
         // Mensaje de operacion
         JOptionPane.showMessageDialog(null, "Solicitud de amistad enviado.");
-        
+                
         // * Fronted
         this.operacion = "enviado";
         
@@ -126,6 +130,9 @@ public class Amistad {
 
             // Eliminar la notificacion a perfil
             Storage.fncStorageEliminarUnaLinea(new File(this.perfil.stgFriends), this.yoker + Storage.identificador_amigo2);
+            
+            // * Registrar notificaciones
+            Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz cancelado una solicitud de amistad para " + this.perfil.getStrEmail() );
             
             // Mensaje de operacion
             JOptionPane.showMessageDialog(null, "Haz cancelado la solicitud de amistad." );
@@ -163,6 +170,10 @@ public class Amistad {
             Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgChats, perfil_seleccionado, this.perfil.getStrEmail());
             Storage.fncStorageReemplazarUnaLinea(this.perfil.stgChats, yoker, this.session_activa.getStrEmail());
             
+            // * Registrar notificaciones
+            Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz aceptado una solicitud de amistad de " + this.perfil.getStrEmail() );
+            Storage.fncStorageRegistrarNotificacion(this.perfil, this.session_activa.getStrEmail() + " acepto tú solicitud de amistad" );
+            
             // Mensaje de operacion 
             JOptionPane.showMessageDialog(null, "Haz aceptado el solicitud de amistad."
                     + "\nEn hora buena ahora pueden conversar.");
@@ -197,6 +208,9 @@ public class Amistad {
             new File(original).delete();
             new File(clone).delete();
             
+            // * Registrar notificaciones
+            Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz eliminado " + this.perfil.getStrEmail() + " de tú lista de amigos" );
+            
             // Mensaje de operacion 
             JOptionPane.showMessageDialog(null, "Haz aceptado eliminar este perfil de tú lista de amigos.");
             
@@ -206,15 +220,7 @@ public class Amistad {
         }
         
     }
-    
-    public String getOperacion() {
-        return operacion;
-    }
-
-    public void setOperacion(String operacion_exitosa) {
-        this.operacion = operacion_exitosa;
-    }
-
+   
     private void fncSolicitudDeAmistadRecibidoCancelar() {
         
         int respuesta = JOptionPane.showConfirmDialog(null, "Este perfil te ha enviado una solicitud de amistad."
@@ -233,6 +239,10 @@ public class Amistad {
             // Eliminar el chat de perfil con su soicitud de amistad para session_activa
             String solicitud = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail() );
             new File(solicitud).delete();
+            
+            // * Registrar notificaciones
+            Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz rechazado la solicitu de amistad de " + this.perfil.getStrEmail() );
+            Storage.fncStorageRegistrarNotificacion(this.perfil, this.session_activa.getStrEmail() + " ha rechazado tú solicitud de amistad" );
 
             JOptionPane.showMessageDialog(null, "Haz rechazado la solicitu de amistad.");
             
@@ -244,4 +254,12 @@ public class Amistad {
         
     }
     
-}
+    public String getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(String operacion_exitosa) {
+        this.operacion = operacion_exitosa;
+    }
+    
+} // !# Fin de la clase
