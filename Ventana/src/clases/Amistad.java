@@ -50,26 +50,33 @@ public class Amistad {
         boolean db_friends = Storage.fncStorageBuscarUnaLinea(session_activa.stgFriends, perfil_seleccionado+Storage.identificador_amigo1);
         
         // * Verificar estado de amistad para perfil
-        String amistad = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
+        String amistad_session_activa = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
+        String amistad_perfil = Storage.fncStorageVerificarAmistad(this.perfil.stgFriends, this.session_activa.getStrEmail());
         
         System.out.println("Perfil = " + this.perfil_seleccionado);
         System.out.println("Yoker = " + this.yoker);
-        System.out.println("Ver amistad = " + amistad);
+        System.out.println("Ver amistad session activa = " + amistad_session_activa);
+        System.out.println("Ver amistad perfil = " + amistad_perfil);
         System.out.println("Ver db_chats = " + db_chats);
         System.out.println("Ver db_friends = " + db_friends);
         
-        if(db_chats == false && db_friends == false && amistad.equals("recibido")){         
-            this.fncSolicituDeAmistadRecibido();
+        if(db_chats == false && db_friends == false && amistad_session_activa.equals("recibido")){         
+            
+            if( amistad_perfil.contains("enviado")){
+                this.fncSolicitudDeAmistadRecibidoCancelar();
+            }else{
+                this.fncSolicituDeAmistadRecibido();
+            }
             
         }else
-        if(db_chats == true && db_friends == false && amistad.equals("enviado")){         
+        if(db_chats == true && db_friends == false && amistad_session_activa.equals("enviado")){         
             this.fncSolicituDeAmistadEnviado();
             
         }else
-        if( db_chats == false && db_friends == false && amistad.equals("none") ){
+        if( db_chats == false && db_friends == false && amistad_session_activa.equals("none") ){
             this.fncCrearUnaSolicitudDeAmistad();            
         }else 
-        if(db_chats == true && db_friends == true && amistad.equals("amigos")){         
+        if(db_chats == true && db_friends == true && amistad_session_activa.equals("amigos")){         
             this.fncSolicituDeAmistadEliminar();
             
         }
@@ -206,6 +213,35 @@ public class Amistad {
 
     public void setOperacion(String operacion_exitosa) {
         this.operacion = operacion_exitosa;
+    }
+
+    private void fncSolicitudDeAmistadRecibidoCancelar() {
+        
+        int respuesta = JOptionPane.showConfirmDialog(null, "Este perfil te ha enviado una solicitud de amistad."
+                + "\nDeseas rechazar a solicitud de amistad?", "Confirmar ..." , JOptionPane.YES_NO_OPTION); 
+        
+        if( respuesta == JOptionPane.YES_OPTION ){
+            
+            // Eliminar rastros en perfil en .chats y .friends
+            Storage.fncStorageEliminarUnaLinea(new File(this.perfil.stgChats), this.yoker);
+            Storage.fncStorageEliminarUnaLinea(new File(this.perfil.stgFriends), this.yoker+Storage.identificador_amigo3);
+            
+            // Eliminar rastros en session_activa en .chats y .friends
+            Storage.fncStorageEliminarUnaLinea(new File(this.session_activa.stgChats), this.perfil_seleccionado);
+            Storage.fncStorageEliminarUnaLinea(new File(this.session_activa.stgFriends), this.perfil_seleccionado+Storage.identificador_amigo2);
+            
+            // Eliminar el chat de perfil con su soicitud de amistad para session_activa
+            String solicitud = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail() );
+            new File(solicitud).delete();
+
+            JOptionPane.showMessageDialog(null, "Haz rechazado la solicitu de amistad.");
+            
+            this.operacion = "rechazado";
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Abre el chat para aceptar la solicitud de amistad en tú lista de amigos.");
+        }
+        
     }
     
 }

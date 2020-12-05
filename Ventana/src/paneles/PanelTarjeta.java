@@ -245,11 +245,19 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         Amistad solicitud = new Amistad(People.session_activa);
         solicitud.fncAmistadEnviarSolicitudTo(this.perfil);
+        String none = this.btnAgregarAmigo.getText();
         
+        // * Verificar la operación realizada
+        if( solicitud.getOperacion().equals("none") ){
+            this.btnAgregarAmigo.setText(none);
+            
+        }else
         if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){
             this.btnAgregarAmigo.setText("Amigo+1");
+            
         }else{
             this.btnAgregarAmigo.setText("Solicitud " + solicitud.getOperacion());
+            
         }   
         
     }
