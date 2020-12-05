@@ -191,7 +191,6 @@ public class People extends javax.swing.JFrame {
         SingUp ventana = new SingUp( People.session_activa );
         People.session_activa = null; // En la ventana People se elimina la sesssion_activa
         ventana.setVisible(true);
-        System.out.println("*** People:::De vuelto a ventana SingUp");
 
     }//GEN-LAST:event_bntVolverMouseReleased
 
@@ -282,7 +281,6 @@ public class People extends javax.swing.JFrame {
         try {
 
             ActionListener tarea = (ActionEvent e) -> {
-                System.out.println("::: Observador People :::");
                 
                 /// * Verifica si hubo algun cambio en archivo database.profiles
                 observador_de_perfiles.Inicializar();

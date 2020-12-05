@@ -65,8 +65,8 @@ public class Storage {
                     archivo_tmp.renameTo(new File(enArchivo.getPath()));
                 }
 
-            } catch (IOException e) {
-            }
+            } catch (IOException e) {}
+
         } else {
             return false;
         }
@@ -100,8 +100,8 @@ public class Storage {
                     archivo_tmp.renameTo(new File(enArchivo.getPath()));
                 }
 
-            } catch (IOException e) {
-            }
+            } catch (IOException e) {}
+
         } else {
             return false;
         }
@@ -127,9 +127,8 @@ public class Storage {
                 // ** Antes **; + "\n"
                 escribir.append(linea + "\n");
                 escribir.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (IOException e) {}
+
         } else {
             return false;
         }
@@ -146,7 +145,7 @@ public class Storage {
                 if( !encontrar_cuenta.contains("*") ){
                     encontrar_cuenta = encontrar_cuenta.substring(0, encontrar_cuenta.lastIndexOf("@"));
                     encontrar_cuenta = encontrar_cuenta + extension_rs;
-                } System.out.println("Encontrar la cuenta: " + encontrar_cuenta);
+                }
                 
                 BufferedReader db_archivo = new BufferedReader(new FileReader(new File(enPath)));
                 String linea;
@@ -165,9 +164,8 @@ public class Storage {
                 
                 db_archivo.close();
 
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (IOException e) {}
+
         } else {
             return false;
         }
@@ -184,7 +182,7 @@ public class Storage {
                 if( !encontrar_cuenta.contains("*") ){
                     encontrar_cuenta = encontrar_cuenta.substring(0, encontrar_cuenta.lastIndexOf("@"));
                     encontrar_cuenta = encontrar_cuenta + extension_rs;
-                } System.out.println("Encontrar la cuenta: " + encontrar_cuenta);
+                }
                 
                 BufferedReader db_archivo = new BufferedReader(new FileReader(new File(enPath)));
                 String linea;
@@ -206,9 +204,8 @@ public class Storage {
                 
                 db_archivo.close();
 
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (IOException e) {}
+
         } else {
             return "error";
         }
@@ -225,7 +222,7 @@ public class Storage {
                 String linea;
 
                 while ((linea = archivo.readLine()) != null) {
-                    // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
+
                     if (linea.equals(encontrar_linea) && !linea.isEmpty()) {
                         return true;
                     }
@@ -233,9 +230,7 @@ public class Storage {
                 
                 archivo.close();
 
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (IOException e) {}
 
         } else {
             return false;
@@ -252,7 +247,7 @@ public class Storage {
                 String linea;
 
                 while ((linea = archivo.readLine()) != null) {
-                    // System.out.println("Buscando .. " + linea_buscado + " con .." + linea);
+
                     if (linea.contains(buscar_linea) && !linea.isEmpty()) {
                         return true;
                     }
@@ -260,9 +255,8 @@ public class Storage {
                 
                 archivo.close();
                 
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (IOException e) {}
+            
         } else {
             return false;
         }
@@ -291,18 +285,12 @@ public class Storage {
         // Si el File no existe y el String es vacio retorna false
 
         if (!enArchivoA.exists()) {
-            System.out.println("archivo no existe.");
 
             return false;
         } else if (!new File(aArchivoB).exists()) {
-            System.out.println("pathB no existe.");
 
             return false;
         } else if (enArchivoA.exists() && new File(aArchivoB).exists()) {
-            System.out.println("******** Moviendo *******");
-            System.out.println("De: " + enArchivoA.getAbsolutePath());
-            System.out.println("To: " + aArchivoB);
-            System.out.println("******** ******** *******");
 
             FileInputStream in = new FileInputStream(enArchivoA.getAbsolutePath());
             FileOutputStream ou = new FileOutputStream(aArchivoB);
@@ -335,7 +323,6 @@ public class Storage {
     public static boolean fncStorageCopiarArchivo(File deArchivoA, String aArchivoB) {
 
         if (!deArchivoA.exists()) {
-            System.out.println("archivoA no existe.");
 
             return false;
         } else if (deArchivoA.exists() && !aArchivoB.isEmpty()) {
@@ -365,8 +352,7 @@ public class Storage {
                     archivo_tmp.renameTo(new File(aArchivoB));
                 }
 
-            } catch (IOException e) {
-            }
+            } catch (IOException e) {}
 
         } else {
             return false;
@@ -378,11 +364,9 @@ public class Storage {
     public static boolean fncStorageMoverArchivo(File enArchivoA, String aArchivoB) {
 
         if (!enArchivoA.exists()) {
-            System.out.println("archivoA no existe.");
 
             return false;
         } else if (!new File(aArchivoB).exists()) {
-            System.out.println("pathB no existe.");
 
             return false;
         } else if (enArchivoA.exists() && !aArchivoB.isEmpty()) {
@@ -408,8 +392,7 @@ public class Storage {
                     archivo_tmp.renameTo(new File(aArchivoB));
                 }
 
-            } catch (IOException e) {
-            }
+            } catch (IOException e) {}
 
         } else {
             return false;
@@ -422,7 +405,6 @@ public class Storage {
         
     // ******* Método con retorno a String *******
     public static String fncStorageObtenerRutaData(String email) {
-        // System.out.println(" sadasdsdas ----- "+ Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data );
         return Rutas.storage_profiles + email + "/profile/" + email + Rutas.extesion_data;
     }
 
@@ -507,17 +489,11 @@ public class Storage {
         }else{
             img_profile = Storage.fncStorageCrearRutaProfile(session_activa.getStrEmail(), Rutas.extesion_svg);
         }
-        
-        // ****** TESTING
-        System.out.println("Img profile verificado : " + img_profile);
-        
+                
         return img_profile;
     }
     
     public static void fncStorageInsertarPicture(JPanel contenedor, String url, boolean vaciar){
-        
-        // ****** TESTING
-        System.out.println("Insertando img profile : " + new File(url).getAbsolutePath() + " en el panel : " + contenedor.toString()  );
         
         if(vaciar) contenedor.removeAll();
         

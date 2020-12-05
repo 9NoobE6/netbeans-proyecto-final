@@ -545,7 +545,6 @@ public class Profile extends javax.swing.JFrame {
         jsp.getViewport().setBorder(null);
         
         // * Crear un observador para firmas
-        System.out.println("stgTome = " + this.perfil.stgTome );
         
         // * Crear un observador para mostrar todas las firmas
         tome = new singupWatcherTome(
@@ -564,10 +563,7 @@ public class Profile extends javax.swing.JFrame {
              
             ActionListener tarea;
             tarea = (ActionEvent e) -> {
-                
-                // Observadores o Watchers (Depende de Session)
-                System.out.println("::: Observador Profile :::");
-                
+                                
                 // Observadores o Watchers para notificaciones (Depende de Session)
                 amigos.Inicializar();
                 tome.Inicializar();
@@ -638,9 +634,7 @@ public class Profile extends javax.swing.JFrame {
         // * Restriccion de mensaje
         // Si el perfil seleccionado es amigo de session_activa puede enviar mensaje...
         if(Storage.fncStorageEncontrarUnaLinea(this.session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1)){
-            // * Testing
-            System.out.println("Enviar mensaje a ....");
-
+            
             try {
                 // * Intentar capturar el mensaje...
                 String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
@@ -658,7 +652,8 @@ public class Profile extends javax.swing.JFrame {
 
                 }
 
-            } catch (Exception e) { }
+            } catch (Exception e) {}
+
         }else{
             JOptionPane.showMessageDialog(null, "Este perfil no es tu amigo, enviale una solicitud de amistad.");
         }
@@ -741,9 +736,7 @@ public class Profile extends javax.swing.JFrame {
             ventana.setVisible(true); // Se visualiza
             
         }
-        
-        System.out.println("*** Profile:::De vuelto a ventana People");
-        
+                
     }
 
 }

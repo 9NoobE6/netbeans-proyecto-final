@@ -51,9 +51,6 @@ public class peopleWatcherProfile extends Observador{
 
                 while ((linea = db_profiles.readLine()) != null) {
                     
-                    // ***** TESTING
-                    System.out.println("People :: linea = " + linea);
-                    
                     if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Storage.extension_rs)) {
                         PanelTarjeta a = new PanelTarjeta(new Session(linea));
                         a.padre = JFramePadre;
@@ -85,8 +82,7 @@ public class peopleWatcherProfile extends Observador{
                 coordenadaY = 20;
                 db_profiles.close();
                 
-            } catch (Exception e) {
-            }
+            } catch (Exception e) {}
             
         }
         

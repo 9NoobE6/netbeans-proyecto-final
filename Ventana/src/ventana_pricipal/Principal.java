@@ -465,15 +465,10 @@ public class Principal extends javax.swing.JFrame {
             File archivo_data = new File( Storage.fncStorageObtenerRutaData( email ) );
             File contendor_perfil = new File( Rutas.storage_profiles + email);
             boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, email );
-
-            System.out.println("Data :: " + archivo_data);
-            System.out.println("Contenedor :: " + contendor_perfil);
-            System.out.println("Crear cuenta :: " + cuenta_registrado);
             
             // Si la cuenta no esta registrada como profile.txt .... 
             // Significa que la cuenta no esta creado...
             if( !cuenta_registrado ){
-                //System.out.println("Puedes eliminar la cuenta existente y crear uno nuevo...");
                 // Entonces si existe un contenedor perfil de la cuenta a crear
                 // se elimina para crear el nuevo perfil
                 Storage.fncStorageEliminarDirectorio(contendor_perfil);
@@ -526,12 +521,10 @@ public class Principal extends javax.swing.JFrame {
                         
                         JOptionPane.showMessageDialog(null, "Data:: Usuario creado exitosamente...");
 
-                    }else{System.out.println("Tuve un error..."); }
+                    }
                 
-                } catch (IOException e) {
-                    System.out.println("An error occurred.");
-                    e.printStackTrace();
-                }
+                } catch (IOException e) {}
+
             }else {
                 // Mostrar un mensaje de email registrado
                 JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
@@ -650,11 +643,10 @@ public class Principal extends javax.swing.JFrame {
                 }
                 
                 database.close(); // Cerrar el archivo abierto
-            }catch(Exception e){}    
+            }catch(Exception e){}
+
         }else return false;
         
-        System.out.println("Formulario: " + String.valueOf( this.campo_singup_contrasenha.getPassword() ).trim());
-        System.out.println("Data : " + contrasena.trim() );
         return String.valueOf( this.campo_singup_contrasenha.getPassword() ).equals(contrasena);
     }
     
@@ -746,9 +738,8 @@ public class Principal extends javax.swing.JFrame {
             // * Crear un chat temporal
             new File( Rutas.storage_profiles + this.campo_registro_email.getText() + Rutas.storage_chats + Rutas.extesion_chatmp + this.campo_registro_email.getText() + Rutas.extesion_chats ).createNewFile();
 
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IOException ex) {}
+
     }
 
     private void fncIniciarSession() {
@@ -819,15 +810,11 @@ public class Principal extends javax.swing.JFrame {
 
                         while ((linea = leerArchivo.readLine()) != null) {
                             
-                            // ****** TESTING
-                            System.out.println("Verificando existencia de cuenta: " + linea);
-                            
                             if( linea.contains(Storage.extension_rs) ){
                                 
                                 String contenedor = Rutas.storage_profiles + linea;
                                 if( new File(contenedor).isDirectory() && new File(contenedor).exists() ){
                                     sobrescribirArchivo.write(linea + "\n");
-                                    System.out.println("sobreescribiendo a : " + linea);
                                 }
                                 
                             }
@@ -842,8 +829,8 @@ public class Principal extends javax.swing.JFrame {
                     archivo_tmp.renameTo(new File(Rutas.path_profiles));
                 }
 
-            } catch (IOException e) {
-            } 
+            } catch (IOException e) {}
+
         }
         
     }
@@ -851,9 +838,7 @@ public class Principal extends javax.swing.JFrame {
     private boolean fncVerificarString(String text){
         
         for (int item = 0; item < text.length(); item++){
-            System.out.println("Verificando char : _"+text.charAt(item)+"_" );
             if( Character.isDigit( text.charAt(item) ) ){
-                System.out.println("Aqui");
                 return false;
             }
         }

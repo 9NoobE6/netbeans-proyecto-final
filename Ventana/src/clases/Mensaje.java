@@ -30,7 +30,6 @@ public class Mensaje {
             // * Establecer session_activa
             this.session_activa = session_activa;
             this.mensaje = Storage.fncStorageCrearMensaje(session_activa, mensaje);
-            System.out.println("Generando mensaje de ..." + this.session_activa.getStrEmail());
             
         }
         
@@ -41,7 +40,6 @@ public class Mensaje {
             
             // * Establecer perfil
             this.perfil = perfil;
-            System.out.println("Enviado mensaje a ... " + this.perfil.getStrEmail());
             
             //* Enviado mensaje...
             this.fncMensajeEnviadoMensajeTo();
@@ -68,13 +66,7 @@ public class Mensaje {
         
         // * Verificar estado de amistad para perfil
         String amistad = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
-        
-        System.out.println("Perfil = " + this.perfil_seleccionado);
-        System.out.println("Yoker = " + this.yoker);
-        System.out.println("Ver amistad = " + amistad);
-        System.out.println("Ver db_chats = " + db_chats);
-        System.out.println("Ver db_friends = " + db_friends);
-        
+                
         //  * Verificar si somos amigos
         if( db_friends == true && db_chats == true && amistad.equals("amigos") )
             this.fncConversacionActiva();
@@ -99,8 +91,7 @@ public class Mensaje {
         // Tengo una conversación
         // Seleccionas al chat del perfil en mi session_activa
         // y haces una copia a pefil
-        System.out.println("STAGE 1");
-
+        
         // * Agregar el mensaje en mi cuenta o session_activa
         String chat = Storage.fncStorageCrearRutaChats(perfil.getStrEmail(), session_activa.getStrEmail());
         Storage.fncStorageAcoplarUnaLinea(chat, mensaje);
@@ -122,7 +113,6 @@ public class Mensaje {
         // No tengo una conversación, pero perfil si.
         // Seleccionas al chat del perfil y agregas el mensaje
         // despues notificas....
-        System.out.println("STAGE 2");
 
         // Respodiendo a perfil 
         // Seleccionar la conversion de perfil con sesion_activa
@@ -133,7 +123,6 @@ public class Mensaje {
         // Si session_activa no esta en la lista de amigo de perfil
         if( Storage.fncStorageEncontrarUnaLinea(perfil.stgFriends, yoker) == false ){
 
-            System.out.println("STAGE 2 - AAAA");
 
             // Constentando el mensaje deperfil
             // Notificar - Registrar session_activa en .friends de perfil
@@ -153,8 +142,6 @@ public class Mensaje {
                     "Puedes chatear pueden conservar en en las lista de amigos.");
         }else{
 
-            System.out.println("STAGE 2 - BBBB");
-            
             if( this.mostrar_msg )
                 JOptionPane.showMessageDialog(null, "Mensaje enviado.");
         }
@@ -165,14 +152,11 @@ public class Mensaje {
         
         // Tengo una conversion en session_activa
         // Sin que me responda perfil
-        System.out.println("STAGE 4");
 
         // Verificar que pefil aun conserva la conversion original entre session_activa y perfil
         if( Storage.fncStorageEncontrarUnaLinea(perfil.stgFriends, yoker) == true && 
             Storage.fncStorageEncontrarUnaLinea(perfil.stgChats, yoker) == true
         ){
-
-            System.out.println("STAGE 4 - FFFF");
 
             // Agrego un nuevo mensaje a la conversion original
             // por que si perfil me tiene como amigo pudo estar enviado mesajes... (Entonces es el más actualizado)
@@ -229,8 +213,6 @@ public class Mensaje {
 
             if( new File(chat).createNewFile() ){
 
-                System.out.println("STAGE 5");
-
                 // * Agregar el mensaje
                 Storage.fncStorageAcoplarUnaLinea(chat, mensaje);
 
@@ -248,7 +230,8 @@ public class Mensaje {
                         "Espera su respuesta para conversar.");
 
             }
-        } catch (IOException ex) { Logger.getLogger(PanelTarjeta.class.getName()).log(Level.SEVERE, null, ex); }            
+        } catch (IOException ex) {}
+
     }
    
  

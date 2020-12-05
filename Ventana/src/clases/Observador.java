@@ -29,14 +29,12 @@ public class Observador {
     
     public void fncIniciarObservador(){
         
-        System.out.println("::: Ejecutando el observador :::");
         if(this.fncVerificarCambiosEnElArchivoPath()){
             
             /* ejecutar el observador si existe */
             if(observardor != null)
                 observardor.ejecutar();
                 
-            System.out.println("Hubo cambios en el archivo + " + path.getAbsolutePath());
         }    
     }
 
@@ -59,6 +57,7 @@ public class Observador {
                 }else return false;
                 
             } catch (IOException e) {}
+            
         }else
             return false;
                 

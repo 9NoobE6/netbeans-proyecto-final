@@ -28,7 +28,6 @@ public class Session {
             scanner = new Scanner(new File( Storage.fncStorageObtenerRutaData(email) ));
             scanner.useDelimiter("\n");
                  
-            // System.out.println("Activando session...");
             this.strNombres = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
             this.strApellidos = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
             this.strNacimiento = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
@@ -38,9 +37,7 @@ public class Session {
             this.strImgPerfil = scanner.next().trim(); // Eliminar los caracteres blancos iniciales y finales.
             
             scanner.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (FileNotFoundException ex) {}
         
         // * Crear archivos de almacenamiento para el perfil
         // storage_profiles/abcd@extesion/profile/example@extesion.data
@@ -77,9 +74,6 @@ public class Session {
             if (mis_datos.exists()) {
                 FileWriter registrar_nuevos_datos = new FileWriter(path);
                 
-                System.out.println(">>>>> NAme " + strNombres);
-                System.out.println(">>>>> FirsrNAme " + strApellidos);
-                
                 registrar_nuevos_datos.write(this.strNombres + "\n");
                 registrar_nuevos_datos.write(this.strApellidos + "\n"); 
         
@@ -93,12 +87,8 @@ public class Session {
                 registrar_nuevos_datos.close();
             }
                 
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
     
-        //System.out.println("Datos Actualizados...");
     }
     
     // Metodos setters y getters

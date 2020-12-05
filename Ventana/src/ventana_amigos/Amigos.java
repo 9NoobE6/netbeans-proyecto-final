@@ -330,8 +330,6 @@ public class Amigos extends javax.swing.JFrame {
         this.session_activa = null; // En la ventana SingUp se elimina la sesssion_activa
         ventana.setVisible(true); // Se visualiza
         
-        System.out.println("*** People:::De vuelto a ventana SingUp");
-
     }//GEN-LAST:event_bntVolverMouseReleased
 
     private void bntAbrirChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntAbrirChatMouseReleased
@@ -350,7 +348,6 @@ public class Amigos extends javax.swing.JFrame {
             // Deshabilitamos todos los componentes de chat
             this.fncCambiarEstadoPanelAmigos(true);
             this.fncCambiarEstadoPanelChat(false);
-            System.out.println("Finalizó la conversacion...");
 
             // Borrar los variables que se nececesitan para otro chat
             this.lista_mensajes.removeAll();
@@ -389,8 +386,7 @@ public class Amigos extends javax.swing.JFrame {
     }//GEN-LAST:event_bntEnviarMensajeMouseReleased
 
     private void lista_de_amigosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lista_de_amigosMouseReleased
-        // ********* TESTING
-        System.out.println("Quien seleccione ... " + this.lista_de_amigos.getSelectedValue() );
+        
         String mi_amigo = this.lista_de_amigos.getSelectedValue();
         
         // * Se verifica que el perfil seleccionado en la lista de amigos ...
@@ -451,9 +447,7 @@ public class Amigos extends javax.swing.JFrame {
         ventana.ventana_Amigos = true; // Inidicar a la ventana que vuelva a SingUp
         ventana.setVisible(true); // Se visualiza
         ventana.fncBienvenidoToPerfil();
-        
-        System.out.println("*** Amigos::: Abriendo el perfil de " + perfil);
-        
+              
     }//GEN-LAST:event_bntVerPerfilMouseReleased
 
     /**
@@ -564,7 +558,6 @@ public class Amigos extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        System.out.println("::: Observador Chats :::");
                         // * Ejecutar los observadores
                         
                         if (chat_activado == true) {   
@@ -575,9 +568,8 @@ public class Amigos extends javax.swing.JFrame {
                         // Sincronizar lista de amigos de session_activa
                         observador_amigos.Inicializar();
                     
-                    }catch (IOException ex) {
-                        Logger.getLogger(Amigos.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    }catch (IOException ex) {}
+
                 }
             };
 
@@ -585,6 +577,7 @@ public class Amigos extends javax.swing.JFrame {
            observador.start();
            
         }catch(Exception a){}
+
     }
     
     private void fncCambiarEstadoPanelChat(boolean estado){
@@ -621,8 +614,11 @@ public class Amigos extends javax.swing.JFrame {
         Path path = Paths.get(file);
         long bytes =0;
         try{
-             bytes = Files.size(path.toAbsolutePath());
+
+            bytes = Files.size(path.toAbsolutePath());
+
         }catch(Exception e){}
+
         return bytes;
     }
 
@@ -646,7 +642,6 @@ public class Amigos extends javax.swing.JFrame {
                 BufferedReader chat_activo = new BufferedReader( new FileReader(archivo) );
                 String linea; 
                 while ((linea = chat_activo.readLine()) != null){
-                    System.out.println(linea);
                     
                     if( linea.contains(this.session_activa.getStrEmail()) ){
                         this.mensajes.addElement(" # " + linea);
@@ -680,10 +675,6 @@ public class Amigos extends javax.swing.JFrame {
         
         // Se obtiene el perfil seleccionado de lista de amigos..
         String msg_body = this.txt_mensaje.getText();
-        
-        // ****** Testing
-        System.out.println("** tamaño del mensaje : " + msg_body.length());
-        System.out.println("## tamaño del mensaje : " + msg_body.trim().length() );
         
         // * Verificar que chat este activado, el chat se activa al Abrir el chat 
         if( this.chat_activado == true ){
@@ -778,10 +769,6 @@ public class Amigos extends javax.swing.JFrame {
                         String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), new Session(perfil).getStrEmail());
                         Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), clone);
                         
-                        // ****** TESTING
-                        System.out.println("Paht Chat Original: " + this.chat_path_activo);
-                        System.out.println("Paht Chat Clone: " + clone);
-                        
                         // * Registrar notificaciones
                         Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz aceptado una solicitud de amistad de " + new Session(perfil).getStrEmail() );
                         Storage.fncStorageRegistrarNotificacion(new Session(perfil), this.session_activa.getStrEmail() + " acepto tú solicitud de amistad" );
@@ -851,9 +838,6 @@ public class Amigos extends javax.swing.JFrame {
 
         // Se activa el area de mensaje...
         this.txt_mensaje.setFocusable(true);
-
-        System.out.println("Ruta del chat: " + this.chat_path_activo  );
-        //System.out.println("Iniciando conversacion...");
                 
     }
 
@@ -863,7 +847,6 @@ public class Amigos extends javax.swing.JFrame {
         // y se crear un objeto per verificar su existencia...
         String pathA = this.session_activa.stgFriends;
         File amistades = new File(pathA);
-        System.out.println("Eliminado amigo..." + this.lista_de_amigos.getSelectedValue());
         
         if(amistades.exists() && this.lista_de_amigos.isSelectionEmpty() == false && this.chat_activado == false
           && this.lista_de_amigos.getSelectedValue().equals("No tienes amigos...") == false){

@@ -68,8 +68,6 @@ public class singupWatcherTome extends Observador{
                 String email;
 
                 while ((email = stgTome.readLine()) != null) {
-                    // *** Testing
-                    System.out.println(":: Tome :: linea = " + email);
                     
                     // * Verificar si existe una cuenta 
                     boolean cuenta = Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, email);
@@ -94,7 +92,7 @@ public class singupWatcherTome extends Observador{
                 // * Cerrar el almacenamiento de .tome
                 stgTome.close();
 
-            } catch (Exception e) { System.out.println("Error en profileWatcherTome" + e.getMessage()); }
+            } catch (Exception e) {}
 
         }   
          

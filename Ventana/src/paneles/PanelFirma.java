@@ -130,7 +130,6 @@ public class PanelFirma extends javax.swing.JPanel {
         
         if(vaciar) contenedor.removeAll();
         
-        System.out.println(url);
         ImageIcon icono = new ImageIcon( url );
         JLabel etiquetaImagen = new JLabel();
         etiquetaImagen.setBounds(0, 0, contenedor.getWidth(), contenedor.getHeight());

@@ -68,9 +68,6 @@ public class PanelTarjeta extends javax.swing.JPanel {
         
         // * Verificar amistad con perfil
         String estado = Storage.fncStorageVerificarAmistad(People.session_activa.stgFriends, this.perfil.getStrEmail());
-        
-        // ****** TESTING
-        System.out.println("Estado >>> " + estado );
                
         if( estado.equals("amigos") ){
             this.btnEnviarMensajeTo.setText("Mensaje+1");
@@ -267,9 +264,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         // * Restriccion de mensaje
         // Si el perfil seleccionado es amigo de session_activa puede enviar mensaje...
         if(Storage.fncStorageEncontrarUnaLinea(People.session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1)){
-            // * Testing
-            System.out.println("Enviar mensaje a ....");
-
+            
             try {
                 // * Intentar capturar el mensaje...
                 String mensaje = JOptionPane.showInputDialog(null,"Escribe un mensaje");
@@ -287,7 +282,8 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
                 }
 
-            } catch (Exception e) { }
+            } catch (Exception e) {}
+            
         }else{
             JOptionPane.showMessageDialog(null, "Este perfil no es tu amigo, enviale una solicitud de amistad.");
         }

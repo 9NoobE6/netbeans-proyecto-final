@@ -55,8 +55,6 @@ public class WatcherNotificaciones extends Observador{
                 String linea;
 
                 while ((linea = stgNotify.readLine()) != null) {
-                    // *** Testing
-                    System.out.println(":: Notify :: linea = " + linea);
                     
                     if( !linea.trim().isEmpty() ){
                         // * Registrar todas las notificaciones...
@@ -68,17 +66,10 @@ public class WatcherNotificaciones extends Observador{
                 // * Cerrar el almacenamiento de .notify
                 stgNotify.close();
                 
-                // ***** TESTING
-                System.out.println(":: Notify :: getSize = " + this.notificaciones.getSize());
-                System.out.println(":: Notify :: size = " + this.notificaciones.size());
-                System.out.println(":: Notify :: isEmpty = " + this.notificaciones.isEmpty());
-
-                
-            
                 // * Mostrar todas las notificaciones...
                 this.lista_de_notificaciones.setModel(notificaciones);
             
-            } catch (Exception e) { System.out.println("Error en profileWatcherNotify"); }
+            } catch (Exception e) {}
 
         }
         

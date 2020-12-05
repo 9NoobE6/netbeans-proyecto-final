@@ -23,7 +23,6 @@ public class Amistad {
             
             // * Establecer perfil
             this.perfil = perfil;
-            System.out.println("Enviado solicitud a ... " + this.perfil.getStrEmail());
             
             //* Enviado mensaje...
             this.operacion = "none";
@@ -52,13 +51,6 @@ public class Amistad {
         // * Verificar estado de amistad para perfil
         String amistad_session_activa = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
         String amistad_perfil = Storage.fncStorageVerificarAmistad(this.perfil.stgFriends, this.session_activa.getStrEmail());
-        
-        System.out.println("Perfil = " + this.perfil_seleccionado);
-        System.out.println("Yoker = " + this.yoker);
-        System.out.println("Ver amistad session activa = " + amistad_session_activa);
-        System.out.println("Ver amistad perfil = " + amistad_perfil);
-        System.out.println("Ver db_chats = " + db_chats);
-        System.out.println("Ver db_friends = " + db_friends);
         
         if(db_chats == false && db_friends == false && amistad_session_activa.equals("recibido")){         
             

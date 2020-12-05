@@ -481,10 +481,10 @@ public class SingUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Lo siento, la imagen tiene que ser menor de 1MB.");
             }else{
                 try {
+                    
                     this.fncCopiarImagen(archivo.getAbsolutePath());
-                } catch (IOException ex) {
-                    Logger.getLogger(SingUp.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+                } catch (IOException ex) {}
                 
                 // * Actualizar la img profile
                 session_activa.setStrImgPerfil(session_activa.getStrEmail() + Rutas.extesion_svg);
@@ -503,7 +503,6 @@ public class SingUp extends javax.swing.JFrame {
     private void btnModificarCuentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarCuentaMouseReleased
         // TODO add your handling code here:
         
-        System.out.println("texot :: " + this.btnModificarCuenta.getText());
         // Si modificar_cuenta es false 
         if( !this.modificar_cuenta && this.btnModificarCuenta.getText().equals("Modificar") ){
             
@@ -575,7 +574,6 @@ public class SingUp extends javax.swing.JFrame {
                 this.session_activa = null; // En la ventana SingUp se elimina la session activa
                 ventana.tiempo.stop();
                 ventana.setVisible(true);
-                System.out.println("*** SingUp:::Cuenta eliminada");
                 
             }
         
@@ -742,17 +740,11 @@ public class SingUp extends javax.swing.JFrame {
         this.panel_contenedor_mural.setEnabled(true);
         this.panel_contenedor_mural.setVisible(true);
                 
-        // * Testing
-        System.out.println("PATH Tome: " + this.session_activa.stgTome);
-        System.out.println("PATH Mural: " + this.session_activa.stgNotify);
-        System.out.println("panel_notify: " + this.panel_notify.getBounds() );
-        
         // * Crear un obsevador para notificaciones
         WatcherNotificaciones notify = new WatcherNotificaciones(this.session_activa.stgNotify, lista_de_notificaciones);
         notify.setLista_vacio("Sin notificaciones...");
         
         // * Crear un observador para firmas
-        System.out.println("stgTome = " + this.session_activa.stgTome );
         singupWatcherTome tome = new singupWatcherTome(
                 this.session_activa.getStrEmail(), 
                 this.session_activa.stgTome,
@@ -780,7 +772,6 @@ public class SingUp extends javax.swing.JFrame {
     }
     
     private void fncSincronizandoMensajes(){
-        System.out.println("::: Observador SingUp :::");
     }
     
     
@@ -813,8 +804,11 @@ public class SingUp extends javax.swing.JFrame {
         Path path = Paths.get(file);
         long bytes =0;
         try{
-             bytes = Files.size(path.toAbsolutePath());
+
+            bytes = Files.size(path.toAbsolutePath());
+        
         }catch(Exception e){}
+
         return bytes;
     }
         
@@ -925,7 +919,6 @@ public class SingUp extends javax.swing.JFrame {
     }
 
     private void fncModificarDatosDeSession() {
-        System.out.println("Estado: " + this.fncVerificarCampos());
             
             int resultado = this.fncVerificarCampos();
             
@@ -980,9 +973,6 @@ public class SingUp extends javax.swing.JFrame {
     }
 
     private void fncLimpiarNotificaciones() {
-        
-        // ***** TESTING
-        System.out.println(":: Notify :: getSize = " + this.lista_de_notificaciones.getModel().getSize());
         
         // Método para eliminar todas la notificaciones de session activa
         if( !this.lista_de_notificaciones.getModel().getElementAt(0).contains("Sin ") ){
