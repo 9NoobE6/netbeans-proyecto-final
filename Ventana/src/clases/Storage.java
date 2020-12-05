@@ -32,7 +32,7 @@ public class Storage {
     // * Esto son espacio que dejan entre los mensajes en el chat
     public final static String espacios="\n\n";
     public final static int longitud = 60;
-    public final static String identificador_amigo1 = " - Saluda a tu amigo.";
+    public final static String identificador_amigo1 = " - Somos amigos.";
     public final static String identificador_amigo2 = " - Amigo+1 Recibido.";
     public final static String identificador_amigo3 = " - Amigo+1 Enviado.";
     public static final String extension_rs = "@gobim.dev";
