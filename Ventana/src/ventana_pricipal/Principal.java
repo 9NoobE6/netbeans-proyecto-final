@@ -777,10 +777,21 @@ public class Principal extends javax.swing.JFrame {
                 }
                 
             } else {
-                
-                if( !cuenta_registrado ) Storage.fncStorageEliminarDirectorio(contenedor);
-                JOptionPane.showMessageDialog(null, "No existe una cuenta con "+ email );
-                
+                                
+                if( !cuenta_registrado ){
+                    
+                    // Si la cuenta no esta registrado intentamos eliminar el contenedor
+                    Storage.fncStorageEliminarDirectorio(contenedor);
+                    JOptionPane.showMessageDialog(null, "No existe una cuenta con "+ email );
+                    
+                }else{
+                    
+                    // Si la cuenta esta registrado mostramos un aviso de correo no disponible
+                    JOptionPane.showMessageDialog(null,
+                        "El correo " + email + " no esta disponible" 
+                        + "\nIntroduzca un nuevo correo eletronico.");
+                    
+                }
             }
             
         }
