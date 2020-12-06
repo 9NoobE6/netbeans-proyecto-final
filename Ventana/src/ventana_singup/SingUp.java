@@ -567,8 +567,7 @@ public class SingUp extends javax.swing.JFrame {
                 
                 // * Eliminar el contenedor de session_activa y del registro de perfiles o cuentas .profiles
                 Storage.fncStorageEliminarDirectorio( new File(Rutas.storage_profiles + this.session_activa.getStrEmail()) );
-                Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), this.session_activa.getStrEmail());
-
+                
                 // Se inicializa la vetana Pricipal
                 Principal ventana = new Principal();
                 this.session_activa = null; // En la ventana SingUp se elimina la session activa

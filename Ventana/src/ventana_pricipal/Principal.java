@@ -53,9 +53,6 @@ public class Principal extends javax.swing.JFrame {
         panel_logo.setImagenFondo(new ImagenFondo( new java.io.File( Rutas.path_logo ), 0.8f ));
         panel_logo.setToolTipText("RS Gobim");
         
-        // * Verificar que las cuentas existan
-        this.fncBorrarCuentasInexistentes();
-
     }
     
     private void fncEstablecerItems(){
@@ -165,8 +162,8 @@ public class Principal extends javax.swing.JFrame {
         });
 
         panel_registro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 51), 2, true));
-        panel_registro.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
 
+        campo_registro_nombres.setText("ProgrammerAuditore");
         campo_registro_nombres.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_nombresKeyTyped(evt);
@@ -177,6 +174,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setText("Apellido (s): ");
 
+        campo_registro_apellidos.setText("Desarrollador");
         campo_registro_apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_apellidosKeyTyped(evt);
@@ -187,6 +185,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Contraseña:");
 
+        campo_registro_email.setText("gobim@gobim.dev");
         campo_registro_email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_emailKeyTyped(evt);
@@ -195,6 +194,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel5.setText("Email:");
 
+        campo_registro_contrasenha.setText("gobim@gobim.dev");
         campo_registro_contrasenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_contrasenhaKeyTyped(evt);
@@ -304,11 +304,11 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        panel_singup.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
         panel_singup.setOpaque(false);
 
         jLabel7.setText("Contraseña: ");
 
+        campo_singup_email.setText("gobim@gobim.dev");
         campo_singup_email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 campo_singup_emailKeyReleased(evt);
@@ -317,6 +317,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel8.setText("Email:");
 
+        campo_singup_contrasenha.setText("gobim@gobim.dev");
         campo_singup_contrasenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 campo_singup_contrasenhaKeyReleased(evt);
@@ -793,46 +794,6 @@ public class Principal extends javax.swing.JFrame {
         String email = this.campo_registro_email.getText().trim();
         return (email.indexOf(Storage.extension_rs) + Storage.extension_rs.length()) == email.length();
            
-    }
-    
-    private void fncBorrarCuentasInexistentes(){
-        
-        // * Verificar si el archivo .data existe
-        if( new File(Rutas.path_profiles).exists() ){           
-            try {
-                                    
-                File archivo_tmp = new File(Rutas.path_profiles + "_tmp000.txt");
-                if (archivo_tmp.createNewFile()) {
-
-                    try (FileWriter sobrescribirArchivo = new FileWriter(Rutas.path_profiles + "_tmp000.txt")) {
-                        BufferedReader leerArchivo = new BufferedReader(new FileReader(Rutas.path_profiles));
-                        String linea;
-
-                        while ((linea = leerArchivo.readLine()) != null) {
-                            
-                            if( linea.contains(Storage.extension_rs) ){
-                                
-                                String contenedor = Rutas.storage_profiles + linea;
-                                if( new File(contenedor).isDirectory() && new File(contenedor).exists() ){
-                                    sobrescribirArchivo.write(linea + "\n");
-                                }
-                                
-                            }
-                            
-                        }
-                        leerArchivo.close();
-                    }
-                    
-                    new File(Rutas.path_profiles).delete();
-                    
-                    // Cambio de storage
-                    archivo_tmp.renameTo(new File(Rutas.path_profiles));
-                }
-
-            } catch (IOException e) {}
-
-        }
-        
     }
     
     private boolean fncVerificarString(String text){

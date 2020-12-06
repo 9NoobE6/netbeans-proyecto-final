@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -69,17 +70,23 @@ public class singupWatcherTome extends Observador{
 
                 while ((email = stgTome.readLine()) != null) {
                     
-                    // * Verificar si existe una cuenta 
-                    boolean cuenta = Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, email);
-                    if( cuenta == true && email.contains(email_session_activa) == false && !email.isEmpty() && email.contains(Storage.extension_rs) ){
-                        // * Registrar todas las firmas...
-                        PanelFirma a = new PanelFirma(new Session(email));
-                        a.setFirma( stgTome.readLine() );
-                        a.setBounds(20, coordenadaY, 480, 130);
-                        panel_mural.add(a);
-                        panel_mural.validate();
-                        panel_mural.repaint();
-                        coordenadaY += 20 + a.getHeight();
+                    if( !email.isEmpty() && email.contains(Storage.extension_rs) ){
+                        // * Verificar si existe una cuenta
+                        boolean cuenta = Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, email);
+                        boolean cuenta_data = new File( new Session(email).stgData).exists();
+                        File cuenta_contenedor = new File( Rutas.storage_profiles + new Session(email).getStrEmail()  );
+                        
+                        if( (cuenta_contenedor.isDirectory() && cuenta_contenedor.exists()) && (cuenta == true && cuenta_data)
+                        && email.contains(email_session_activa) == false ){
+                            // * Mostrando la firma del perfil...
+                            PanelFirma a = new PanelFirma(new Session(email));
+                            a.setFirma( stgTome.readLine() );
+                            a.setBounds(20, coordenadaY, 480, 130);
+                            panel_mural.add(a);
+                            panel_mural.validate();
+                            panel_mural.repaint();
+                            coordenadaY += 20 + a.getHeight();
+                        }
                     }
                     
                 }
@@ -92,7 +99,7 @@ public class singupWatcherTome extends Observador{
                 // * Cerrar el almacenamiento de .tome
                 stgTome.close();
 
-            } catch (Exception e) {}
+            } catch (IOException e) {}
 
         }   
          

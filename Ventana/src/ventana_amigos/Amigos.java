@@ -43,6 +43,7 @@ import jpanelimagen.JPanelImagen;
 import ventana_pricipal.Principal;
 import ventana_profile.Profile;
 import ventana_singup.SingUp;
+import watcher.WatcherListaDeAmigos;
 import watcher.WatcherNotificaciones;
 
 /**
@@ -529,7 +530,7 @@ public class Amigos extends javax.swing.JFrame {
     private String chat_path_activo;
     private boolean chat_activado=false;
     private boolean es_amigo = false;
-    private WatcherNotificaciones observador_amigos;
+    private WatcherListaDeAmigos observador_amigos;
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
@@ -547,7 +548,7 @@ public class Amigos extends javax.swing.JFrame {
         this.campo_email_chat.setBackground(new Color(204,204,204));
         this.campo_email_chat.setEditable(false);
         
-        observador_amigos = new WatcherNotificaciones(
+        observador_amigos = new WatcherListaDeAmigos(
                 this.session_activa.stgFriends, this.lista_de_amigos ); 
         
         observador_amigos.setLista_vacio("Sin amigos...");

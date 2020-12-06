@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -50,15 +51,24 @@ public class peopleWatcherProfile extends Observador{
                 String linea;
 
                 while ((linea = db_profiles.readLine()) != null) {
-                    
-                    if (linea.equals(People.session_activa.getStrEmail()) == false && !linea.isEmpty() && linea.contains(Storage.extension_rs)) {
-                        PanelTarjeta a = new PanelTarjeta(new Session(linea));
-                        a.padre = JFramePadre;
-                        a.setBounds(60, coordenadaY, 600, 135);
-                        panel_perfiles.add(a);
-                        panel_perfiles.validate();
-                        panel_perfiles.repaint();
-                        coordenadaY += 20 + a.getHeight();
+                                       
+                    if ( !linea.isEmpty() && linea.contains(Storage.extension_rs) ) {
+                        // * Verificar si existe una cuenta
+                        boolean cuenta = Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, linea);
+                        boolean cuenta_data = new File( new Session(linea).stgData).exists();
+                        File cuenta_contenedor = new File( Rutas.storage_profiles + new Session(linea).getStrEmail()  );
+                        
+                        if( (cuenta_contenedor.isDirectory() && cuenta_contenedor.exists()) && (cuenta == true && cuenta_data)
+                        && linea.contains(People.session_activa.getStrEmail()) == false ){
+                            // * Mostrando el perfil de la cuenta...
+                            PanelTarjeta a = new PanelTarjeta(new Session(linea));
+                            a.padre = JFramePadre;
+                            a.setBounds(60, coordenadaY, 600, 135);
+                            panel_perfiles.add(a);
+                            panel_perfiles.validate();
+                            panel_perfiles.repaint();
+                            coordenadaY += 20 + a.getHeight();
+                        }
                     }
                     
                 }
@@ -82,7 +92,7 @@ public class peopleWatcherProfile extends Observador{
                 coordenadaY = 20;
                 db_profiles.close();
                 
-            } catch (Exception e) {}
+            } catch (IOException e) {}
             
         }
         

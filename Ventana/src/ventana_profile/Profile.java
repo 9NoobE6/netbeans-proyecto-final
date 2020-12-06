@@ -56,6 +56,7 @@ import ventana_amigos.Amigos;
 import paneles.PanelTarjeta;
 import ventana_people.People;
 import ventana_singup.SingUp;
+import watcher.WatcherListaDeAmigos;
 import watcher.WatcherNotificaciones;
 import watcher.singupWatcherTome;
 
@@ -481,7 +482,7 @@ public class Profile extends javax.swing.JFrame {
     private boolean mural_activado = false;
     private boolean firmar_activado = false;
     private singupWatcherTome tome;
-    private WatcherNotificaciones amigos;
+    private WatcherListaDeAmigos amigos;
     private ActionListener oyente;
     private Timer observador = new Timer(1000, oyente);
 
@@ -553,7 +554,7 @@ public class Profile extends javax.swing.JFrame {
                 this.panel_firmas );
 
         // * Crear un observador para la lista de amigos
-        amigos = new WatcherNotificaciones(
+        amigos = new WatcherListaDeAmigos(
             this.perfil.stgFriends, this.lista_de_amigos);
         
         // Establecer texto cuando este vacio la lista de amigos

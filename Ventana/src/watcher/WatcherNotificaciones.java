@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -69,7 +70,7 @@ public class WatcherNotificaciones extends Observador{
                 // * Mostrar todas las notificaciones...
                 this.lista_de_notificaciones.setModel(notificaciones);
             
-            } catch (Exception e) {}
+            } catch (IOException e) {}
 
         }
         
