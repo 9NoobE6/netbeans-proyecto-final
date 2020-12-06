@@ -466,17 +466,9 @@ public class Principal extends javax.swing.JFrame {
             File archivo_data = new File( Storage.fncStorageObtenerRutaData( email ) );
             File contendor_perfil = new File( Rutas.storage_profiles + email);
             boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, email );
-            
-            // Si la cuenta no esta registrada como profile.txt .... 
-            // Significa que la cuenta no esta creado...
-            if( !cuenta_registrado ){
-                // Entonces si existe un contenedor perfil de la cuenta a crear
-                // se elimina para crear el nuevo perfil
-                Storage.fncStorageEliminarDirectorio(contendor_perfil);
-            }
                       
             // Verificamos que el contenedor perfil a crear no exista y su archivo .data
-            if( ((contendor_perfil.isDirectory() || !contendor_perfil.exists()) && !archivo_data.exists())){
+            if( !cuenta_registrado && !archivo_data.exists() && !contendor_perfil.exists() ){
                 
                 // Si no existe se crea la cuenta
                 this.fncCrearCuentaNueva();
@@ -528,7 +520,9 @@ public class Principal extends javax.swing.JFrame {
 
             }else {
                 // Mostrar un mensaje de email registrado
-                JOptionPane.showMessageDialog(null, "Usuario existente...\nIntroduzca un nuevo correo eletronico.");
+                JOptionPane.showMessageDialog(null,
+                        "El correo " + email + " no esta disponible" 
+                        + "\nIntroduzca un nuevo correo eletronico.");
             }
             
         }
@@ -756,14 +750,15 @@ public class Principal extends javax.swing.JFrame {
             String email = this.campo_singup_email.getText().trim();
             String contenedor_perfil = Rutas.storage_profiles + email;
             String path_data_perfil = Storage.fncStorageObtenerRutaData(email);
+            boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, email);
             
             // Crear objetos para verificar existencias
             File contenedor = new File(contenedor_perfil);
             File file_data = new File(path_data_perfil);
             
             // Verificar si existe el usuario, mediante los path creados...
-            if ( contenedor.isDirectory() && contenedor.exists() && file_data.exists() ) {
-                
+            if ( contenedor.isDirectory() && contenedor.exists() && file_data.exists() && cuenta_registrado ) {
+                               
                 // Verificar si la contraseña es correcta
                 if( !fncVerificarContrasehna(path_data_perfil) ){
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta... \n");
@@ -773,7 +768,7 @@ public class Principal extends javax.swing.JFrame {
                     // Se borra la ventana Principal liberando memoria
                     this.setVisible(false); // Desaparece la ventana
                     this.dispose(); // Se libera la memoria
-                   
+                    
                     // * Inicializa la ventana de SingUp
                     SingUp ventana = new SingUp( new Session( email ));
                     ventana.setVisible(true);
@@ -782,7 +777,10 @@ public class Principal extends javax.swing.JFrame {
                 }
                 
             } else {
-                JOptionPane.showMessageDialog(null, "Usuario no existente...\nRegistre un nuevo usuario.");
+                
+                if( !cuenta_registrado ) Storage.fncStorageEliminarDirectorio(contenedor);
+                JOptionPane.showMessageDialog(null, "No existe una cuenta con "+ email );
+                
             }
             
         }
