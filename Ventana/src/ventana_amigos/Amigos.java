@@ -650,10 +650,6 @@ public class Amigos extends javax.swing.JFrame {
 
     private void fncAbrirChatTo() {
        
-        // Crear path y objeto archivo de mi storage .chats para ver los chats que tengo registrados
-        String path = this.session_activa.stgFriends;
-        File chats = new File( path );
-        
         // Verificar que chat no este activado
         if(this.chat_activado == false){
             

@@ -19,7 +19,9 @@ public class Amistad {
     }
     
     public void fncAmistadEnviarSolicitudTo(Session perfil){
-        if( Storage.fncStorageEncontrarUnaLinea( Rutas.path_profiles, perfil.getStrEmail() ) ){
+        
+        // * Verificar que la cuenta exista
+        if( Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, perfil.getStrEmail() ) ){
             
             // * Establecer perfil
             this.perfil = perfil;
@@ -33,11 +35,11 @@ public class Amistad {
     
     private void fncAmistadEnviadoSolicitudTo(){
         
-        // Verificar si es perfil es amigo
+        // Salvar los email reales
         this.perfil_seleccionado = this.perfil.getStrEmail();
         this.yoker = session_activa.getStrEmail();
         
-        
+        // Verificar si es perfil es amigo
         if( !Storage.fncStorageBuscarUnaLinea(session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1) ){
             // Si no somos amigos nos ponemos un *
             perfil_seleccionado += "*"; // Si perfil selecciona no es amigo mio se pone un *
@@ -47,11 +49,18 @@ public class Amistad {
         // Buscar el chat
         boolean db_chats = Storage.fncStorageBuscarUnaLinea(session_activa.stgChats, perfil_seleccionado);
         boolean db_friends = Storage.fncStorageBuscarUnaLinea(session_activa.stgFriends, perfil_seleccionado+Storage.identificador_amigo1);
-        
+                
         // * Verificar estado de amistad para perfil
         String amistad_session_activa = Storage.fncStorageVerificarAmistad(this.session_activa.stgFriends, this.perfil.getStrEmail());
         String amistad_perfil = Storage.fncStorageVerificarAmistad(this.perfil.stgFriends, this.session_activa.getStrEmail());
         
+        // * Verificar si perfil es boot
+        boolean perfil_boot = Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, this.perfil.getStrEmail()+Storage.identificador_boots);
+        
+        if( perfil_boot && db_chats == false && db_friends == false && amistad_session_activa.equals("none")  ){
+            this.fncCrearUnaSolicitudDeAmistadBoot();
+
+        }else 
         if(db_chats == false && db_friends == false && amistad_session_activa.equals("recibido")){         
             
             if( amistad_perfil.contains("enviado")){
@@ -66,10 +75,12 @@ public class Amistad {
             
         }else
         if( db_chats == false && db_friends == false && amistad_session_activa.equals("none") ){
-            this.fncCrearUnaSolicitudDeAmistad();            
+            this.fncCrearUnaSolicitudDeAmistad();
+            
         }else 
         if(db_chats == true && db_friends == true && amistad_session_activa.equals("amigos")){         
             this.fncSolicituDeAmistadEliminar();
+            
             
         }
         
@@ -252,6 +263,47 @@ public class Amistad {
 
     public void setOperacion(String operacion_exitosa) {
         this.operacion = operacion_exitosa;
+    }
+
+    private void fncCrearUnaSolicitudDeAmistadBoot() {
+        
+        // Crear un nuevo mensaje
+        Mensaje solicitud = new Mensaje(this.session_activa, "Hola quieres ser mi amigo?");
+        solicitud.setMostrar_msg(false);
+        solicitud.fncMensajeEnviarMensajeTo(this.perfil);
+        
+        // * Eliminar registro en session_activa y perfil
+        Storage.fncStorageEliminarUnaLinea(new File(this.session_activa.stgChats), perfil_seleccionado);
+        Storage.fncStorageEliminarUnaLinea(new File(perfil.stgFriends), this.yoker);
+        
+        // * Para session_activa
+        Storage.fncStorageAcoplarUnaLinea(this.session_activa.stgFriends, this.perfil.getStrEmail()+Storage.identificador_amigo1);
+        Storage.fncStorageActualizarUnaLinea(this.session_activa.stgChats, this.perfil.getStrEmail());
+        
+        // * Para perfil
+        Storage.fncStorageAcoplarUnaLinea(this.perfil.stgFriends, this.session_activa.getStrEmail()+Storage.identificador_amigo1);
+        Storage.fncStorageActualizarUnaLinea(this.perfil.stgChats, this.session_activa.getStrEmail());
+
+        // * Registrar notificaciones para session_activa
+        Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz enviado una solicitud de amistad para " + this.perfil.getStrEmail() );
+        Storage.fncStorageRegistrarNotificacion(this.session_activa, this.perfil.getStrEmail() + " acepto tú solicitud de amistad" );
+        
+        // * Registrar notificaciones para perfil
+        Storage.fncStorageRegistrarNotificacion(this.perfil, "Tienes una solicitud de amistad de " + this.session_activa.getStrEmail() );
+        Storage.fncStorageRegistrarNotificacion(this.perfil, "Haz aceptado una solicitud de amistad de " + this.perfil.getStrEmail() );
+        
+        // * Clonar la conversacion original a perfil
+        String chat_original = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), this.perfil.getStrEmail());
+        String chat_clone = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail());
+        Storage.fncStorageCopiarArchivo(new File(chat_original), chat_clone);
+        
+        // Mensaje de operacion
+        JOptionPane.showMessageDialog(null, "Este pefil acepto tu solicitud de amistad enviado."
+                + "\nPuedes chatear con él en tù la lista de amigos.");
+                
+        // * Fronted
+        this.operacion = "enviado";
+        
     }
     
 } // !# Fin de la clase

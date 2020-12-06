@@ -25,7 +25,8 @@ public class Mensaje {
         
     public Mensaje(Session session_activa, String mensaje) {  
         
-        if( Storage.fncStorageEncontrarUnaLinea( Rutas.path_profiles, session_activa.getStrEmail() ) ){
+        // * Verificar que la cuenta exista
+        if( Storage.fncStorageEncontrarUnaCuenta( Rutas.path_profiles, session_activa.getStrEmail() ) ){
             
             // * Establecer session_activa
             this.session_activa = session_activa;
@@ -36,7 +37,9 @@ public class Mensaje {
     }
     
     public void fncMensajeEnviarMensajeTo(Session perfil){
-        if( Storage.fncStorageEncontrarUnaLinea( Rutas.path_profiles, perfil.getStrEmail() ) ){
+        
+        // * Verificar que la cuenta exista
+        if( Storage.fncStorageEncontrarUnaCuenta( Rutas.path_profiles, perfil.getStrEmail() ) ){
             
             // * Establecer perfil
             this.perfil = perfil;

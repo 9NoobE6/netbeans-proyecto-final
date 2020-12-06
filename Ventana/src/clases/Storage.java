@@ -35,6 +35,7 @@ public class Storage {
     public final static String identificador_amigo1 = " - Somos amigos.";
     public final static String identificador_amigo2 = " - Amigo+1 Recibido.";
     public final static String identificador_amigo3 = " - Amigo+1 Enviado.";
+    public final static String identificador_boots= " *boot";
     public static final String extension_rs = "@gobim.dev";
     
     
@@ -157,6 +158,9 @@ public class Storage {
                         return true;
                     }else 
                     if (linea.equals(encontrar_cuenta + Storage.identificador_amigo1) && !linea.isEmpty() && linea.contains(extension_rs)){
+                        return true;
+                    }else 
+                    if (linea.equals(encontrar_cuenta + Storage.identificador_boots) && !linea.isEmpty() && linea.contains(extension_rs)){
                         return true;
                     }
                     
@@ -491,6 +495,15 @@ public class Storage {
         }
                 
         return img_profile;
+    }
+    
+    public static String fncStorageObtenerEmailProfile(String tmp_email){
+        
+        // Crear el email de profile
+        tmp_email = tmp_email.substring(0, tmp_email.lastIndexOf("@"));
+        tmp_email = tmp_email + Storage.extension_rs;
+        
+        return tmp_email;
     }
     
     public static void fncStorageInsertarPicture(JPanel contenedor, String url, boolean vaciar){
