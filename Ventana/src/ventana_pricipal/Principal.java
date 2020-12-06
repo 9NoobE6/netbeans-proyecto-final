@@ -76,7 +76,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         
-        for(int item = 1985; item <= 2020; item++  ){
+        for(int item = 1940; item <= 2020; item++  ){
             this.cmbox_registro_anho.addItem(""+item);
         }
         

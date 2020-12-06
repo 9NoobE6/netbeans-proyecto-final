@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 
 public class Observador {
-    private final File path;
+    private File path;
     private long path_size=0;
     private long path_size_tmp=0;
     private ObservadorInterface observardor = null;
@@ -71,6 +71,14 @@ public class Observador {
 
     public void setObservar(ObservadorInterface observar) {
         this.observardor = observar;
+    }
+
+    public File getPath() {
+        return path;
+    }
+
+    public void setPath(File path) {
+        this.path = path;
     }
 
 }

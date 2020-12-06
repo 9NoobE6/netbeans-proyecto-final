@@ -43,6 +43,7 @@ import jpanelimagen.JPanelImagen;
 import ventana_pricipal.Principal;
 import ventana_profile.Profile;
 import ventana_singup.SingUp;
+import watcher.WatcherChat;
 import watcher.WatcherListaDeAmigos;
 import watcher.WatcherNotificaciones;
 
@@ -98,7 +99,7 @@ public class Amigos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_mensaje = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        lista_mensajes = new javax.swing.JList<>();
+        lista_de_mensajes = new javax.swing.JList<>();
         bntEnviarMensaje = new javax.swing.JButton();
         btnCerrarChat = new javax.swing.JButton();
 
@@ -109,7 +110,6 @@ public class Amigos extends javax.swing.JFrame {
 
         campo_email_chat.setEditable(false);
         campo_email_chat.setBackground(new java.awt.Color(204, 255, 204));
-        campo_email_chat.setForeground(new java.awt.Color(0, 0, 0));
         campo_email_chat.setText("jTextField1");
 
         bntVolver.setBackground(new java.awt.Color(0, 102, 153));
@@ -233,7 +233,7 @@ public class Amigos extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(txt_mensaje);
 
-        jScrollPane3.setViewportView(lista_mensajes);
+        jScrollPane3.setViewportView(lista_de_mensajes);
 
         bntEnviarMensaje.setBackground(new java.awt.Color(0, 153, 0));
         bntEnviarMensaje.setForeground(new java.awt.Color(255, 255, 255));
@@ -337,8 +337,7 @@ public class Amigos extends javax.swing.JFrame {
 
         // Al presionar en el boton Abrir chat se ejecuta este método
         this.fncAbrirChatTo();
-        
-        
+
     }//GEN-LAST:event_bntAbrirChatMouseReleased
 
     private void btnCerrarChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarChatMouseReleased
@@ -351,11 +350,10 @@ public class Amigos extends javax.swing.JFrame {
             this.fncCambiarEstadoPanelChat(false);
 
             // Borrar los variables que se nececesitan para otro chat
-            this.lista_mensajes.removeAll();
+            this.lista_de_mensajes.removeAll();
             this.mensajes.removeAllElements();
             this.txt_mensaje.setText("");
             this.chat_activado = false;
-            this.chat_path_activo = "";
             this.size_chats = 0;
             
             // Deshabitamos el panel del titulo, cambiando los colores
@@ -515,7 +513,7 @@ public class Amigos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<String> lista_de_amigos;
-    private javax.swing.JList<String> lista_mensajes;
+    private javax.swing.JList<String> lista_de_mensajes;
     private jpanelimagen.JPanelImagen panel_3_Background;
     private jpanelimagen.JPanelImagen panel_contenedor_chat;
     private jpanelimagen.JPanelImagen panel_lista_de_amigos;
@@ -527,10 +525,9 @@ public class Amigos extends javax.swing.JFrame {
     private long size_chats;
     DefaultListModel mensajes = new DefaultListModel();
     DefaultListModel amigos = new DefaultListModel();
-    private String chat_path_activo;
     private boolean chat_activado=false;
-    private boolean es_amigo = false;
     private WatcherListaDeAmigos observador_amigos;
+    private WatcherChat conversacion;
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
@@ -548,6 +545,11 @@ public class Amigos extends javax.swing.JFrame {
         this.campo_email_chat.setBackground(new Color(204,204,204));
         this.campo_email_chat.setEditable(false);
         
+        // * Watcher para conversacion
+        conversacion = new WatcherChat(session_activa, lista_de_mensajes);
+        conversacion.setLista_vacio("Sin mensajes...");
+        
+        //  * Creando un watcher para la lista de amigos
         observador_amigos = new WatcherListaDeAmigos(
                 this.session_activa.stgFriends, this.lista_de_amigos ); 
         
@@ -558,18 +560,16 @@ public class Amigos extends javax.swing.JFrame {
             ActionListener tarea = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try {
-                        // * Ejecutar los observadores
-                        
-                        if (chat_activado == true) {   
-                            // Sincronizar los mensajes si chat esta activado
-                            Amigos.this.fncSincronizarMensajes(); 
-                        }
-                        
-                        // Sincronizar lista de amigos de session_activa
-                        observador_amigos.Inicializar();
+                    // * Ejecutar los observadores
                     
-                    }catch (IOException ex) {}
+                    if (chat_activado == true) {
+                        // Sincronizar los mensajes si chat esta activado
+                        //Amigos.this.fncSincronizarMensajes();
+                        conversacion.Inicializar();
+                        
+                    }
+                    // Sincronizar lista de amigos de session_activa
+                    observador_amigos.Inicializar();
 
                 }
             };
@@ -584,7 +584,7 @@ public class Amigos extends javax.swing.JFrame {
     private void fncCambiarEstadoPanelChat(boolean estado){
         this.txt_mensaje.setEnabled(estado);
         this.btnCerrarChat.setEnabled(estado);
-        this.lista_mensajes.setEnabled(estado);
+        this.lista_de_mensajes.setEnabled(estado);
         this.txt_mensaje.setEnabled(estado);
         this.bntEnviarMensaje.setEnabled(estado);
         
@@ -621,55 +621,6 @@ public class Amigos extends javax.swing.JFrame {
         }catch(Exception e){}
 
         return bytes;
-    }
-
-    private void fncSincronizarMensajes() throws FileNotFoundException, IOException {
-        String path = this.chat_path_activo;
-        File chat = new File(path);
-        long _size_ = this.fncObtenerTamahnoStorages(path);
-        
-        if(chat.exists()){
-            if( _size_ > this.size_chats || _size_ < this.size_chats ){
-                
-                this.mensajes.removeAllElements();
-                this.lista_mensajes.removeAll();
-                
-                // Covertir el item selecciona en un correo de con extension
-                String perfil = lista_de_amigos.getSelectedValue();
-                perfil = perfil.substring(0, perfil.lastIndexOf("@"));
-                perfil = perfil + Storage.extension_rs;
-               
-                File archivo = new File( path );
-                BufferedReader chat_activo = new BufferedReader( new FileReader(archivo) );
-                String linea; 
-                while ((linea = chat_activo.readLine()) != null){
-                    
-                    if( linea.contains(this.session_activa.getStrEmail()) ){
-                        this.mensajes.addElement(" # " + linea);
-                        linea = chat_activo.readLine();
-                        this.mensajes.addElement(linea);
-                    }else if( linea.contains( perfil ) ){ 
-                        String a = "%-" + Math.abs(linea.length() - 90) + "s";
-                        this.mensajes.addElement( linea.format(a, "").replace(' ',' ') + linea + " * ");
-                        linea = chat_activo.readLine();
-                        this.mensajes.addElement( linea + linea.format(a, "").replace(' ',' '));
-                    }else{
-                        this.mensajes.addElement(linea);
-                    }
-                    
-                }
-
-                this.lista_mensajes.setModel(this.mensajes);
-                this.size_chats = _size_;
-                chat_activo.close();
-                
-                int ultimo_mensaje = this.lista_mensajes.getModel().getSize() - 1;
-                if (ultimo_mensaje >= 0) {
-                   this.lista_mensajes.ensureIndexIsVisible(ultimo_mensaje);
-                }
-                
-            }
-        }
     }
 
     private void fncEnviarMensajeTo() {
@@ -712,16 +663,6 @@ public class Amigos extends javax.swing.JFrame {
                 
             if(Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, perfil)){
                 
-                
-                if(this.lista_de_amigos.getSelectedValue().equals(perfil+"*")){
-                    
-                    // Selecciona el chat desde perfil remitente
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
-                    this.es_amigo = false;
-                    
-                    this.fncHabilitarChat(perfil);
-                    
-                }else
                 // Amigo+1 Enviado
                 if(this.lista_de_amigos.getSelectedValue().contains("*"+Storage.identificador_amigo3)){
                     
@@ -743,8 +684,7 @@ public class Amigos extends javax.swing.JFrame {
                         /* Iniciar amistad */
                         
                         // Selecciona el chat desde perfil remitente
-                        this.chat_path_activo = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
-                        this.es_amigo = true;
+                        String chat_remitente = Storage.fncStorageCrearRutaChats(perfil, this.session_activa.getStrEmail());
                         
                         // * Acoplar el mensaje de somos amigos en pefil y session_activa
                         Storage.fncStorageAcoplarUnaLinea(new Session(perfil).stgFriends, 
@@ -768,7 +708,7 @@ public class Amigos extends javax.swing.JFrame {
                         
                         // * Clonar el mensaje de solicitud de amistad
                         String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), new Session(perfil).getStrEmail());
-                        Storage.fncStorageCopiarArchivo(new File(this.chat_path_activo), clone);
+                        Storage.fncStorageCopiarArchivo(new File(chat_remitente), clone);
                         
                         // * Registrar notificaciones
                         Storage.fncStorageRegistrarNotificacion(this.session_activa, "Haz aceptado una solicitud de amistad de " + new Session(perfil).getStrEmail() );
@@ -804,10 +744,11 @@ public class Amigos extends javax.swing.JFrame {
                 // Somos AmigosxSimpre
                 if(this.lista_de_amigos.getSelectedValue().contains(perfil+Storage.identificador_amigo1)){
                     
-                    // Selecciona el chat desde mi cuenta principal
-                    this.chat_path_activo = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), perfil);
-                    this.es_amigo = true;
+                    // Mostrar mensaje de operación
+                    JOptionPane.showMessageDialog(null, "Iniciando chat con " + perfil);
                     
+                    // Establecer el perfil a chatear y habilitar chat
+                    conversacion.setChatearTo( new Session(perfil)  );
                     this.fncHabilitarChat(perfil);
                     
                 }
