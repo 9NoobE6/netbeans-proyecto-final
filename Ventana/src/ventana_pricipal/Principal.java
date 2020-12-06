@@ -165,8 +165,8 @@ public class Principal extends javax.swing.JFrame {
         });
 
         panel_registro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 51), 2, true));
+        panel_registro.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
 
-        campo_registro_nombres.setText("jTextField1");
         campo_registro_nombres.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_nombresKeyTyped(evt);
@@ -175,9 +175,8 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre (s): ");
 
-        jLabel2.setText("Apellidos: ");
+        jLabel2.setText("Apellido (s): ");
 
-        campo_registro_apellidos.setText("jTextField1");
         campo_registro_apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_apellidosKeyTyped(evt);
@@ -188,7 +187,6 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Contraseña:");
 
-        campo_registro_email.setText("abc@gobim.dev");
         campo_registro_email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_emailKeyTyped(evt);
@@ -197,7 +195,6 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel5.setText("Email:");
 
-        campo_registro_contrasenha.setText("jPasswordField1");
         campo_registro_contrasenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campo_registro_contrasenhaKeyTyped(evt);
@@ -307,11 +304,11 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
+        panel_singup.setImagenFondo(new jpanelimagen.ImagenFondo(new java.io.File("C:/Program Files/NetBeans 8.2"),1.0f));
         panel_singup.setOpaque(false);
 
         jLabel7.setText("Contraseña: ");
 
-        campo_singup_email.setText("jTextField1");
         campo_singup_email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 campo_singup_emailKeyReleased(evt);
@@ -320,7 +317,6 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel8.setText("Email:");
 
-        campo_singup_contrasenha.setText("jPasswordField1");
         campo_singup_contrasenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 campo_singup_contrasenhaKeyReleased(evt);
