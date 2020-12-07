@@ -432,100 +432,8 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarmeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarmeMouseReleased
-        // TODO add your handling code here:
-        int anho = Integer.parseInt( this.cmbox_registro_anho.getItemAt( this.cmbox_registro_anho.getSelectedIndex() ) );
         
-        if( (2020-anho) < 18 ){
-            JOptionPane.showMessageDialog(null, "Eres menor de edad!");
-        }else if( !this.fncVerificarString( this.campo_registro_nombres.getText().trim() ) ){
-            JOptionPane.showMessageDialog(null, "El campo nombre(s) tiene digitos...");
-        }else if( this.campo_registro_nombres.getText().trim().length() > (20-1) ){
-            JOptionPane.showMessageDialog(null, "Introduzca nombre(s) de 20 caracteres, por favor...");
-        }else if( this.campo_registro_nombres.getText().trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca su(s) nombre(s), por favor...");
-        }else if( !this.fncVerificarString( this.campo_registro_apellidos.getText().trim() ) ){
-            JOptionPane.showMessageDialog(null, "El campo apellido(s) tiene digitos...");
-        }else if( this.campo_registro_apellidos.getText().trim().length() > (20-1) ){
-            JOptionPane.showMessageDialog(null, "Introduzca apellido(s) de 20 caracteres, por favor...");
-        }else if( this.campo_registro_apellidos.getText().trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca su(s) apellido(s), por favor...");
-        }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca una contraseña, por favor...");
-        }else if( this.campo_registro_email.getText().trim().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Storage.extension_rs+" , por favor...\n"
-                    +"por ejemplo example"+Storage.extension_rs+"");
-        }else if( !this.campo_registro_email.getText().trim().contains(Storage.extension_rs) || !this.fncVerificarEmail() ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Storage.extension_rs+" , por favor...\n" 
-                    +"por ejemplo example"+Storage.extension_rs+"");
-        }else if( this.campo_registro_email.getText().trim().length() > 23 ){
-            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico menor o igual a 23 caracteres, por favor...");
-        }else{
-                
-            // Crear rutas para verificar su existencia
-            String email = this.campo_registro_email.getText();
-            File archivo_data = new File( Storage.fncStorageObtenerRutaData( email ) );
-            File contendor_perfil = new File( Rutas.storage_profiles + email);
-            boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, email );
-                      
-            // Verificamos que el contenedor perfil a crear no exista y su archivo .data
-            if( !cuenta_registrado && !archivo_data.exists() && !contendor_perfil.exists() ){
-                
-                // Si no existe se crea la cuenta
-                this.fncCrearCuentaNueva();
-                
-                // Interntar crear archivo .data, donde se almacenan los datos personales del usuario
-                try {
-                    // Registrar datos de usuario (.data)
-                    if (archivo_data.createNewFile()) {
-                        FileWriter registrar_datos = new FileWriter(archivo_data);
-                        
-                        // Registramos nombres y apellidos
-                        registrar_datos.write(this.campo_registro_nombres.getText() + "\n");
-                        registrar_datos.write(this.campo_registro_apellidos.getText() + "\n");
-                        
-                        // Reconstruimos la fecha de nacimiento y lo regisrtramos
-                        String Fnacimiento = (String)this.cmbox_registro_dia.getSelectedItem()
-                                +"/"+ (String)this.cmbox_registro_mes.getSelectedItem()
-                                +"/"+ (String)this.cmbox_registro_anho.getSelectedItem();     
-                        registrar_datos.write(Fnacimiento + "\n");
-                        
-                        // Registrar el sexo seleccionado por el usuario
-                        if( this.sexo_registro_femenino.isSelected() ){
-                            registrar_datos.write("Femenino" + "\n");
-                        }else{
-                            registrar_datos.write("Masculino" + "\n");
-                        }
-                        
-                        // Registrar la contraseña
-                        registrar_datos.write(String.valueOf(this.campo_registro_contrasenha.getPassword()) + "\n");
-                        
-                        // Registrar el email
-                        registrar_datos.write(this.campo_registro_email.getText() + "\n");
-                        
-                        // Registrar un imagen de perfil por defecto
-                        registrar_datos.write(Rutas.default_img + "\n");
-                        
-                        // Cerrar el archivo .data con los datos personales del usuario.
-                        registrar_datos.close();
-
-                        // Actualizar y Registrar a this.campo_registro_email.getText()
-                        Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), email );
-                        Storage.fncStorageAcoplarUnaLinea(Rutas.path_profiles, email );
-                        
-                        JOptionPane.showMessageDialog(null, "Data:: Usuario creado exitosamente...");
-
-                    }
-                
-                } catch (IOException e) {}
-
-            }else {
-                // Mostrar un mensaje de email registrado
-                JOptionPane.showMessageDialog(null,
-                        "El correo " + email + " no esta disponible" 
-                        + "\nIntroduzca un nuevo correo eletronico.");
-            }
-            
-        }
+        this.fncRegistrarCuenta();
         
     }//GEN-LAST:event_btnRegistrarmeMouseReleased
 
@@ -814,6 +722,104 @@ public class Principal extends javax.swing.JFrame {
         }
         
         return true;
+    }
+
+    private void fncRegistrarCuenta() {
+       
+        int anho = Integer.parseInt( this.cmbox_registro_anho.getItemAt( this.cmbox_registro_anho.getSelectedIndex() ) );
+        
+        if( (2020-anho) < 18 ){
+            JOptionPane.showMessageDialog(null, "Eres menor de edad!");
+        }else if( !this.fncVerificarString( this.campo_registro_nombres.getText().trim() ) ){
+            JOptionPane.showMessageDialog(null, "El campo nombre(s) tiene digitos...");
+        }else if( this.campo_registro_nombres.getText().trim().length() > (20-1) ){
+            JOptionPane.showMessageDialog(null, "Introduzca nombre(s) de 20 caracteres, por favor...");
+        }else if( this.campo_registro_nombres.getText().trim().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Introduzca su(s) nombre(s), por favor...");
+        }else if( !this.fncVerificarString( this.campo_registro_apellidos.getText().trim() ) ){
+            JOptionPane.showMessageDialog(null, "El campo apellido(s) tiene digitos...");
+        }else if( this.campo_registro_apellidos.getText().trim().length() > (20-1) ){
+            JOptionPane.showMessageDialog(null, "Introduzca apellido(s) de 20 caracteres, por favor...");
+        }else if( this.campo_registro_apellidos.getText().trim().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Introduzca su(s) apellido(s), por favor...");
+        }else if( String.valueOf(this.campo_registro_contrasenha.getPassword()).trim().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Introduzca una contraseña, por favor...");
+        }else if( this.campo_registro_email.getText().trim().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Storage.extension_rs+" , por favor...\n"
+                    +"por ejemplo example"+Storage.extension_rs+"");
+        }else if( !this.campo_registro_email.getText().trim().contains(Storage.extension_rs) || !this.fncVerificarEmail() ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico con terminación "+Storage.extension_rs+" , por favor...\n" 
+                    +"por ejemplo example"+Storage.extension_rs+"");
+        }else if( this.campo_registro_email.getText().trim().length() > 23 ){
+            JOptionPane.showMessageDialog(null, "Introduzca un correo electronico menor o igual a 23 caracteres, por favor...");
+        }else{
+                
+            // Crear rutas para verificar su existencia
+            String email = this.campo_registro_email.getText();
+            File archivo_data = new File( Storage.fncStorageObtenerRutaData( email ) );
+            File contendor_perfil = new File( Rutas.storage_profiles + email);
+            boolean cuenta_registrado = Storage.fncStorageEncontrarUnaCuenta(Rutas.path_profiles, email );
+                      
+            // Verificamos que el contenedor perfil a crear no exista y su archivo .data
+            if( !cuenta_registrado && !archivo_data.exists() && !contendor_perfil.exists() ){
+                
+                // Si no existe se crea la cuenta
+                this.fncCrearCuentaNueva();
+                
+                // Interntar crear archivo .data, donde se almacenan los datos personales del usuario
+                try {
+                    // Registrar datos de usuario (.data)
+                    if (archivo_data.createNewFile()) {
+                        FileWriter registrar_datos = new FileWriter(archivo_data);
+                        
+                        // Registramos nombres y apellidos
+                        registrar_datos.write(this.campo_registro_nombres.getText() + "\n");
+                        registrar_datos.write(this.campo_registro_apellidos.getText() + "\n");
+                        
+                        // Reconstruimos la fecha de nacimiento y lo regisrtramos
+                        String Fnacimiento = (String)this.cmbox_registro_dia.getSelectedItem()
+                                +"/"+ (String)this.cmbox_registro_mes.getSelectedItem()
+                                +"/"+ (String)this.cmbox_registro_anho.getSelectedItem();     
+                        registrar_datos.write(Fnacimiento + "\n");
+                        
+                        // Registrar el sexo seleccionado por el usuario
+                        if( this.sexo_registro_femenino.isSelected() ){
+                            registrar_datos.write("Femenino" + "\n");
+                        }else{
+                            registrar_datos.write("Masculino" + "\n");
+                        }
+                        
+                        // Registrar la contraseña
+                        registrar_datos.write(String.valueOf(this.campo_registro_contrasenha.getPassword()) + "\n");
+                        
+                        // Registrar el email
+                        registrar_datos.write(this.campo_registro_email.getText() + "\n");
+                        
+                        // Registrar un imagen de perfil por defecto
+                        registrar_datos.write(Rutas.default_img + "\n");
+                        
+                        // Cerrar el archivo .data con los datos personales del usuario.
+                        registrar_datos.close();
+
+                        // Actualizar y Registrar a this.campo_registro_email.getText()
+                        Storage.fncStorageEliminarUnaLinea(new File(Rutas.path_profiles), email );
+                        Storage.fncStorageAcoplarUnaLinea(Rutas.path_profiles, email );
+                        
+                        JOptionPane.showMessageDialog(null, "Data:: Usuario creado exitosamente...");
+
+                    }
+                
+                } catch (IOException e) {}
+
+            }else {
+                // Mostrar un mensaje de email registrado
+                JOptionPane.showMessageDialog(null,
+                        "El correo " + email + " no esta disponible" 
+                        + "\nIntroduzca un nuevo correo eletronico.");
+            }
+            
+        }
+        
     }
     
 }
