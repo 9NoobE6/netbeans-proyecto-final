@@ -47,8 +47,6 @@ public class WatcherMensajesBoot extends Observador{
                 BufferedReader conversacion = new BufferedReader(new FileReader(archivo));
                 String linea;
                 
-                System.out.println(">>>> Inicio <<<<");
-                System.out.println(">>>> " + this.mensaje_enviado.trim() + " <<<<");
                 while ((linea = conversacion.readLine()) != null) {
                     
                     linea = linea.trim();
@@ -59,19 +57,8 @@ public class WatcherMensajesBoot extends Observador{
                     }else
                     if( !linea.isEmpty() && !this.mensaje_enviado.trim().isEmpty() && linea.contains("@") ){
                         
-//                        String answer = linea;
-//                        answer = answer.substring(0, answer.lastIndexOf("@"));
-                        System.out.println("Buscando la mejor respuesta en linea = " + linea);
-                        System.out.println("Para el mensaje = " + this.mensaje_enviado.trim());
-                        
                         if( this.fncSeleccionarMensajeDeRespuesta(linea, this.mensaje_enviado.trim()) > 50 ){
                             this.mensaje_responder = conversacion.readLine();
-                            
-                            System.out.println("");
-                            System.out.println("");
-                            System.out.println("La mejor respuesta esta en la linea = " + linea );
-                            System.out.println("");
-                            System.out.println("");
                             
                             break;
                         }
@@ -82,7 +69,6 @@ public class WatcherMensajesBoot extends Observador{
                     
                 }
                 
-                System.out.println("La mejor respuesta = " + this.mensaje_responder);
                 if( !this.mensaje_responder.isEmpty() && !this.mensaje_enviado.trim().isEmpty() ){
                     
                     Mensaje responder = new Mensaje(this.perfil, this.mensaje_responder);
@@ -114,12 +100,7 @@ public class WatcherMensajesBoot extends Observador{
         for(int qitem=0; qitem < query.length; qitem++){
             
             for(int citem=0; citem < claves.length; citem++){
-            System.out.print("claves["+ claves[citem] +"]");
-            System.out.print(" <-> ");
-            System.out.print("query["+ query[qitem] +"]");
-            System.out.println("");
-                
-                
+           
                 Matcher comquery = patron.matcher(query[qitem].toUpperCase());
                 Matcher comclaves = patron.matcher(claves[citem].toUpperCase());
                 
@@ -132,10 +113,6 @@ public class WatcherMensajesBoot extends Observador{
             }
             
         }
-        
-        System.out.println("Coincidencias = " + conicidencias);
-        System.out.println("porcentaje = " + ((conicidencias*100) / query.length) );
-        System.out.println("porcentaje = " + (((query.length+conicidencias)*100) / (query.length+conicidencias)) );
         
         return (int) ((conicidencias*100) / query.length);
     }
