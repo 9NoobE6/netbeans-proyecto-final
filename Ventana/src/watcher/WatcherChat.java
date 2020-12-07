@@ -90,6 +90,12 @@ public class WatcherChat extends Observador{
                     
                 }
                 
+                // Hacer scrooll automatico para el chat y ver mensajes recientes...
+                int ultimo_mensaje = this.lista_de_mensajes.getModel().getSize() - 1;
+                if (ultimo_mensaje >= 0) {
+                   this.lista_de_mensajes.ensureIndexIsVisible(ultimo_mensaje);
+                }
+                
                 // * Cerrar el almacenamiento de .notify
                 chat_activo.close();
                 

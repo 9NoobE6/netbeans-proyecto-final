@@ -45,6 +45,7 @@ import ventana_profile.Profile;
 import ventana_singup.SingUp;
 import watcher.WatcherChat;
 import watcher.WatcherListaDeAmigos;
+import watcher.WatcherMensajesBoot;
 import watcher.WatcherNotificaciones;
 
 /**
@@ -345,10 +346,6 @@ public class Amigos extends javax.swing.JFrame {
         
         // El codigo se ejecuta, solo si el chat esta activado.
         if( this.chat_activado == true){
-            // Deshabilitamos todos los componentes de chat
-            this.fncCambiarEstadoPanelAmigos(true);
-            this.fncCambiarEstadoPanelChat(false);
-
             // Borrar los variables que se nececesitan para otro chat
             this.lista_de_mensajes.removeAll();
             this.mensajes.removeAllElements();
@@ -364,6 +361,13 @@ public class Amigos extends javax.swing.JFrame {
             
             // Desactivamos el area de mensaje...
             this.txt_mensaje.setFocusable(false);
+            
+            // Desactivamos el boot si esta activado
+            Amigos.mensajes_boots_activado = false;
+            
+            // Deshabilitamos todos los componentes de chat
+            this.fncCambiarEstadoPanelAmigos(true);
+            this.fncCambiarEstadoPanelChat(false);
         }
        
     }//GEN-LAST:event_btnCerrarChatMouseReleased
@@ -528,6 +532,8 @@ public class Amigos extends javax.swing.JFrame {
     private boolean chat_activado=false;
     private WatcherListaDeAmigos observador_amigos;
     private WatcherChat conversacion;
+    WatcherMensajesBoot mensajes_boots;
+    public static boolean mensajes_boots_activado = false;
     
     private void fncInicializarVentana(){
         this.setLocationRelativeTo(null);
@@ -567,6 +573,17 @@ public class Amigos extends javax.swing.JFrame {
                         //Amigos.this.fncSincronizarMensajes();
                         conversacion.Inicializar();
                         
+                        // * Verificar y activar los mensajes boots o automaticos
+                        if(Amigos.mensajes_boots_activado == true){
+                            mensajes_boots.Inicializar();
+                        }
+                        
+                        // Hacer scrooll automatico para el chat y ver mensajes recientes...
+                        int ultimo_mensaje = lista_de_mensajes.getModel().getSize() - 1;
+                        if (ultimo_mensaje >= 0) {
+                           lista_de_mensajes.ensureIndexIsVisible(ultimo_mensaje);
+                        }
+
                     }
                     // Sincronizar lista de amigos de session_activa
                     observador_amigos.Inicializar();
@@ -633,13 +650,19 @@ public class Amigos extends javax.swing.JFrame {
             if( msg_body.trim().length() > 0 ){
                 
                 // * Recrear codigo
-                String perfil = this.lista_de_amigos.getSelectedValue();
-                perfil = perfil.substring(0, perfil.indexOf("@") );
-                perfil = perfil + Storage.extension_rs;
-
+                String perfil = Storage.fncStorageObtenerEmailProfile(this.lista_de_amigos.getSelectedValue());
+                
+                // * Verificar si perfil es un boot
+                if( Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, perfil+Storage.identificador_boots) ){
+                    
+                    // * Activar el mensajes de boots
+                    Amigos.mensajes_boots_activado = true;
+                    this.mensajes_boots.setMensaje(this.session_activa, msg_body);
+                }
+                
                 Mensaje conversacion = new Mensaje( this.session_activa, msg_body);
                 conversacion.fncMensajeEnviarMensajeTo( new Session(perfil) );
-            
+   
             }else{
                 JOptionPane.showMessageDialog(null, "No se puede enviar mensajes vacios.");
             }
@@ -743,12 +766,22 @@ public class Amigos extends javax.swing.JFrame {
                     // Mostrar mensaje de operación
                     JOptionPane.showMessageDialog(null, "Iniciando chat con " + perfil);
                     
-                    // Establecer el perfil a chatear y habilitar chat
+                    // Establecer el perfil a chatear
                     conversacion.setChatearTo( new Session(perfil)  );
+                    
+                    // * Verificar si perfil es un boot
+                    if( Storage.fncStorageEncontrarUnaLinea(Rutas.path_profiles, perfil+Storage.identificador_boots) ){
+                        
+                        // * Activar el mensajes de boots
+                        this.mensajes_boots = new WatcherMensajesBoot(conversacion.getPath_conversacion(), new Session(perfil));
+                    
+                    }
+                    
+                    // Habilitar el chat
                     this.fncHabilitarChat(perfil);
                     
                 }
-                
+
                 
             }else{
                 JOptionPane.showMessageDialog(null, "Lo siento, el chat no existe.");
