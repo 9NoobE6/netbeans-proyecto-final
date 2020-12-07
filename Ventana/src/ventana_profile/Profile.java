@@ -616,6 +616,10 @@ public class Profile extends javax.swing.JFrame {
         if( solicitud.getOperacion().equals("none") ){
             this.btnAgregarAmigo.setText(none);
             
+        }else 
+        if( solicitud.getOperacion().equals("amigos") ){
+            this.btnAgregarAmigo.setText("Somos amigos...");
+            
         }else
         if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){
             this.btnAgregarAmigo.setText("Amigo+1");

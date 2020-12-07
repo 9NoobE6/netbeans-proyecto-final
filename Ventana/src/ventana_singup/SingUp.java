@@ -941,7 +941,10 @@ public class SingUp extends javax.swing.JFrame {
                     button = JOptionPane.showConfirmDialog(null, box, "Confirmar los nuevos datos...", JOptionPane.OK_CANCEL_OPTION);
                    
                     if (button == JOptionPane.OK_OPTION) {
-                        if( String.valueOf(this.campo_contrasenha.getPassword()).equals(this.session_activa.getStrContrasenha()) ) {
+                        
+                        char [] pass = jpf.getPassword();
+                        // * Verificar que la contraseña sea correcta al actual para actualizar datos
+                        if( this.session_activa.getStrContrasenha().trim().equals( String.valueOf( pass  ) ) ) {
                             // Enviar los datos del formulario a session
                             this.session_activa.setStrNombres(this.campo_nombres.getText());
                             this.session_activa.setStrApellidos(this.campo_apellidos.getText());

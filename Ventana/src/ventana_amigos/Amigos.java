@@ -349,6 +349,10 @@ public class Amigos extends javax.swing.JFrame {
             // Borrar los variables que se nececesitan para otro chat
             this.lista_de_mensajes.removeAll();
             this.mensajes.removeAllElements();
+            this.mensajes.clear();
+            this.lista_de_mensajes.setModel(amigos); // Borrar todos los mensajes
+            
+            // Deshabilitar 
             this.txt_mensaje.setText("");
             this.chat_activado = false;
             this.size_chats = 0;
@@ -395,21 +399,28 @@ public class Amigos extends javax.swing.JFrame {
         // * Se verifica que el perfil seleccionado en la lista de amigos ...
         // existene mi lista de amigos en decir en session_activa
         // * Se verifica que el chat esta desactivado
-        if( Storage.fncStorageEncontrarUnaCuenta(this.session_activa.stgFriends, mi_amigo) && this.chat_activado == false ){
+        try {
             
-            // * Se habilitan todos los botones 
-            this.bntAbrirChat.setEnabled(true);
-            this.bntVerPerfil.setEnabled(true);
-            this.bntEliminar.setEnabled(true);
-        
-        }else{
+            if( !mi_amigo.contains("cargando") && !mi_amigo.isEmpty() && this.chat_activado == false ){
+                if( Storage.fncStorageEncontrarUnaCuenta(this.session_activa.stgFriends, mi_amigo)  ){
+
+                    // * Se habilitan todos los botones 
+                    this.bntAbrirChat.setEnabled(true);
+                    this.bntVerPerfil.setEnabled(true);
+                    this.bntEliminar.setEnabled(true);
+
+                }else{
+
+                    // * Se desabilitan todos los botones
+                    this.bntAbrirChat.setEnabled(false);
+                    this.bntVerPerfil.setEnabled(false);
+                    this.bntEliminar.setEnabled(false);
+
+                }
+            }
             
-            // * Se desabilitan todos los botones
-            this.bntAbrirChat.setEnabled(false);
-            this.bntVerPerfil.setEnabled(false);
-            this.bntEliminar.setEnabled(false);
-        
-        }
+        } catch (Exception e) {}
+
         
     }//GEN-LAST:event_lista_de_amigosMouseReleased
 

@@ -191,6 +191,7 @@ public class Amistad {
     private void fncSolicituDeAmistadEliminar() {
         
         int respuesta = JOptionPane.showConfirmDialog(null, "Este perfil y tú son amigos."
+                + "\nSi lo eliminas se borraran toda la conversación."
                 + "\nDeseas eliminar de tú lista de amigos?", "Confirmar ..." , JOptionPane.YES_NO_OPTION);
         
         if( respuesta == JOptionPane.YES_OPTION ){
@@ -302,7 +303,7 @@ public class Amistad {
                 + "\nPuedes chatear con él en tù la lista de amigos.");
                 
         // * Fronted
-        this.operacion = "enviado";
+        this.operacion = "amigos";
         
     }
     

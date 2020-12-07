@@ -235,7 +235,6 @@ public class PanelTarjeta extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private Session perfil;
     private Session session;
-    private boolean solicitud_enviada = false;
     public JFrame padre;
     
     private void fncAgregarAmigoPlus() {
@@ -247,6 +246,10 @@ public class PanelTarjeta extends javax.swing.JPanel {
         // * Verificar la operación realizada
         if( solicitud.getOperacion().equals("none") ){
             this.btnAgregarAmigo.setText(none);
+            
+        }else 
+        if( solicitud.getOperacion().equals("amigos") ){
+            this.btnAgregarAmigo.setText("Somos amigos...");
             
         }else
         if( solicitud.getOperacion().equals("cancelado") || solicitud.getOperacion().equals("eliminado") ){
