@@ -165,9 +165,13 @@ public class Amistad {
                     yoker+Storage.identificador_amigo3, this.session_activa.getStrEmail()+Storage.identificador_amigo1);
             
             // Crear rutas para clonar el chat de solicitud de amistad...
-            String original = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail());
-            String clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), this.perfil.getStrEmail());
-            Storage.fncStorageCopiarArchivo(new File(original), clone); // Clonando archivo
+            String chat_original = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail());
+            
+            // * Aceptar la solicitu de amistad
+            Storage.fncStorageAcoplarUnaLinea(chat_original, Storage.fncStorageCrearMensaje(this.session_activa, "Acepto tu solicitud de amistad")  );
+            
+            String chat_clone = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), this.perfil.getStrEmail());
+            Storage.fncStorageCopiarArchivo(new File(chat_original), chat_clone); // Clonando archivo
             
             // * Activar chats en ambos cuentas...
             Storage.fncStorageReemplazarUnaLinea(this.session_activa.stgChats, perfil_seleccionado, this.perfil.getStrEmail());
@@ -295,6 +299,10 @@ public class Amistad {
         
         // * Clonar la conversacion original a perfil
         String chat_original = Storage.fncStorageCrearRutaChats(this.session_activa.getStrEmail(), this.perfil.getStrEmail());
+        
+        // * Aceptar la solicitu de amistad
+        Storage.fncStorageAcoplarUnaLinea(chat_original, Storage.fncStorageCrearMensaje(this.perfil, "Acepto tu solicitud de amistad")  );
+        
         String chat_clone = Storage.fncStorageCrearRutaChats(this.perfil.getStrEmail(), this.session_activa.getStrEmail());
         Storage.fncStorageCopiarArchivo(new File(chat_original), chat_clone);
         
